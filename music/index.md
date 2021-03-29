@@ -15,9 +15,9 @@
 
 首页: [xmoon.info](xmoon.info)
 
-描述: 努力的把不会的变成「会的」
+描述: KEEP WORKING
 
-主题: [LoveIt](https://github.com/dillonzq/LoveIt)
+主题: [uBlogger](https://github.com/uPagge/uBlogger)
 
 框架: [Hugo](https://github.com/gohugoio/hugo)
 
