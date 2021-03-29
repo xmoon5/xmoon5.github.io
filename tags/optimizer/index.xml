@@ -9,6 +9,8 @@
     <pubDate>Thu, 21 May 2020 23:56:32 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/optimizer/</guid>
-    <description><![CDATA[神经网络是基于链接的人工智能，当网络结构固定后，不同参数的选取对模型的表达力影响很大，优化器就是引导更新模型参数的工具 常用符号 待优化参数w 损]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/20200612232746326.png" referrerpolicy="no-referrer">
+            </div>神经网络是基于链接的人工智能，当网络结构固定后，不同参数的选取对模型的表达力影响很大，优化器就是引导更新模型参数的工具 常用符号 待优化参数w 损]]></description>
 </item></channel>
 </rss>

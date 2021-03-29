@@ -9,6 +9,8 @@
     <pubDate>Mon, 15 Jun 2020 13:50:27 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/convolutional2/</guid>
-    <description><![CDATA[Cifar10数据集 提供 5万张 32*32 像素点的十分类彩色图片和标签，用于训练。 提供 1万张 32*32 像素点的十分类彩色图片和标签，用于测试。 导入cifar1]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/20200614194424177.png" referrerpolicy="no-referrer">
+            </div>Cifar10数据集 提供 5万张 32*32 像素点的十分类彩色图片和标签，用于训练。 提供 1万张 32*32 像素点的十分类彩色图片和标签，用于测试。 导入cifar1]]></description>
 </item></channel>
 </rss>

@@ -9,6 +9,8 @@
     <pubDate>Wed, 29 Jul 2020 17:30:45 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/cannyhough/</guid>
-    <description><![CDATA[任务说明：编写一个钱币定位系统，其不仅能够检测出输入图像中各个钱币的边缘，同时，还能给出各个钱币的圆心坐标与半径。 效果 代码实现 Canny边缘]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/20200729181503649.png" referrerpolicy="no-referrer">
+            </div>任务说明：编写一个钱币定位系统，其不仅能够检测出输入图像中各个钱币的边缘，同时，还能给出各个钱币的圆心坐标与半径。 效果 代码实现 Canny边缘]]></description>
 </item></channel>
 </rss>

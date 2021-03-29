@@ -9,6 +9,8 @@
     <pubDate>Fri, 10 Jul 2020 16:50:26 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/edgedetection/</guid>
-    <description><![CDATA[边缘提取 在大多数时候图像的边缘可以承载大部分的信息，并且提取边缘可以除去很多干扰信息，提高处理数据的效率 目标 识别图像中的突然变化(不连续) 图]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/20200710170507176.png" referrerpolicy="no-referrer">
+            </div>边缘提取 在大多数时候图像的边缘可以承载大部分的信息，并且提取边缘可以除去很多干扰信息，提高处理数据的效率 目标 识别图像中的突然变化(不连续) 图]]></description>
 </item></channel>
 </rss>

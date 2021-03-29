@@ -9,6 +9,8 @@
     <pubDate>Wed, 24 Jun 2020 00:30:27 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/rnn2/</guid>
-    <description><![CDATA[Embedding 独热码：数量大，过于稀疏，映射之间是独立的，没有表现出关联性 Embedding：一种单词编码方法，以低维向量实现了编码，这种编码通过神经网]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/20200623233232807.png" referrerpolicy="no-referrer">
+            </div>Embedding 独热码：数量大，过于稀疏，映射之间是独立的，没有表现出关联性 Embedding：一种单词编码方法，以低维向量实现了编码，这种编码通过神经网]]></description>
 </item></channel>
 </rss>

@@ -9,13 +9,17 @@
     <pubDate>Sun, 09 Aug 2020 11:06:26 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/panorama/</guid>
-    <description><![CDATA[目标：将数张有重叠部分的图像通过特征点检测，匹配，图像变换拼成一幅无缝的全景图或高分辨率图像 在图像拼接中首先利用SIFT算法提取图像特征进而]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/20200809110956387.png" referrerpolicy="no-referrer">
+            </div>目标：将数张有重叠部分的图像通过特征点检测，匹配，图像变换拼成一幅无缝的全景图或高分辨率图像 在图像拼接中首先利用SIFT算法提取图像特征进而]]></description>
 </item><item>
     <title>区域检测——Blob &amp; SIFT</title>
     <link>https://xmoon5.github.io/edgedetection2/</link>
     <pubDate>Wed, 22 Jul 2020 13:20:26 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/edgedetection2/</guid>
-    <description><![CDATA[针对Harris无法拟合尺度问题而提出 目标:独立检测同一图像缩放版本的对应区域 需要通过尺度选择机制来寻找与图像变换协变的特征区域大小 “当尺度]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/20200721151228568.png" referrerpolicy="no-referrer">
+            </div>针对Harris无法拟合尺度问题而提出 目标:独立检测同一图像缩放版本的对应区域 需要通过尺度选择机制来寻找与图像变换协变的特征区域大小 “当尺度]]></description>
 </item></channel>
 </rss>

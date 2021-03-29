@@ -9,6 +9,8 @@
     <pubDate>Thu, 21 May 2020 18:14:58 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/regularization/</guid>
-    <description><![CDATA[欠拟合与过拟合 欠拟合：模型不能有效拟合数据集对现有数据集学习的不够彻底 过拟合：模型对训练集拟合的太好，而缺失了泛化力 欠拟合的解决方法： 增加输]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/20200612232746282.png" referrerpolicy="no-referrer">
+            </div>欠拟合与过拟合 欠拟合：模型不能有效拟合数据集对现有数据集学习的不够彻底 过拟合：模型对训练集拟合的太好，而缺失了泛化力 欠拟合的解决方法： 增加输]]></description>
 </item></channel>
 </rss>

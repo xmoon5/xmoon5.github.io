@@ -9,6 +9,8 @@
     <pubDate>Sun, 09 Aug 2020 11:06:26 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/panorama/</guid>
-    <description><![CDATA[目标：将数张有重叠部分的图像通过特征点检测，匹配，图像变换拼成一幅无缝的全景图或高分辨率图像 在图像拼接中首先利用SIFT算法提取图像特征进而]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/20200809110956387.png" referrerpolicy="no-referrer">
+            </div>目标：将数张有重叠部分的图像通过特征点检测，匹配，图像变换拼成一幅无缝的全景图或高分辨率图像 在图像拼接中首先利用SIFT算法提取图像特征进而]]></description>
 </item></channel>
 </rss>

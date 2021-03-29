@@ -9,28 +9,36 @@
     <pubDate>Wed, 24 Jun 2020 00:30:27 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/rnn2/</guid>
-    <description><![CDATA[Embedding 独热码：数量大，过于稀疏，映射之间是独立的，没有表现出关联性 Embedding：一种单词编码方法，以低维向量实现了编码，这种编码通过神经网]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/20200623233232807.png" referrerpolicy="no-referrer">
+            </div>Embedding 独热码：数量大，过于稀疏，映射之间是独立的，没有表现出关联性 Embedding：一种单词编码方法，以低维向量实现了编码，这种编码通过神经网]]></description>
 </item><item>
     <title>TensorFlow2.1入门学习笔记(15)——循环神经网络，顺序字母预测</title>
     <link>https://xmoon5.github.io/rnn1/</link>
     <pubDate>Tue, 23 Jun 2020 20:01:27 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/rnn1/</guid>
-    <description><![CDATA[卷积就是特征提取器，通过卷积计算层提取空间信息，例如我们可以用卷积和提取一张图片的空间特征，再把提取到的空间特征送入全连接网络，实现离散数据]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/2020062315163759.png" referrerpolicy="no-referrer">
+            </div>卷积就是特征提取器，通过卷积计算层提取空间信息，例如我们可以用卷积和提取一张图片的空间特征，再把提取到的空间特征送入全连接网络，实现离散数据]]></description>
 </item><item>
     <title>TensorFlow2.1入门学习笔记(14)——卷积神经网络InceptionNet, ResNet示例</title>
     <link>https://xmoon5.github.io/convolutional3/</link>
     <pubDate>Fri, 19 Jun 2020 00:05:27 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/convolutional3/</guid>
-    <description><![CDATA[InceptionNet InceptionNet诞生于2014年，当年ImageNet竞赛冠军，Top5错误率为6.67% InceptionNet引入了Incep]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/20200618235842459.png" referrerpolicy="no-referrer">
+            </div>InceptionNet InceptionNet诞生于2014年，当年ImageNet竞赛冠军，Top5错误率为6.67% InceptionNet引入了Incep]]></description>
 </item><item>
     <title>TensorFlow2.1入门学习笔记(13)——卷积神经网络LeNet, AlexNet, VGGNet示例</title>
     <link>https://xmoon5.github.io/convolutional2/</link>
     <pubDate>Mon, 15 Jun 2020 13:50:27 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/convolutional2/</guid>
-    <description><![CDATA[Cifar10数据集 提供 5万张 32*32 像素点的十分类彩色图片和标签，用于训练。 提供 1万张 32*32 像素点的十分类彩色图片和标签，用于测试。 导入cifar1]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/20200614194424177.png" referrerpolicy="no-referrer">
+            </div>Cifar10数据集 提供 5万张 32*32 像素点的十分类彩色图片和标签，用于训练。 提供 1万张 32*32 像素点的十分类彩色图片和标签，用于测试。 导入cifar1]]></description>
 </item><item>
     <title>TensorFlow2.1入门学习笔记(12)——卷积神经网络</title>
     <link>https://xmoon5.github.io/convolutional1/</link>
@@ -46,7 +54,9 @@
     <pubDate>Thu, 04 Jun 2020 23:34:53 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/selfdatatrain/</guid>
-    <description><![CDATA[以MNIST的sequential模型为base-line，通过读取自己的数据，训练模型并存储模型，最后达到绘图实物的运用。 自制数据集，解决]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/2020060500240012.png" referrerpolicy="no-referrer">
+            </div>以MNIST的sequential模型为base-line，通过读取自己的数据，训练模型并存储模型，最后达到绘图实物的运用。 自制数据集，解决]]></description>
 </item><item>
     <title>TensorFlow2.1入门学习笔记(10)——使用keras搭建神经网络(Mnist,Fashion)</title>
     <link>https://xmoon5.github.io/tf_keras_mnist/</link>
@@ -62,14 +72,18 @@
     <pubDate>Thu, 21 May 2020 23:56:32 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/optimizer/</guid>
-    <description><![CDATA[神经网络是基于链接的人工智能，当网络结构固定后，不同参数的选取对模型的表达力影响很大，优化器就是引导更新模型参数的工具 常用符号 待优化参数w 损]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/20200612232746326.png" referrerpolicy="no-referrer">
+            </div>神经网络是基于链接的人工智能，当网络结构固定后，不同参数的选取对模型的表达力影响很大，优化器就是引导更新模型参数的工具 常用符号 待优化参数w 损]]></description>
 </item><item>
     <title>TensorFlow2.1入门学习笔记(8)——欠拟合与过拟合(正则化)</title>
     <link>https://xmoon5.github.io/regularization/</link>
     <pubDate>Thu, 21 May 2020 18:14:58 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/regularization/</guid>
-    <description><![CDATA[欠拟合与过拟合 欠拟合：模型不能有效拟合数据集对现有数据集学习的不够彻底 过拟合：模型对训练集拟合的太好，而缺失了泛化力 欠拟合的解决方法： 增加输]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/20200612232746282.png" referrerpolicy="no-referrer">
+            </div>欠拟合与过拟合 欠拟合：模型不能有效拟合数据集对现有数据集学习的不够彻底 过拟合：模型对训练集拟合的太好，而缺失了泛化力 欠拟合的解决方法： 增加输]]></description>
 </item><item>
     <title>TensorFlow2.1入门学习笔记(7)——损失函数</title>
     <link>https://xmoon5.github.io/loss/</link>

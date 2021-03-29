@@ -9,7 +9,9 @@
     <pubDate>Thu, 04 Jun 2020 23:34:53 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/selfdatatrain/</guid>
-    <description><![CDATA[以MNIST的sequential模型为base-line，通过读取自己的数据，训练模型并存储模型，最后达到绘图实物的运用。 自制数据集，解决]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/2020060500240012.png" referrerpolicy="no-referrer">
+            </div>以MNIST的sequential模型为base-line，通过读取自己的数据，训练模型并存储模型，最后达到绘图实物的运用。 自制数据集，解决]]></description>
 </item><item>
     <title>TensorFlow2.1入门学习笔记(10)——使用keras搭建神经网络(Mnist,Fashion)</title>
     <link>https://xmoon5.github.io/tf_keras_mnist/</link>

@@ -9,6 +9,8 @@
     <pubDate>Sun, 26 Jul 2020 15:30:26 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/texture/</guid>
-    <description><![CDATA[纹理是由一些基元以某种方式组合起来，虽然看起来很“乱”，但任然存在一些规律 规则的纹理与不规则的纹理 纹理描述 使用高斯偏导核，对图像进行卷积，x]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/20200726121818902.png" referrerpolicy="no-referrer">
+            </div>纹理是由一些基元以某种方式组合起来，虽然看起来很“乱”，但任然存在一些规律 规则的纹理与不规则的纹理 纹理描述 使用高斯偏导核，对图像进行卷积，x]]></description>
 </item></channel>
 </rss>

@@ -2,29 +2,50 @@
 <html lang="zh-CN">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noodp"/><title> | Moon&#39;s Blog</title><meta name="twitter:card" content="summary_large_image"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noodp"/><title>单纯形法 | Moon&#39;s Blog</title><meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content=""/>
-<meta name="twitter:title" content=""/>
-<meta name="twitter:description" content=""/><meta name="twitter:creator" content="@MoonXiaomu"/><meta name="Description" content="KEEP KWARKING"><meta property="og:title" content="" />
+<meta name="twitter:title" content="单纯形法"/>
+<meta name="twitter:description" content=""/><meta name="twitter:creator" content="@MoonXiaomu"/><meta name="Description" content="KEEP KWARKING"><meta property="og:title" content="单纯形法" />
 <meta property="og:description" content="单纯形法" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://xmoon5.github.io/simplexmethod/" />
 <meta property="og:image" content="https://xmoon5.github.io/images/favicon.svg"/>
+<meta property="article:published_time" content="2020-11-28T14:56:36+08:00" />
 <meta property="article:modified_time" content="2021-03-29T11:51:46+08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
 <meta name="application-name" content="MOON">
 <meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://xmoon5.github.io/simplexmethod/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "",
+        "headline": "单纯形法",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/xmoon5.github.io\/simplexmethod\/"
-        },"image": ["https:\/\/xmoon5.github.io\/images\/cover.png"],"genre": "posts","wordCount":  4 ,
-        "url": "https:\/\/xmoon5.github.io\/simplexmethod\/","dateModified": "2021-03-29T11:51:46+08:00","description": ""
+        },"image": ["https:\/\/xmoon5.github.io\/images\/cover.png"],"genre": "posts","keywords": "算法","wordCount":  4 ,
+        "url": "https:\/\/xmoon5.github.io\/simplexmethod\/","datePublished": "2020-11-28T14:56:36+08:00","dateModified": "2021-03-29T11:51:46+08:00","description": ""
     }
-    </script></head>
+    </script><script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "主页",
+            "item": "https:\/\/xmoon5.github.io"
+        },{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "优化方法",
+            "item": "https://xmoon5.github.io/categories/%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/"
+        },{
+                "@type": "ListItem",
+                "position": 3,
+                "name": "单纯形法"
+            }]
+    }
+</script></head>
     <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
         <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
@@ -133,12 +154,14 @@
                 <div class="post-all-meta">
                     <nav class="breadcrumbs">
     <ol>
-        <li><a href="/">主页 </a></li><li></li>
+        <li><a href="/">主页 </a></li><li><a href="/categories/%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/">优化方法 </a></li><li>单纯形法</li>
     </ol>
 </nav>
-                    <h1 class="single-title flipInX"></h1><div class="post-meta">
-                        <div class="post-meta-line"><span class="post-meta-date">
-                                <i class="svg-icon icon-clock"></i><time class="timeago" datetime="0001-01-01">0001-01-01</time>
+                    <h1 class="single-title flipInX">单纯形法</h1><div class="post-meta">
+                        <div class="post-meta-line"><span class="post-category">
+                                <a href="/categories/%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/"><i class="svg-icon icon-folder"></i>优化方法</a>
+                            </span><span class="post-meta-date">
+                                <i class="svg-icon icon-clock"></i><time class="timeago" datetime="2020-11-28">2020-11-28</time>
                             </span><span class="post-meta-words">
                                 <i class="svg-icon icon-pencil"></i>约 4 字
                             </span>
@@ -212,15 +235,15 @@
 
 
 <div class="post-share"><div class="share-link">
-        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://xmoon5.github.io/simplexmethod/" data-title="" data-via="MoonXiaomu"><span class="svg-social-icon icon-twitter"></span></a>
+        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://xmoon5.github.io/simplexmethod/" data-title="单纯形法" data-via="MoonXiaomu" data-hashtags="算法"><span class="svg-social-icon icon-twitter"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://xmoon5.github.io/simplexmethod/"><span class="svg-social-icon icon-facebook"></span></a>
+        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://xmoon5.github.io/simplexmethod/" data-hashtag="算法"><span class="svg-social-icon icon-facebook"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://xmoon5.github.io/simplexmethod/" data-title="" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
+        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://xmoon5.github.io/simplexmethod/" data-title="单纯形法" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://xmoon5.github.io/simplexmethod/" data-title="" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
+        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://xmoon5.github.io/simplexmethod/" data-title="单纯形法" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
     </div></div>
-</div>
+<div class="post-tags"><a href="/tags/%E7%AE%97%E6%B3%95/" class="tag">算法</a></div></div>
         </div>
     <div id="toc-final"></div>
     </article><div class="page single comments content-block-position"><div id="comments"></div></div></div>

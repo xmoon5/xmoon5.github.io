@@ -9,6 +9,8 @@
     <pubDate>Tue, 23 Jun 2020 20:01:27 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/rnn1/</guid>
-    <description><![CDATA[卷积就是特征提取器，通过卷积计算层提取空间信息，例如我们可以用卷积和提取一张图片的空间特征，再把提取到的空间特征送入全连接网络，实现离散数据]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/2020062315163759.png" referrerpolicy="no-referrer">
+            </div>卷积就是特征提取器，通过卷积计算层提取空间信息，例如我们可以用卷积和提取一张图片的空间特征，再把提取到的空间特征送入全连接网络，实现离散数据]]></description>
 </item></channel>
 </rss>

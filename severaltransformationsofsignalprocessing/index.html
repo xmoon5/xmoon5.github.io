@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noodp"/><title>信号处理的几种变换 | Moon&#39;s Blog</title><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content=""/>
+<meta name="twitter:title" content="信号处理的几种变换"/>
+<meta name="twitter:description" content=""/><meta name="twitter:creator" content="@MoonXiaomu"/><meta name="Description" content="KEEP KWARKING"><meta property="og:title" content="信号处理的几种变换" />
+<meta property="og:description" content="信号处理中通常会进行转换，使信号便于处理，提取信息，最基本的变换是傅里叶变换，后又衍生处了小波波变换，希尔伯特变换，希尔伯特黄变换，曲波变换" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xmoon5.github.io/severaltransformationsofsignalprocessing/" />
+<meta property="og:image" content="https://xmoon5.github.io/images/favicon.svg"/>
+<meta property="article:published_time" content="2020-10-25T17:34:31+08:00" />
+<meta property="article:modified_time" content="2020-10-25T17:34:31+08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+<meta name="application-name" content="MOON">
+<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://xmoon5.github.io/severaltransformationsofsignalprocessing/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "信号处理的几种变换",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/xmoon5.github.io\/severaltransformationsofsignalprocessing\/"
+        },"image": ["https:\/\/xmoon5.github.io\/images\/cover.png"],"genre": "posts","keywords": "算法","wordCount":  101 ,
+        "url": "https:\/\/xmoon5.github.io\/severaltransformationsofsignalprocessing\/","datePublished": "2020-10-25T17:34:31+08:00","dateModified": "2020-10-25T17:34:31+08:00","description": ""
+    }
+    </script><script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "主页",
+            "item": "https:\/\/xmoon5.github.io"
+        },{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "信号处理",
+            "item": "https://xmoon5.github.io/categories/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/"
+        },{
+                "@type": "ListItem",
+                "position": 3,
+                "name": "信号处理的几种变换"
+            }]
+    }
+</script></head>
+    <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('light' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'light' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Moon&#39;s Blog" class="header-logo logo-svg"><span class="header-title-pre"><i class='fas fa-pencil-alt fa-fw'></i></span>Moon&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <nav>
+                <ul class="menu-inner"><li>
+                        <a class="menu-item" href="/posts/"> 目录 </a>
+                    </li><li>
+                        <a class="menu-item" href="/tags/"> 标签 </a>
+                    </li><li>
+                        <a class="menu-item" href="/categories/"> 归档 </a>
+                    </li><li>
+                        <a class="menu-item" href="/music/"> 歌单 </a>
+                    </li><li>
+                        <a class="menu-item" href="/comments/"> 留言板 </a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/" rel="noopener noreffer" target="_blank"> 小工具 </a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/GithubGo/index.html" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a>
+                    </li></ul>
+            </nav><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="search……" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <span class="svg-icon icon-search"></span>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <span class="svg-icon icon-cancel"></span>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <span class="svg-icon icon-loading"></span>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <span class="svg-icon icon-moon"></span>
+                </a>
+            </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Moon&#39;s Blog" class="header-logo"><span class="header-title-pre"><i class='fas fa-pencil-alt fa-fw'></i></span>Moon&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="search……" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <span class="svg-icon icon-search"></span>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <span class="svg-icon icon-cancel"></span>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <span class="svg-icon icon-loading"></span>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><nav>
+                <ul><li>
+                        <a class="menu-item" href="/posts/" title="">目录</a>
+                    </li><li>
+                        <a class="menu-item" href="/tags/" title="">标签</a>
+                    </li><li>
+                        <a class="menu-item" href="/categories/" title="">归档</a>
+                    </li><li>
+                        <a class="menu-item" href="/music/" title="">歌单</a>
+                    </li><li>
+                        <a class="menu-item" href="/comments/" title="">留言板</a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/" title="" rel="noopener noreffer" target="_blank">小工具</a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/GithubGo/index.html" title="" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a>
+                    </li></ul>
+            </nav>
+            <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <span class="svg-icon icon-moon"></span>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+<div class="container content-article page-toc theme-classic"><div class="toc" id="toc-auto">
+            <div class="toc-title">目录</div>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div>
+
+    <div class="header-post">
+
+        
+
+        
+        <div class="post-title">
+
+                <div class="post-all-meta">
+                    <nav class="breadcrumbs">
+    <ol>
+        <li><a href="/">主页 </a></li><li><a href="/categories/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/">信号处理 </a></li><li>信号处理的几种变换</li>
+    </ol>
+</nav>
+                    <h1 class="single-title flipInX">信号处理的几种变换</h1><div class="post-meta">
+                        <div class="post-meta-line"><span class="post-category">
+                                <a href="/categories/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/"><i class="svg-icon icon-folder"></i>信号处理</a>
+                            </span><span class="post-meta-date">
+                                <i class="svg-icon icon-clock"></i><time class="timeago" datetime="2020-10-25">2020-10-25</time>
+                            </span><span class="post-meta-words">
+                                <i class="svg-icon icon-pencil"></i>约 101 字
+                            </span>
+                            <span class="post-meta-reading">
+                                <i class="svg-icon icon-stopwatch"></i>预计阅读 1 分钟
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+
+    <article class="single toc-start">
+
+        <div class="content-block content-block-first content-block-position">
+
+        <div class="post"><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
+            </div><p>信号处理中通常会进行转换，使信号便于处理，提取信息，最基本的变换是傅里叶变换，后又衍生处了小波波变换，希尔伯特变换，希尔伯特黄变换，曲波变换等等，其对波信号转换和处理的思想对图像信号的处理具有很大的启发</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20201025175518227.GIF" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20201025175518227.GIF"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20201025173052286.jpg" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20201025173052286.jpg"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/2020102517321159.jpg" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/2020102517321159.jpg"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20201025173236471.jpg" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20201025173236471.jpg"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20201025173253660.jpg" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20201025173253660.jpg"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/2020102517330025.jpg" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/2020102517330025.jpg"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20201025173306415.jpg" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20201025173306415.jpg"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20201025180556921.jpg" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20201025180556921.jpg"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+</div>
+
+            <div class="post" style="padding-top: 0">
+
+
+<div class="post-share"><div class="share-link">
+        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://xmoon5.github.io/severaltransformationsofsignalprocessing/" data-title="信号处理的几种变换" data-via="MoonXiaomu" data-hashtags="算法"><span class="svg-social-icon icon-twitter"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://xmoon5.github.io/severaltransformationsofsignalprocessing/" data-hashtag="算法"><span class="svg-social-icon icon-facebook"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://xmoon5.github.io/severaltransformationsofsignalprocessing/" data-title="信号处理的几种变换" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://xmoon5.github.io/severaltransformationsofsignalprocessing/" data-title="信号处理的几种变换" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
+    </div></div>
+<div class="post-tags"><a href="/tags/%E7%AE%97%E6%B3%95/" class="tag">算法</a></div></div>
+        </div>
+    <div id="toc-final"></div>
+    </article><div class="page single comments content-block-position"><div id="comments"></div></div></div>
+
+</main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><div><span id="timeDate">正在烧脑计算建站时间...</span><span id="times"></span><script>var now = new Date();function createtime(){var grt= new Date("05/20/2020 00:00:00");now.setTime(now.getTime()+250);days = (now - grt ) / 1000 / 60 / 60 / 24;dnum = Math.floor(days);hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);hnum = Math.floor(hours);if(String(hnum).length ==1 ){hnum = "0" + hnum; }minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);mnum = Math.floor(minutes);if(String(mnum).length ==1 ){mnum = "0" + mnum;}seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);snum = Math.round(seconds);if(String(snum).length ==1 ){snum = "0" + snum;}document.getElementById("timeDate").innerHTML = "&nbsp"+dnum+"&nbsp天";document.getElementById("times").innerHTML = hnum + "&nbsp小时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";}setInterval("createtime()",250);</script></div>___<i class="fa fa-biking fa-fw"></i>______</div><div class="footer-line"><i class="svg-icon icon-copyright"></i><span>2020 - 2021</span><span class="author">&nbsp;<a href="/" target="_blank"></a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="http://www.beian.miit.gov.cn" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://blog.pangao.vip/icp/xmoon.info">🧑ICP证000000号</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="svg-icon icon-arrow-up"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="svg-icon icon-comments-fixed"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/twemoji@13.0.0/dist/twemoji.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"","algoliaIndex":"","algoliaSearchKey":"","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"algolia"},"twemoji":true};</script><script src="/js/theme.min.js"></script><script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	        ga('create', 'UA-167439955-2', 'auto');
+	        ga('set', 'anonymizeIp', true);
+	        ga('send', 'pageview');
+	    </script></body>
+</html>

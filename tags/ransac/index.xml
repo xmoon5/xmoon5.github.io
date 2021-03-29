@@ -9,20 +9,26 @@
     <pubDate>Sun, 09 Aug 2020 11:06:26 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/panorama/</guid>
-    <description><![CDATA[目标：将数张有重叠部分的图像通过特征点检测，匹配，图像变换拼成一幅无缝的全景图或高分辨率图像 在图像拼接中首先利用SIFT算法提取图像特征进而]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/20200809110956387.png" referrerpolicy="no-referrer">
+            </div>目标：将数张有重叠部分的图像通过特征点检测，匹配，图像变换拼成一幅无缝的全景图或高分辨率图像 在图像拼接中首先利用SIFT算法提取图像特征进而]]></description>
 </item><item>
     <title>图像分割(Segmentation)——K-Means, 最小割, 归一化图割</title>
     <link>https://xmoon5.github.io/segmentstionclustering/</link>
     <pubDate>Fri, 31 Jul 2020 17:50:45 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/segmentstionclustering/</guid>
-    <description><![CDATA[图像分割是将图片将相似的部分分割成相同的块 Gestalt理论 解释物体分割的底层原理 将同一个东西群组在一起,集合中的元素可以具有由关系产生的属]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/20200731151831291.png" referrerpolicy="no-referrer">
+            </div>图像分割是将图片将相似的部分分割成相同的块 Gestalt理论 解释物体分割的底层原理 将同一个东西群组在一起,集合中的元素可以具有由关系产生的属]]></description>
 </item><item>
     <title>拟合(Fitting)</title>
     <link>https://xmoon5.github.io/fitting/</link>
     <pubDate>Wed, 15 Jul 2020 18:30:26 &#43;0800</pubDate>
     <author>Moon</author>
     <guid>https://xmoon5.github.io/fitting/</guid>
-    <description><![CDATA[提取完边缘后如何使用数学模型来描述边缘？ 例如：在桌子上有几枚硬币，在经过边缘提取后，需要描述出硬币的圆心坐标和圆的大小 难点 噪声：噪声的存在使]]></description>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://img-blog.csdnimg.cn/20200715184300485.png" referrerpolicy="no-referrer">
+            </div>提取完边缘后如何使用数学模型来描述边缘？ 例如：在桌子上有几枚硬币，在经过边缘提取后，需要描述出硬币的圆心坐标和圆的大小 难点 噪声：噪声的存在使]]></description>
 </item></channel>
 </rss>
