@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Batch Normalization - 标签 - Moon&#39;s Blog</title>
+        <link>https://xmoon5.github.io/tags/batch-normalization/</link>
+        <description>Batch Normalization - 标签 - Moon&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 13 Aug 2020 12:50:45 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/tags/batch-normalization/" rel="self" type="application/rss+xml" /><item>
+    <title>经典算法：Batch Normalization</title>
+    <link>https://xmoon5.github.io/batchnormalization/</link>
+    <pubDate>Thu, 13 Aug 2020 12:50:45 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/batchnormalization/</guid>
+    <description><![CDATA[在卷积网络六大模块中的BN（批批标准化）所指的就是Batch Normalization，该算法15年提出，现在已经成为深度学习中经常使用的技]]></description>
+</item></channel>
+</rss>

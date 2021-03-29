@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>深度学习 - 标签 - Moon&#39;s Blog</title>
+        <link>https://xmoon5.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</link>
+        <description>深度学习 - 标签 - Moon&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 02 Jul 2020 10:22:26 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+    <title>半监督深度学习</title>
+    <link>https://xmoon5.github.io/semisupervisedlearning/</link>
+    <pubDate>Thu, 02 Jul 2020 10:22:26 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/semisupervisedlearning/</guid>
+    <description><![CDATA[<div class="featured-image">
+                <img src="https://gitee.com/xiaomoon/image/raw/master/img/20200702114454.png" referrerpolicy="no-referrer">
+            </div>半监督学习 在有标签数据+无标签数据混合成的训练数据中使用的机器学习算法。一般假设，无标签数据比有标签数据多，甚至多得多。 要求： 无标签数据一般]]></description>
+</item></channel>
+</rss>

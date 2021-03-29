@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>GRU - 标签 - Moon&#39;s Blog</title>
+        <link>https://xmoon5.github.io/tags/gru/</link>
+        <description>GRU - 标签 - Moon&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 24 Jun 2020 00:30:27 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/tags/gru/" rel="self" type="application/rss+xml" /><item>
+    <title>TensorFlow2.1入门学习笔记(16)——实战使用RNN，LSTM，GRU实现股票预测</title>
+    <link>https://xmoon5.github.io/rnn2/</link>
+    <pubDate>Wed, 24 Jun 2020 00:30:27 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/rnn2/</guid>
+    <description><![CDATA[Embedding 独热码：数量大，过于稀疏，映射之间是独立的，没有表现出关联性 Embedding：一种单词编码方法，以低维向量实现了编码，这种编码通过神经网]]></description>
+</item></channel>
+</rss>

@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>paper阅读 - 标签 - Moon&#39;s Blog</title>
+        <link>https://xmoon5.github.io/tags/paper%E9%98%85%E8%AF%BB/</link>
+        <description>paper阅读 - 标签 - Moon&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 03 Jul 2020 00:20:26 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/tags/paper%E9%98%85%E8%AF%BB/" rel="self" type="application/rss+xml" /><item>
+    <title>高驱动注意网络(HANET)</title>
+    <link>https://xmoon5.github.io/hanet/</link>
+    <pubDate>Fri, 03 Jul 2020 00:20:26 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/hanet/</guid>
+    <description><![CDATA[PAPER: Cars Can’t Fly up in the Sky: Improving Urban-Scene Segmentation via Height-driven Attention Networks CityScape数据集 介绍 ​Cityscapes是关于城市街道场景的语义理解图片数据集。它主要包含来]]></description>
+</item></channel>
+</rss>

@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Texture - 标签 - Moon&#39;s Blog</title>
+        <link>https://xmoon5.github.io/tags/texture/</link>
+        <description>Texture - 标签 - Moon&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 26 Jul 2020 15:30:26 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/tags/texture/" rel="self" type="application/rss+xml" /><item>
+    <title>纹理表示(Texture)</title>
+    <link>https://xmoon5.github.io/texture/</link>
+    <pubDate>Sun, 26 Jul 2020 15:30:26 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/texture/</guid>
+    <description><![CDATA[纹理是由一些基元以某种方式组合起来，虽然看起来很“乱”，但任然存在一些规律 规则的纹理与不规则的纹理 纹理描述 使用高斯偏导核，对图像进行卷积，x]]></description>
+</item></channel>
+</rss>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noodp"/><title>高驱动注意网络(HANET) | Moon&#39;s Blog</title><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content=""/>
+<meta name="twitter:title" content="高驱动注意网络(HANET)"/>
+<meta name="twitter:description" content=""/><meta name="twitter:creator" content="@MoonXiaomu"/><meta name="Description" content="KEEP KWARKING"><meta property="og:title" content="高驱动注意网络(HANET)" />
+<meta property="og:description" content="PAPER: Cars Can’t Fly up in the Sky: Improving Urban-Scene Segmentation via Height-driven Attention Networks CityScape数据集 介绍 ​Cityscapes是关于城市街道场景的语义理解图片数据集。它主要包含来" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xmoon5.github.io/hanet/" />
+<meta property="og:image" content="https://xmoon5.github.io/images/favicon.svg"/>
+<meta property="article:published_time" content="2020-07-03T00:20:26+08:00" />
+<meta property="article:modified_time" content="2021-03-29T11:34:14+08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+<meta name="application-name" content="MOON">
+<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://xmoon5.github.io/hanet/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "高驱动注意网络(HANET)",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/xmoon5.github.io\/hanet\/"
+        },"image": ["https:\/\/xmoon5.github.io\/images\/cover.png"],"genre": "posts","keywords": "神经网络, paper阅读, HANet","wordCount":  1491 ,
+        "url": "https:\/\/xmoon5.github.io\/hanet\/","datePublished": "2020-07-03T00:20:26+08:00","dateModified": "2021-03-29T11:34:14+08:00","description": ""
+    }
+    </script><script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "主页",
+            "item": "https:\/\/xmoon5.github.io"
+        },{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "计算机视觉",
+            "item": "https://xmoon5.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"
+        },{
+                "@type": "ListItem",
+                "position": 3,
+                "name": "高驱动注意网络(HANET)"
+            }]
+    }
+</script></head>
+    <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Moon&#39;s Blog" class="header-logo logo-svg"><span class="header-title-pre"><i class='fas fa-pencil-alt fa-fw'></i></span>Moon&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <nav>
+                <ul class="menu-inner"><li>
+                        <a class="menu-item" href="/posts/"> 目录 </a>
+                    </li><li>
+                        <a class="menu-item" href="/tags/"> 标签 </a>
+                    </li><li>
+                        <a class="menu-item" href="/categories/"> 归档 </a>
+                    </li><li>
+                        <a class="menu-item" href="/music/"> 歌单 </a>
+                    </li><li>
+                        <a class="menu-item" href="/comments/"> 留言板 </a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/" rel="noopener noreffer" target="_blank"> 小工具 </a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/GithubGo/index.html" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a>
+                    </li></ul>
+            </nav><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="search……" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <span class="svg-icon icon-search"></span>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <span class="svg-icon icon-cancel"></span>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <span class="svg-icon icon-loading"></span>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <span class="svg-icon icon-moon"></span>
+                </a>
+            </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Moon&#39;s Blog" class="header-logo"><span class="header-title-pre"><i class='fas fa-pencil-alt fa-fw'></i></span>Moon&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="search……" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <span class="svg-icon icon-search"></span>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <span class="svg-icon icon-cancel"></span>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <span class="svg-icon icon-loading"></span>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><nav>
+                <ul><li>
+                        <a class="menu-item" href="/posts/" title="">目录</a>
+                    </li><li>
+                        <a class="menu-item" href="/tags/" title="">标签</a>
+                    </li><li>
+                        <a class="menu-item" href="/categories/" title="">归档</a>
+                    </li><li>
+                        <a class="menu-item" href="/music/" title="">歌单</a>
+                    </li><li>
+                        <a class="menu-item" href="/comments/" title="">留言板</a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/" title="" rel="noopener noreffer" target="_blank">小工具</a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/GithubGo/index.html" title="" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a>
+                    </li></ul>
+            </nav>
+            <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <span class="svg-icon icon-moon"></span>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+<div class="container content-article page-toc theme-classic"><div class="toc" id="toc-auto">
+            <div class="toc-title">目录</div>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div>
+
+    <div class="header-post">
+
+        
+
+        
+        <div class="post-title">
+
+                <div class="post-all-meta">
+                    <nav class="breadcrumbs">
+    <ol>
+        <li><a href="/">主页 </a></li><li><a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">计算机视觉 </a></li><li>高驱动注意网络(HANET)</li>
+    </ol>
+</nav>
+                    <h1 class="single-title flipInX">高驱动注意网络(HANET)</h1><div class="post-meta">
+                        <div class="post-meta-line"><span class="post-category">
+                                <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"><i class="svg-icon icon-folder"></i>计算机视觉</a>
+                            </span><span class="post-meta-date">
+                                <i class="svg-icon icon-clock"></i><time class="timeago" datetime="2020-07-03">2020-07-03</time>
+                            </span><span class="post-meta-words">
+                                <i class="svg-icon icon-pencil"></i>约 1491 字
+                            </span>
+                            <span class="post-meta-reading">
+                                <i class="svg-icon icon-stopwatch"></i>预计阅读 3 分钟
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+
+    <article class="single toc-start">
+
+        <div class="content-block content-block-first content-block-position">
+
+        <div class="post"><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#cityscape数据集">CityScape数据集</a></li>
+    <li><a href="#hanet介绍">HANet介绍</a></li>
+    <li><a href="#网络结构">网络结构</a></li>
+    <li><a href="#将hanet插入resnet101">将HANet插入ResNet101</a></li>
+    <li><a href="#github项目地址">GitHub项目地址</a></li>
+  </ul>
+</nav></div>
+            </div><div style="margin: 20px 0 20px 0;">
+                    <span class="post-update">
+                        <b>更新于 2021-03-29</b>
+                    </span>
+                </div></br>
+<p>PAPER: <a href="http://openaccess.thecvf.com/content_CVPR_2020/papers/Choi_Cars_Cant_Fly_Up_in_the_Sky_Improving_Urban-Scene_Segmentation_CVPR_2020_paper.pdf" target="_blank" rel="noopener noreffer">Cars Can’t Fly up in the Sky: Improving Urban-Scene Segmentation via Height-driven Attention Networks</a></p>
+<h2 id="cityscape数据集">CityScape数据集</h2>
+<ul>
+<li><strong>介绍</strong></li>
+</ul>
+<p>​<a href="https://www.cityscapes-dataset.com/" target="_blank" rel="noopener noreffer">Cityscapes</a>是关于城市街道场景的语义理解图片数据集。它主要包含来自50个不同城市的街道场景，拥有5000张在城市环境中驾驶场景的高质量像素级注释图像（其中 2975 for train，500 for val,1525 for test， 共有19个类别）；此外，它还有20000张粗糙标注的图像(gt coarse)。</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200702120655751.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200702120655751.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<ul>
+<li><strong>数据集结构</strong></li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">cityscapes
+ └ leftImg8bit_trainvaltest
+   └ leftImg8bit
+     └ train
+     └ val
+     └ test
+ └ gtFine_trainvaltest
+   └ gtFine
+     └ train
+     └ val
+     └ test
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="hanet介绍">HANet介绍</h2>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube-nocookie.com/embed/0Orj3AUfu9Y" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<blockquote>
+<p>高驱动注意网络（height-driven attention networks）是根据城市数据集的内在特征而提出的通用网络附加模型，提高了城市环境的语义分割的accuracy，容易嵌入各个网络，且对于mIoU有着较为明显的提高</p>
+</blockquote>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200702161944726.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200702161944726.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p>通过观察可以发现城市CityScape数据的数据在高度方向包含的信息密度要远少于水平方向的信息密度，并且有着较为明显的结构性，此方法将数据沿着高度方向分为上、中、下三部分。</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200702120758103.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200702120758103.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<blockquote>
+<p>Cityscapes dataset中一个像素超过19个类的概率分布X的熵计算为:</p>
+<p>$$H(x) = H(p_{road}, p_{building},…,p_{motorcy})=-\sum _i p_i logp_i$$</p>
+</blockquote>
+<h2 id="网络结构">网络结构</h2>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200702120853315.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200702120853315.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<ul>
+<li>
+<p>$X_l，X_h$: 语义分割特征图中的底层和高层特征图</p>
+</li>
+<li>
+<p><strong>（a）宽度池化</strong>：
+获得一个channel-wise attention map 为矩阵$Z$, $Z = G_{pool}(X_l)$, 池化方式为平均池化，$Z$中的第h行计算方式为$$Z_{:,h}=[\frac1W\sum_{i=1}^WX_{1,h,i};…;\frac1W\sum_{i=1}^WX_{C,h,i}]$$</p>
+</li>
+<li>
+<p><strong>（b）下采样</strong>（插入Coarse Attention）：
+将（a）中得到的$Z(C_l \times H_l \times 1)$进行下采样得到$\hat{Z}(C_l \times \hat{H} \times 1)$其中超参数$\hat{H}$设置为<strong>16</strong></p>
+</li>
+<li>
+<p><strong>（c）计算</strong>：
+由于每一行都与其相邻的行相关，在估计注意力图时，采用卷积层来考虑相邻行之间的关系。
+注意图A表示在每一行中哪些通道是关键的。中间层的每一行可能存在多个信息特征;在最后一层中，每一行都可以与多个标签(如道路、汽车、人行道等)相关联。为了实现这些多重特征和标签，在计算注意力地图时使用了一个sigmoid函数，而不是softmax函数。对于N个卷积层，这些操作可以写成</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/2020070212091863.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/2020070212091863.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure>
+<strong>采用三层卷积操作</strong>：</p>
+<ol>
+<li>
+<p>降低通道数：$G_{conv}^1(\hat{Z})= Q^1 \in \R^{\frac{C_l}r \times \hat{H}}$</p>
+</li>
+<li>
+<p>$G_{conv}^2(\delta(Q^1 ))=Q^2 \in \R^{2\cdot \frac{C_l}r \times \hat{H}}$</p>
+</li>
+<li>
+<p>生成注意力图：$G_{conv}^3(\delta(Q^2 ))=\hat{A} \in \R^{C_h \times \hat{H}}$</p>
+</li>
+</ol>
+<p>其中$r$为压缩比，降低了参数量的同时还产生了一种正则化的效果</p>
+</li>
+<li>
+<p><strong>(d)上采样</strong>：
+保持与$X_h$高度一致</p>
+</li>
+<li>
+<p><strong>(e)结合位置编码</strong>：
+人在驾驶时有一些先验知识，比如知道路在下面，天空在上面，因此在中间层特征图$Q^i$的第$i$层的添加正弦位置编码
+位置编码的维数与中间特征图$Q^i$的通道数$C$相同。位置编码定义为</p>
+<p>$$PE_{(p,2i)} = sin(p/100^{2i/C})$$
+$$PE_{(p,2i+1)} = cos(p/100^{2i/C})$$</p>
+<blockquote>
+<p>p为注意力从0到$\hat{H}-1$的整幅图像中的垂直位置指数，i为注意力的维数
+垂直位置的数量设置为$\hat{H}$，作为corse attention中的行数</p>
+</blockquote>
+<p>更新位置编码：$\hat{Q} = Q\oplus PE$</p>
+</li>
+<li>
+<p><strong>超参数的选取</strong>：</p>
+</li>
+</ul>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200702224058351.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200702224058351.png"
+            alt="hyper-parameter"
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<h2 id="将hanet插入resnet101">将HANet插入ResNet101</h2>
+<ul>
+<li>
+<p><strong>结构</strong></p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200702235657703.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200702235657703.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+</li>
+<li>
+<p><strong>配置</strong></p>
+</li>
+</ul>
+<ol>
+<li>
+<p>PyTorch v1.4</p>
+</li>
+<li>
+<p>在第一层网络中，使用3个3 x 3的卷积代替一个7 x 7的卷积</p>
+</li>
+<li>
+<p>在中间特征图和类均匀采样中还采用了一种辅助的交叉损失熵</p>
+</li>
+<li>
+<p>采用SGD优化器，初始学习率为0.01，学习率调度遵循多项式学习率策略，动量为0.9</p>
+</li>
+<li>
+<p>权重衰减分别为5e-4和1e-4用于主网络和HANet</p>
+</li>
+<li>
+<p>为了避免过拟合，使用了语义图像分割模型中典型的数据增强方法，包括随机水平翻转、在[0.5,2]范围内随机缩放、高斯模糊、颜色抖动和随机裁剪。</p>
+</li>
+</ol>
+<h2 id="github项目地址">GitHub项目地址</h2>
+<p><strong><a href="https://github.com/shachoi/HANet" target="_blank" rel="noopener noreffer">https://github.com/shachoi/HANet</a></strong></p>
+</div>
+
+            <div class="post" style="padding-top: 0">
+
+
+<div class="post-share"><div class="share-link">
+        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://xmoon5.github.io/hanet/" data-title="高驱动注意网络(HANET)" data-via="MoonXiaomu" data-hashtags="神经网络,paper阅读,HANet"><span class="svg-social-icon icon-twitter"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://xmoon5.github.io/hanet/" data-hashtag="神经网络"><span class="svg-social-icon icon-facebook"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://xmoon5.github.io/hanet/" data-title="高驱动注意网络(HANET)" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://xmoon5.github.io/hanet/" data-title="高驱动注意网络(HANET)" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
+    </div></div>
+<div class="post-tags"><a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="tag">神经网络</a><a href="/tags/paper%E9%98%85%E8%AF%BB/" class="tag">paper阅读</a><a href="/tags/hanet/" class="tag">HANet</a></div></div>
+        </div>
+    <div id="toc-final"></div>
+    </article><div class="page single comments content-block-position"><div id="comments"></div></div></div>
+
+</main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><div><span id="timeDate">正在烧脑计算建站时间...</span><span id="times"></span><script>var now = new Date();function createtime(){var grt= new Date("05/20/2020 00:00:00");now.setTime(now.getTime()+250);days = (now - grt ) / 1000 / 60 / 60 / 24;dnum = Math.floor(days);hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);hnum = Math.floor(hours);if(String(hnum).length ==1 ){hnum = "0" + hnum; }minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);mnum = Math.floor(minutes);if(String(mnum).length ==1 ){mnum = "0" + mnum;}seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);snum = Math.round(seconds);if(String(snum).length ==1 ){snum = "0" + snum;}document.getElementById("timeDate").innerHTML = "&nbsp"+dnum+"&nbsp天";document.getElementById("times").innerHTML = hnum + "&nbsp小时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";}setInterval("createtime()",250);</script></div>___<i class="fa fa-biking fa-fw"></i>______</div><div class="footer-line"><i class="svg-icon icon-copyright"></i><span>2020 - 2021</span><span class="author">&nbsp;<a href="/" target="_blank"></a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="http://www.beian.miit.gov.cn" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://blog.pangao.vip/icp/xmoon.info">🧑ICP证000000号</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="svg-icon icon-arrow-up"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="svg-icon icon-comments-fixed"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/twemoji@13.0.0/dist/twemoji.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"","algoliaIndex":"","algoliaSearchKey":"","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"algolia"},"twemoji":true};</script><script src="/js/theme.min.js"></script><script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	        ga('create', 'UA-167439955-2', 'auto');
+	        ga('set', 'anonymizeIp', true);
+	        ga('send', 'pageview');
+	    </script></body>
+</html>

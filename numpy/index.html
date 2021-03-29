@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noodp"/><title>TensorFlow2.1入门学习笔记(1)——Numpy科学计算库 | Moon&#39;s Blog</title><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content=""/>
+<meta name="twitter:title" content="TensorFlow2.1入门学习笔记(1)——Numpy科学计算库"/>
+<meta name="twitter:description" content=""/><meta name="twitter:creator" content="@MoonXiaomu"/><meta name="Description" content="KEEP KWARKING"><meta property="og:title" content="TensorFlow2.1入门学习笔记(1)——Numpy科学计算库" />
+<meta property="og:description" content="在正式学习tensorflow2.0之前需要有一定的python基础，对numpy，matplotlib等库有基本的了解，笔者还是AI小白，" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xmoon5.github.io/numpy/" />
+<meta property="og:image" content="https://xmoon5.github.io/images/favicon.svg"/>
+<meta property="article:published_time" content="2020-04-29T11:51:16+08:00" />
+<meta property="article:modified_time" content="2021-03-29T11:34:14+08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+<meta name="application-name" content="MOON">
+<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://xmoon5.github.io/numpy/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "TensorFlow2.1入门学习笔记(1)——Numpy科学计算库",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/xmoon5.github.io\/numpy\/"
+        },"image": ["https:\/\/xmoon5.github.io\/images\/cover.png"],"genre": "posts","keywords": "numpy, 神经网络, 基本库","wordCount":  1098 ,
+        "url": "https:\/\/xmoon5.github.io\/numpy\/","datePublished": "2020-04-29T11:51:16+08:00","dateModified": "2021-03-29T11:34:14+08:00","description": ""
+    }
+    </script><script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "主页",
+            "item": "https:\/\/xmoon5.github.io"
+        },{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "TF2.1学习笔记",
+            "item": "https://xmoon5.github.io/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+        },{
+                "@type": "ListItem",
+                "position": 3,
+                "name": "TensorFlow2.1入门学习笔记(1)——Numpy科学计算库"
+            }]
+    }
+</script></head>
+    <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Moon&#39;s Blog" class="header-logo logo-svg"><span class="header-title-pre"><i class='fas fa-pencil-alt fa-fw'></i></span>Moon&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <nav>
+                <ul class="menu-inner"><li>
+                        <a class="menu-item" href="/posts/"> 目录 </a>
+                    </li><li>
+                        <a class="menu-item" href="/tags/"> 标签 </a>
+                    </li><li>
+                        <a class="menu-item" href="/categories/"> 归档 </a>
+                    </li><li>
+                        <a class="menu-item" href="/music/"> 歌单 </a>
+                    </li><li>
+                        <a class="menu-item" href="/comments/"> 留言板 </a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/" rel="noopener noreffer" target="_blank"> 小工具 </a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/GithubGo/index.html" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a>
+                    </li></ul>
+            </nav><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="search……" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <span class="svg-icon icon-search"></span>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <span class="svg-icon icon-cancel"></span>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <span class="svg-icon icon-loading"></span>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <span class="svg-icon icon-moon"></span>
+                </a>
+            </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Moon&#39;s Blog" class="header-logo"><span class="header-title-pre"><i class='fas fa-pencil-alt fa-fw'></i></span>Moon&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="search……" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <span class="svg-icon icon-search"></span>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <span class="svg-icon icon-cancel"></span>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <span class="svg-icon icon-loading"></span>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><nav>
+                <ul><li>
+                        <a class="menu-item" href="/posts/" title="">目录</a>
+                    </li><li>
+                        <a class="menu-item" href="/tags/" title="">标签</a>
+                    </li><li>
+                        <a class="menu-item" href="/categories/" title="">归档</a>
+                    </li><li>
+                        <a class="menu-item" href="/music/" title="">歌单</a>
+                    </li><li>
+                        <a class="menu-item" href="/comments/" title="">留言板</a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/" title="" rel="noopener noreffer" target="_blank">小工具</a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/GithubGo/index.html" title="" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a>
+                    </li></ul>
+            </nav>
+            <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <span class="svg-icon icon-moon"></span>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+<div class="container content-article page-toc theme-classic"><div class="toc" id="toc-auto">
+            <div class="toc-title">目录</div>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div>
+
+    <div class="header-post">
+
+        
+
+        
+        <div class="post-title">
+
+                <div class="post-all-meta">
+                    <nav class="breadcrumbs">
+    <ol>
+        <li><a href="/">主页 </a></li><li><a href="/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">TF2.1学习笔记 </a></li><li>TensorFlow2.1入门学习笔记(1)——Numpy科学计算库</li>
+    </ol>
+</nav>
+                    <h1 class="single-title flipInX">TensorFlow2.1入门学习笔记(1)——Numpy科学计算库</h1><div class="post-meta">
+                        <div class="post-meta-line"><span class="post-category">
+                                <a href="/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="svg-icon icon-folder"></i>TF2.1学习笔记</a>
+                            </span><span class="post-meta-date">
+                                <i class="svg-icon icon-clock"></i><time class="timeago" datetime="2020-04-29">2020-04-29</time>
+                            </span><span class="post-meta-words">
+                                <i class="svg-icon icon-pencil"></i>约 1098 字
+                            </span>
+                            <span class="post-meta-reading">
+                                <i class="svg-icon icon-stopwatch"></i>预计阅读 3 分钟
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+
+    <article class="single toc-start">
+
+        <div class="content-block content-block-first content-block-position">
+
+        <div class="post"><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1多为数组的形状shape">1.多为数组的形状(Shape)</a>
+          <ul>
+            <li><a href="#一维数组-shape5">一维数组 shape:(5,)</a></li>
+            <li><a href="#二维数组-shape305">二维数组 shape:(30,5)</a></li>
+            <li><a href="#三维数组-shape10305">三维数组 shape:(10,30,5)</a></li>
+            <li><a href="#四维数组-shape510305">四维数组 shape:(5,10,30,5)</a></li>
+            <li><a href="#五维数组-shape4510305">五维数组 shape:(4,5,10,30,5)</a></li>
+          </ul>
+        </li>
+        <li><a href="#2创建nump">2.创建Nump</a>
+          <ul>
+            <li><a href="#安装numpy库">安装Numpy库</a></li>
+            <li><a href="#导入numpy库">导入Numpy库</a></li>
+            <li><a href="#创建数组">创建数组</a></li>
+          </ul>
+        </li>
+        <li><a href="#3数组计算">3.数组计算</a>
+          <ul>
+            <li><a href="#数组间的运算">数组间的运算</a></li>
+            <li><a href="#矩阵运算">矩阵运算</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div style="margin: 20px 0 20px 0;">
+                    <span class="post-update">
+                        <b>更新于 2021-03-29</b>
+                    </span>
+                </div><p>在正式学习tensorflow2.0之前需要有一定的python基础，对numpy，matplotlib等库有基本的了解，笔者还是AI小白，通过写博客来记录自己的学习过程，同时对所学的东西进行总结。主要学习资料西安科技大学：<a href="https://www.icourse163.org/learn/XUST-1206363802#/learn/announce" target="_blank" rel="noopener noreffer">神经网络与深度学习——TensorFlow2.0实战</a>，北京大学：<a href="https://www.icourse163.org/learn/PKU-1002536002#/learn/announce" target="_blank" rel="noopener noreffer">人工智能实践Tensorflow笔记</a>。博客从tf常用的库开始，需要学习python基础的朋友推荐<a href="https://www.runoob.com/python3/python3-tutorial.html" target="_blank" rel="noopener noreffer">菜鸟教程</a></p>
+<!-- more -->
+<h3 id="1多为数组的形状shape">1.多为数组的形状(Shape)</h3>
+<p>描述数组的维度，以及各维度内部元素个数</p>
+<h4 id="一维数组-shape5">一维数组 shape:(5,)</h4>
+<p>描述某位同学5门课程的成绩：</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200429113836745.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200429113836745.png"
+            alt="一维数组"
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<h4 id="二维数组-shape305">二维数组 shape:(30,5)</h4>
+<p>描述某个班30位同学5门课成绩：</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200429113943373.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200429113943373.png"
+            alt="二维数组"
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<h4 id="三维数组-shape10305">三维数组 shape:(10,30,5)</h4>
+<p>描述某个学校10个班30位同学5门课成绩：</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200429115427228.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200429115427228.png"
+            alt="三维数组"
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<h4 id="四维数组-shape510305">四维数组 shape:(5,10,30,5)</h4>
+<p>描述某个地区5所学校10个班30位同学5门课成绩：</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200429120718407.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200429120718407.png"
+            alt="四维数组"
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<h4 id="五维数组-shape4510305">五维数组 shape:(4,5,10,30,5)</h4>
+<p>描述某个某个国家4个地区5所学校10个班30位同学5门课成绩：</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200429120814872.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200429120814872.png"
+            alt="五维数组"
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure>
+更高维以此类推</p>
+<h3 id="2创建nump">2.创建Nump</h3>
+<h4 id="安装numpy库">安装Numpy库</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">i</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">pypi</span><span class="o">.</span><span class="n">tuna</span><span class="o">.</span><span class="n">tsinghua</span><span class="o">.</span><span class="n">edu</span><span class="o">.</span><span class="n">cn</span><span class="o">/</span><span class="n">simple</span> <span class="n">numpy</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="导入numpy库">导入Numpy库</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span> 
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="nn">import</span> <span class="o">*</span>		<span class="c1">#可直接调用库，但不推荐，容易和其他包冲突</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="创建数组">创建数组</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">],[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]],</span>
+				<span class="p">[[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">],[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]])</span>
+<span class="c1"># 数组属性</span>
+<span class="n">m</span><span class="o">.</span><span class="n">ndim</span>				<span class="c1">#3 维度</span>
+<span class="n">m</span><span class="o">.</span><span class="n">shape</span>				<span class="c1">#(2,3,4) 形状</span>
+<span class="n">m</span><span class="o">.</span><span class="n">size</span>				<span class="c1">#24	元素的总个数</span>
+<span class="n">m</span><span class="o">.</span><span class="n">dtype</span>				<span class="c1">#int32 数据类型</span>
+<span class="n">m</span><span class="o">.</span><span class="n">itemsize</span>			<span class="c1">#4 每个元素的字节数</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>创建特殊的数组</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200429133042175.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200429133042175.png"
+            alt="特殊数组"
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># np.arrange(start=0,stop,num=1,dtype) 前闭后开，不包含结束值</span>
+<span class="n">n</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>					<span class="c1">#array([0, 1, 2, 3])</span>
+<span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mf">0.3</span><span class="p">)</span>			<span class="c1">#array([0., 0.3, 0.6, 0.9, 1.2, 1.5, 1.8])</span>
+<span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="n">dtype</span> <span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>	<span class="c1">#array([[1,1],[1, 1],[1, 1]],dtype = int64)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>					<span class="c1">#array([[1., 0., 0.], [0., 1., 0.]])创建一个单位矩阵</span>
+<span class="c1"># np.logspace(stat,stop,num,base,dtype)参数：起始指数，结束指数，基，元素数据类型，包含结束值</span>
+<span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>	<span class="c1">#array([2., 4., 8, 16, 32])</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200429135208645.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200429135208645.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<h3 id="3数组计算">3.数组计算</h3>
+<p>需要了解几个常见的数组数据处理函数</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 数组元素切片</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>		<span class="c1">#一维数组</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>				<span class="c1">#array([0,1,2]) 输出前三个数</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">]])</span>	<span class="c1">#二维数组</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>				<span class="c1">#array([[0,1,2,3],[3,4,5,6]]) 输出前两行</span>
+<span class="c1"># 改变数组的形状</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>			
+<span class="k">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>					<span class="c1">#array([[0,1,2,3],[4,5,6,7],[8,9,10,11]]) 不改变当前数组，按照shape创建新的数组</span>
+<span class="n">c</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>					<span class="c1">#array([[0],[1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11]])</span>
+<span class="n">c</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>			
+<span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>					<span class="c1">#array([[0,1,2,3],[4,5,6,7],[8,9,10,11]]) 改变当前数组，按照shape创建新的数组</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="数组间的运算">数组间的运算</h4>
+<p>1.数组间的元素运算</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200502182836982.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200502182836982.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>		<span class="c1">#6</span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>		<span class="c1">#array([0.         ,1.         ,1.41421356, 1.73205081])</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>数组的轴和秩</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200502183402824.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200502183402824.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p>数组的堆叠运算</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200502185456990.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200502185456990.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">),</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span> <span class="c1">#array([1,2,3],[4,5,6])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">),</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span>	<span class="c1">#array([1,4],[2,5],[3,6])</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arrange</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>	<span class="c1">#a = ([0,1,2,3],[4,5,6,7],[8,9,10,11])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>		<span class="c1">#array([12,15,18,21])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>		<span class="c1">#array([6,22,38])</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>2.数组加减法，对应元素相加减（进行运算的数组长度要一致）</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span>			<span class="c1">#array([[2，1,1],[1,2,1],[1,1,2]])</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>3.一维数组可以和多维数组相加，相加时将会将一维数组扩展至多维</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span>		<span class="c1">#array([2,3,4],[3,4,5])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">b</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>		<span class="c1">#array([1,1,1],[4,4,4])</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>SUMMARIZE:数组间的四则运算，是对应元素加减乘除；
+当数组中元素的数据类型不同时，精度低的数据类型会转换成精度高的数据类型，然后再运算</p>
+<h4 id="矩阵运算">矩阵运算</h4>
+<p>1.矩阵乘法，按矩阵相乘的规则运算</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">))</span>		<span class="c1">#array([6,12,5],[11,19,8])</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>2.转置和求逆</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">#转置</span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>		<span class="c1">#array([1,2],[2,3])</span>
+<span class="c1">#求逆</span>
+<span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>		<span class="c1">#array([-3,2],[2,-1])</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><strong><font size=5><a href="https://www.cnblogs.com/moonspace/p/12826438.html" target="_blank" rel="noopener noreffer">博客园链接</a></font></strong></p>
+</div>
+
+            <div class="post" style="padding-top: 0">
+
+
+<div class="post-share"><div class="share-link">
+        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://xmoon5.github.io/numpy/" data-title="TensorFlow2.1入门学习笔记(1)——Numpy科学计算库" data-via="MoonXiaomu" data-hashtags="numpy,神经网络,基本库"><span class="svg-social-icon icon-twitter"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://xmoon5.github.io/numpy/" data-hashtag="numpy"><span class="svg-social-icon icon-facebook"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://xmoon5.github.io/numpy/" data-title="TensorFlow2.1入门学习笔记(1)——Numpy科学计算库" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://xmoon5.github.io/numpy/" data-title="TensorFlow2.1入门学习笔记(1)——Numpy科学计算库" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
+    </div></div>
+<div class="post-tags"><a href="/tags/numpy/" class="tag">numpy</a><a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="tag">神经网络</a><a href="/tags/%E5%9F%BA%E6%9C%AC%E5%BA%93/" class="tag">基本库</a></div></div>
+        </div>
+    <div id="toc-final"></div>
+    </article><div class="page single comments content-block-position"><div id="comments"></div></div></div>
+
+</main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><div><span id="timeDate">正在烧脑计算建站时间...</span><span id="times"></span><script>var now = new Date();function createtime(){var grt= new Date("05/20/2020 00:00:00");now.setTime(now.getTime()+250);days = (now - grt ) / 1000 / 60 / 60 / 24;dnum = Math.floor(days);hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);hnum = Math.floor(hours);if(String(hnum).length ==1 ){hnum = "0" + hnum; }minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);mnum = Math.floor(minutes);if(String(mnum).length ==1 ){mnum = "0" + mnum;}seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);snum = Math.round(seconds);if(String(snum).length ==1 ){snum = "0" + snum;}document.getElementById("timeDate").innerHTML = "&nbsp"+dnum+"&nbsp天";document.getElementById("times").innerHTML = hnum + "&nbsp小时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";}setInterval("createtime()",250);</script></div>___<i class="fa fa-biking fa-fw"></i>______</div><div class="footer-line"><i class="svg-icon icon-copyright"></i><span>2020 - 2021</span><span class="author">&nbsp;<a href="/" target="_blank"></a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="http://www.beian.miit.gov.cn" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://blog.pangao.vip/icp/xmoon.info">🧑ICP证000000号</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="svg-icon icon-arrow-up"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="svg-icon icon-comments-fixed"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/twemoji@13.0.0/dist/twemoji.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"","algoliaIndex":"","algoliaSearchKey":"","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"algolia"},"twemoji":true};</script><script src="/js/theme.min.js"></script><script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	        ga('create', 'UA-167439955-2', 'auto');
+	        ga('set', 'anonymizeIp', true);
+	        ga('send', 'pageview');
+	    </script></body>
+</html>

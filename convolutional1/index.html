@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noodp"/><title>TensorFlow2.1入门学习笔记(12)——卷积神经网络 | Moon&#39;s Blog</title><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content=""/>
+<meta name="twitter:title" content="TensorFlow2.1入门学习笔记(12)——卷积神经网络"/>
+<meta name="twitter:description" content=""/><meta name="twitter:creator" content="@MoonXiaomu"/><meta name="Description" content="KEEP KWARKING"><meta property="og:title" content="TensorFlow2.1入门学习笔记(12)——卷积神经网络" />
+<meta property="og:description" content="每个神经元与前后相邻层的每一个神经元都有连接关系，输入是特征，输出为预测的结果。随着隐藏层增多，网络规模的增大，待优化参数过多容易导致模型过" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xmoon5.github.io/convolutional1/" />
+<meta property="og:image" content="https://xmoon5.github.io/images/favicon.svg"/>
+<meta property="article:published_time" content="2020-06-13T01:14:27+08:00" />
+<meta property="article:modified_time" content="2021-03-29T11:34:14+08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+<meta name="application-name" content="MOON">
+<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://xmoon5.github.io/convolutional1/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "TensorFlow2.1入门学习笔记(12)——卷积神经网络",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/xmoon5.github.io\/convolutional1\/"
+        },"image": ["https:\/\/xmoon5.github.io\/images\/cover.png"],"genre": "posts","keywords": "CNN, 神经网络","wordCount":  2136 ,
+        "url": "https:\/\/xmoon5.github.io\/convolutional1\/","datePublished": "2020-06-13T01:14:27+08:00","dateModified": "2021-03-29T11:34:14+08:00","description": ""
+    }
+    </script><script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "主页",
+            "item": "https:\/\/xmoon5.github.io"
+        },{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "TF2.1学习笔记",
+            "item": "https://xmoon5.github.io/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+        },{
+                "@type": "ListItem",
+                "position": 3,
+                "name": "TensorFlow2.1入门学习笔记(12)——卷积神经网络"
+            }]
+    }
+</script></head>
+    <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Moon&#39;s Blog" class="header-logo logo-svg"><span class="header-title-pre"><i class='fas fa-pencil-alt fa-fw'></i></span>Moon&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <nav>
+                <ul class="menu-inner"><li>
+                        <a class="menu-item" href="/posts/"> 目录 </a>
+                    </li><li>
+                        <a class="menu-item" href="/tags/"> 标签 </a>
+                    </li><li>
+                        <a class="menu-item" href="/categories/"> 归档 </a>
+                    </li><li>
+                        <a class="menu-item" href="/music/"> 歌单 </a>
+                    </li><li>
+                        <a class="menu-item" href="/comments/"> 留言板 </a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/" rel="noopener noreffer" target="_blank"> 小工具 </a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/GithubGo/index.html" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a>
+                    </li></ul>
+            </nav><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="search……" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <span class="svg-icon icon-search"></span>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <span class="svg-icon icon-cancel"></span>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <span class="svg-icon icon-loading"></span>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <span class="svg-icon icon-moon"></span>
+                </a>
+            </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Moon&#39;s Blog" class="header-logo"><span class="header-title-pre"><i class='fas fa-pencil-alt fa-fw'></i></span>Moon&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="search……" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <span class="svg-icon icon-search"></span>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <span class="svg-icon icon-cancel"></span>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <span class="svg-icon icon-loading"></span>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><nav>
+                <ul><li>
+                        <a class="menu-item" href="/posts/" title="">目录</a>
+                    </li><li>
+                        <a class="menu-item" href="/tags/" title="">标签</a>
+                    </li><li>
+                        <a class="menu-item" href="/categories/" title="">归档</a>
+                    </li><li>
+                        <a class="menu-item" href="/music/" title="">歌单</a>
+                    </li><li>
+                        <a class="menu-item" href="/comments/" title="">留言板</a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/" title="" rel="noopener noreffer" target="_blank">小工具</a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/GithubGo/index.html" title="" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a>
+                    </li></ul>
+            </nav>
+            <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <span class="svg-icon icon-moon"></span>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+<div class="container content-article page-toc theme-classic"><div class="toc" id="toc-auto">
+            <div class="toc-title">目录</div>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div>
+
+    <div class="header-post">
+
+        
+
+        
+        <div class="post-title">
+
+                <div class="post-all-meta">
+                    <nav class="breadcrumbs">
+    <ol>
+        <li><a href="/">主页 </a></li><li><a href="/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">TF2.1学习笔记 </a></li><li>TensorFlow2.1入门学习笔记(12)——卷积神经网络</li>
+    </ol>
+</nav>
+                    <h1 class="single-title flipInX">TensorFlow2.1入门学习笔记(12)——卷积神经网络</h1><div class="post-meta">
+                        <div class="post-meta-line"><span class="post-category">
+                                <a href="/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="svg-icon icon-folder"></i>TF2.1学习笔记</a>
+                            </span><span class="post-meta-date">
+                                <i class="svg-icon icon-clock"></i><time class="timeago" datetime="2020-06-13">2020-06-13</time>
+                            </span><span class="post-meta-words">
+                                <i class="svg-icon icon-pencil"></i>约 2136 字
+                            </span>
+                            <span class="post-meta-reading">
+                                <i class="svg-icon icon-stopwatch"></i>预计阅读 5 分钟
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+
+    <article class="single toc-start">
+
+        <div class="content-block content-block-first content-block-position">
+
+        <div class="post"><div class="image-theme-classic">
+                <img src="https://img-blog.csdnimg.cn/2020061223261222.png" style="width: 100%">
+            </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#卷积计算过程">卷积计算过程：</a>
+      <ul>
+        <li><a href="#卷积convolutional">卷积（Convolutional）</a></li>
+      </ul>
+    </li>
+    <li><a href="#感受野receptive-field">感受野（Receptive Field）</a></li>
+    <li><a href="#全零填充padding">全零填充（Padding）</a></li>
+    <li><a href="#tf描述卷积层">TF描述卷积层</a></li>
+    <li><a href="#批标准化bn">批标准化（BN）</a></li>
+    <li><a href="#池化pooling">池化（Pooling）</a></li>
+    <li><a href="#舍弃dropout">舍弃(Dropout)</a></li>
+    <li><a href="#卷积神经网络">卷积神经网络</a></li>
+  </ul>
+</nav></div>
+            </div><div style="margin: 20px 0 20px 0;">
+                    <span class="post-update">
+                        <b>更新于 2021-03-29</b>
+                    </span>
+                </div><p>每个神经元与前后相邻层的每一个神经元都有连接关系，输入是特征，输出为预测的结果。随着隐藏层增多，网络规模的增大，待优化参数过多容易导致模型过拟合</p>
+<h2 id="卷积计算过程">卷积计算过程：</h2>
+<p>全连接NN：每个神经元与前后相邻层的每一个神经元都有连接关系，输入是特征，输出为预测的结果。</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200612195038324.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200612195038324.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p>实际项目中的图片多是高分辨率彩色图</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200612195316182.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200612195316182.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p>随着隐藏层增多，网络规模的增大，待优化参数过多容易导致模型过拟合</p>
+<p>实际应用时会先对原始图像进行特征提取再把提取到的特征送给全连接网络</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200612195743308.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200612195743308.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<h3 id="卷积convolutional">卷积（Convolutional）</h3>
+<ul>
+<li>
+<p>卷积计算可是一种有效提取图像特征的方法</p>
+</li>
+<li>
+<p>一般会用一个正方形的卷积核，按指定步长，在输入特征图上滑动，遍历输入特征图中的每个像素点。每一个步长，卷积核会与输入特征图出现重合区域，重合区域对应元素相乘、求和再加上偏置项得到输出特征的一个像素点</p>
+</li>
+<li>
+<p>输入特征图的深度（channel数），决定了当前层卷积核的深度；当前层卷积核的个数，决定了当前层输出特征图的深度。</p>
+</li>
+<li>
+<p>卷积核</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200612222105316.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200612222105316.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure>
+
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200612222800539.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200612222800539.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+</li>
+<li>
+<p>卷积核的计算过程</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200612223035455.gif" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200612223035455.gif"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+</li>
+</ul>
+<h2 id="感受野receptive-field">感受野（Receptive Field）</h2>
+<p>卷积神经网络各输出特征图中的每个像素点，在原始输入图片上映射区域的大小。</p>
+<p>例如：5x5x1的输入特征，经过2次3x3x1的卷积过程感受野是5；经过1次5x5x1的卷积过程感受野也是5，感受野相同，则特征提取能力相同。</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200612223641326.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200612223641326.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<ul>
+<li>
+<p>感受野的选择</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200612223955243.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200612223955243.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+</li>
+</ul>
+<p>当输入特征图边长大于10像素点时，两层3x3的卷积核比一层5x5的卷积性能要好，因此在神经网络卷积计算过程中常采用两层3x3的卷积代替已成5x5的卷积。</p>
+<h2 id="全零填充padding">全零填充（Padding）</h2>
+<p>当需要卷积计算保持输入特征图的尺寸不变则使用全零填充，在输入特征的周围用零填充</p>
+<ul>
+<li>在5x5x1的输入特征图经过全零填充后，在经过3x3x1的卷积核，进行步长为1的卷积计算，输出特征图仍是5x5x1</li>
+</ul>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200612233752911.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200612233752911.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<ul>
+<li>输出特征图维度的计算公式</li>
+</ul>
+<div>
+$$
+padding = \left\{
+  \begin{array}{lr}
+    SAME(全0填充)&\frac{入长}{步长}	(向上取整)\\
+    VALID(不全零填充)&\frac{入长-核长+1}{步长}	(向上取整)
+  \end{array}
+\right.
+$$
+</div>
+<ul>
+<li>TenaorFlow描述全零填充
+用参数padding = ‘SAME’ 或 padding = ‘VALID’表示
+
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/2020061223504981.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/2020061223504981.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></li>
+</ul>
+<h2 id="tf描述卷积层">TF描述卷积层</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Conv2D</span> <span class="p">(</span>
+	<span class="n">filters</span> <span class="o">=</span> <span class="err">卷积核个数</span><span class="p">,</span>
+	<span class="n">kernel_size</span> <span class="o">=</span> <span class="err">卷积核尺寸</span><span class="p">,</span> 			<span class="c1">#正方形写核长整数，或（核高h，核宽w）</span>
+	<span class="n">strides</span> <span class="o">=</span> <span class="err">滑动步长</span><span class="p">,</span>					<span class="c1">#横纵向相同写步长整数，或(纵向步长h，横向步长w)，默认1</span>
+	<span class="n">padding</span> <span class="o">=</span> <span class="err">“</span><span class="n">same</span><span class="err">”</span> <span class="ow">or</span> <span class="err">“</span><span class="n">valid</span><span class="err">”</span><span class="p">,</span> 		<span class="c1">#使用全零填充是“same”，不使用是“valid”（默认）</span>
+	<span class="n">activation</span> <span class="o">=</span> <span class="err">“</span> <span class="n">relu</span> <span class="err">”</span> <span class="ow">or</span> <span class="err">“</span> <span class="n">sigmoid</span> <span class="err">”</span> <span class="ow">or</span> <span class="err">“</span> <span class="n">tanh</span> <span class="err">”</span> <span class="ow">or</span> <span class="err">“</span> <span class="n">softmax</span><span class="err">”等</span> <span class="p">,</span> 		<span class="c1">#如有BN此处不写</span>
+	<span class="n">input_shape</span> <span class="o">=</span> <span class="p">(</span><span class="err">高</span><span class="p">,</span> <span class="err">宽</span> <span class="p">,</span> <span class="err">通道数</span><span class="p">)</span>		<span class="c1">#输入特征图维度，可省略</span>
+<span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="批标准化bn">批标准化（BN）</h2>
+<p>神经网络对0附近的数据更敏感，单随网络层数的增加特征数据会出现偏离0均值的情况</p>
+<ul>
+<li>标准化：使数据符合0均值，1为标准差的分布。</li>
+<li>批标准化：对一小批数据（batch），做标准化处理。</li>
+</ul>
+<p>标准化可以是数据重新回归到标准正态分布常用在卷积操作和激活操作之间</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/2020061300060593.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/2020061300060593.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p>批标准化操作将原本偏移的特征数据重新拉回到0均值，使进入到激活函数的数据分布在激活函数线性区使得输入数据的微小变化更明显的提现到激活函数的输出，<strong>提升了激活函数对输入数据的区分力</strong>。但是这种简单的特征数据标准化使特征数据完全满足标准正态分布。集中在激活函数中心的线性区域，<strong>使激活函数丧失了非线性特性</strong>。因此在BN操作中为每个卷积核引入了两个可训练参数，<strong>缩放因子$\gamma$和偏移因子$\beta$</strong>。反向传播时缩放因子$\gamma$和偏移因子$\beta$会与其他带训练参数一同被训练优化，使标准状态分布后的特征数据。通过缩放因子和偏移因子优化了特征数据分布的宽窄和偏移量。保证了网络的非线性表的力。</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/2020061300234954.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/2020061300234954.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<ul>
+<li>BN位于卷积层之后，激活层之前</li>
+<li>TensorFlow描述批标准化
+tf.keras.layers.BatchNormalization()</li>
+</ul>
+<h2 id="池化pooling">池化（Pooling）</h2>
+<p>池化用于减少特征数据量。最大值池化可提取图片纹理，均值池化可保留背景特征。</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200613003846171.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200613003846171.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<ul>
+<li>TensorFlow描述池化</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">MaxPool2D</span><span class="p">(</span>
+	<span class="n">pool_size</span><span class="o">=</span><span class="err">池化核尺寸，</span>	<span class="c1">#正方形写核长整数，或（核高h，核宽w）</span>
+	<span class="n">strides</span><span class="o">=</span><span class="err">池化步长，</span>		<span class="c1">#步长整数， 或(纵向步长h，横向步长w)，默认为pool_size</span>
+	<span class="n">padding</span><span class="o">=</span><span class="err">‘</span><span class="n">valid</span><span class="err">’</span><span class="ow">or</span><span class="err">‘</span><span class="n">same</span><span class="err">’</span> <span class="c1">#使用全零填充是“same”，不使用是“valid”（默认）</span>
+<span class="p">)</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">AveragePooling2D</span><span class="p">(</span>
+	<span class="n">pool_size</span><span class="o">=</span><span class="err">池化核尺寸，</span>	<span class="c1">#正方形写核长整数，或（核高h，核宽w）</span>
+	<span class="n">strides</span><span class="o">=</span><span class="err">池化步长，</span>		<span class="c1">#步长整数， 或(纵向步长h，横向步长w)，默认为pool_size</span>
+	<span class="n">padding</span><span class="o">=</span><span class="err">‘</span><span class="n">valid</span><span class="err">’</span><span class="ow">or</span><span class="err">‘</span><span class="n">same</span><span class="err">’</span> <span class="c1">#使用全零填充是“same”，不使用是“valid”（默认）</span>
+<span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="舍弃dropout">舍弃(Dropout)</h2>
+<p>为了缓解神经网络过拟合，在神经网络训练时，将隐藏层的部分神经元按照一定概率从神经网络中暂时舍弃。神经网络使用时，被舍弃的神经元恢复链接。</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200613004956902.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200613004956902.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<ul>
+<li>TensorFlow描述舍弃
+tf.keras.layers.Dropout(舍弃的概率)</li>
+</ul>
+<h2 id="卷积神经网络">卷积神经网络</h2>
+<p>借助卷积核提取特征后，送入全连接网络。</p>
+<p>卷积神经网络的主要模块：</p>
+<ul>
+<li>卷积（Convolutional）</li>
+<li>批标准化（BN）</li>
+<li>激活（Activation）</li>
+<li>池化（Pooling）</li>
+<li>舍弃（Dropout）</li>
+<li>全连接（FC）</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+	<span class="n">Conv2D</span><span class="p">(</span><span class="n">filters</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">),</span>	<span class="c1">#卷积层</span>
+	<span class="n">BatchNormalization</span><span class="p">(),</span>									<span class="c1">#BN层	</span>
+	<span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>										<span class="c1">#激活层</span>
+	<span class="n">MaxPool2D</span><span class="p">(</span><span class="n">pool_size</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">strides</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="s1">&#39;same&#39;</span><span class="p">),</span>	<span class="c1">#池化层</span>
+	<span class="n">Dropout</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>											<span class="c1">#dropout层</span>
+<span class="p">])</span>
+</code></pre></td></tr></table>
+</div>
+</div></div>
+
+            <div class="post" style="padding-top: 0">
+
+
+<div class="post-share"><div class="share-link">
+        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://xmoon5.github.io/convolutional1/" data-title="TensorFlow2.1入门学习笔记(12)——卷积神经网络" data-via="MoonXiaomu" data-hashtags="CNN,神经网络"><span class="svg-social-icon icon-twitter"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://xmoon5.github.io/convolutional1/" data-hashtag="CNN"><span class="svg-social-icon icon-facebook"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://xmoon5.github.io/convolutional1/" data-title="TensorFlow2.1入门学习笔记(12)——卷积神经网络" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://xmoon5.github.io/convolutional1/" data-title="TensorFlow2.1入门学习笔记(12)——卷积神经网络" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
+    </div></div>
+<div class="post-tags"><a href="/tags/cnn/" class="tag">CNN</a><a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="tag">神经网络</a></div></div>
+        </div>
+    <div id="toc-final"></div>
+    </article><div class="page single comments content-block-position"><div id="comments"></div></div></div>
+
+</main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><div><span id="timeDate">正在烧脑计算建站时间...</span><span id="times"></span><script>var now = new Date();function createtime(){var grt= new Date("05/20/2020 00:00:00");now.setTime(now.getTime()+250);days = (now - grt ) / 1000 / 60 / 60 / 24;dnum = Math.floor(days);hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);hnum = Math.floor(hours);if(String(hnum).length ==1 ){hnum = "0" + hnum; }minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);mnum = Math.floor(minutes);if(String(mnum).length ==1 ){mnum = "0" + mnum;}seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);snum = Math.round(seconds);if(String(snum).length ==1 ){snum = "0" + snum;}document.getElementById("timeDate").innerHTML = "&nbsp"+dnum+"&nbsp天";document.getElementById("times").innerHTML = hnum + "&nbsp小时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";}setInterval("createtime()",250);</script></div>___<i class="fa fa-biking fa-fw"></i>______</div><div class="footer-line"><i class="svg-icon icon-copyright"></i><span>2020 - 2021</span><span class="author">&nbsp;<a href="/" target="_blank"></a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="http://www.beian.miit.gov.cn" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://blog.pangao.vip/icp/xmoon.info">🧑ICP证000000号</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="svg-icon icon-arrow-up"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="svg-icon icon-comments-fixed"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/twemoji@13.0.0/dist/twemoji.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"","algoliaIndex":"","algoliaSearchKey":"","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"algolia"},"twemoji":true};</script><script src="/js/theme.min.js"></script><script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	        ga('create', 'UA-167439955-2', 'auto');
+	        ga('set', 'anonymizeIp', true);
+	        ga('send', 'pageview');
+	    </script></body>
+</html>

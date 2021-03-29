@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>matplotlib - 标签 - Moon&#39;s Blog</title>
+        <link>https://xmoon5.github.io/tags/matplotlib/</link>
+        <description>matplotlib - 标签 - Moon&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 04 May 2020 11:46:02 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/tags/matplotlib/" rel="self" type="application/rss+xml" /><item>
+    <title>TensorFlow2.1入门学习笔记(2)——Matplotlib数据可视化</title>
+    <link>https://xmoon5.github.io/matplotlib/</link>
+    <pubDate>Mon, 04 May 2020 11:46:02 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/matplotlib/</guid>
+    <description><![CDATA[在正式学习tensorflow2.0之前需要有一定的python基础，对numpy，matplotlib等库有基本的了解，笔者还是AI小白，]]></description>
+</item></channel>
+</rss>

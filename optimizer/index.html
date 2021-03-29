@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noodp"/><title>TensorFlow2.1入门学习笔记(9)——神经网络参数优化器(优化器性能比较) | Moon&#39;s Blog</title><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content=""/>
+<meta name="twitter:title" content="TensorFlow2.1入门学习笔记(9)——神经网络参数优化器(优化器性能比较)"/>
+<meta name="twitter:description" content=""/><meta name="twitter:creator" content="@MoonXiaomu"/><meta name="Description" content="KEEP KWARKING"><meta property="og:title" content="TensorFlow2.1入门学习笔记(9)——神经网络参数优化器(优化器性能比较)" />
+<meta property="og:description" content="神经网络是基于链接的人工智能，当网络结构固定后，不同参数的选取对模型的表达力影响很大，优化器就是引导更新模型参数的工具 常用符号 待优化参数w 损" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xmoon5.github.io/optimizer/" />
+<meta property="og:image" content="https://xmoon5.github.io/images/favicon.svg"/>
+<meta property="article:published_time" content="2020-05-21T23:56:32+08:00" />
+<meta property="article:modified_time" content="2021-03-29T11:34:14+08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+<meta name="application-name" content="MOON">
+<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://xmoon5.github.io/optimizer/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "TensorFlow2.1入门学习笔记(9)——神经网络参数优化器(优化器性能比较)",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/xmoon5.github.io\/optimizer\/"
+        },"image": ["https:\/\/xmoon5.github.io\/images\/cover.png"],"genre": "posts","keywords": "optimizer","wordCount":  9066 ,
+        "url": "https:\/\/xmoon5.github.io\/optimizer\/","datePublished": "2020-05-21T23:56:32+08:00","dateModified": "2021-03-29T11:34:14+08:00","description": ""
+    }
+    </script><script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "主页",
+            "item": "https:\/\/xmoon5.github.io"
+        },{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "TF2.1学习笔记",
+            "item": "https://xmoon5.github.io/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+        },{
+                "@type": "ListItem",
+                "position": 3,
+                "name": "TensorFlow2.1入门学习笔记(9)——神经网络参数优化器(优化器性能比较)"
+            }]
+    }
+</script></head>
+    <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Moon&#39;s Blog" class="header-logo logo-svg"><span class="header-title-pre"><i class='fas fa-pencil-alt fa-fw'></i></span>Moon&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <nav>
+                <ul class="menu-inner"><li>
+                        <a class="menu-item" href="/posts/"> 目录 </a>
+                    </li><li>
+                        <a class="menu-item" href="/tags/"> 标签 </a>
+                    </li><li>
+                        <a class="menu-item" href="/categories/"> 归档 </a>
+                    </li><li>
+                        <a class="menu-item" href="/music/"> 歌单 </a>
+                    </li><li>
+                        <a class="menu-item" href="/comments/"> 留言板 </a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/" rel="noopener noreffer" target="_blank"> 小工具 </a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/GithubGo/index.html" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a>
+                    </li></ul>
+            </nav><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="search……" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <span class="svg-icon icon-search"></span>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <span class="svg-icon icon-cancel"></span>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <span class="svg-icon icon-loading"></span>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <span class="svg-icon icon-moon"></span>
+                </a>
+            </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Moon&#39;s Blog" class="header-logo"><span class="header-title-pre"><i class='fas fa-pencil-alt fa-fw'></i></span>Moon&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="search……" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <span class="svg-icon icon-search"></span>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <span class="svg-icon icon-cancel"></span>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <span class="svg-icon icon-loading"></span>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><nav>
+                <ul><li>
+                        <a class="menu-item" href="/posts/" title="">目录</a>
+                    </li><li>
+                        <a class="menu-item" href="/tags/" title="">标签</a>
+                    </li><li>
+                        <a class="menu-item" href="/categories/" title="">归档</a>
+                    </li><li>
+                        <a class="menu-item" href="/music/" title="">歌单</a>
+                    </li><li>
+                        <a class="menu-item" href="/comments/" title="">留言板</a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/" title="" rel="noopener noreffer" target="_blank">小工具</a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/GithubGo/index.html" title="" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a>
+                    </li></ul>
+            </nav>
+            <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <span class="svg-icon icon-moon"></span>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+<div class="container content-article page-toc theme-classic"><div class="toc" id="toc-auto">
+            <div class="toc-title">目录</div>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div>
+
+    <div class="header-post">
+
+        
+
+        
+        <div class="post-title">
+
+                <div class="post-all-meta">
+                    <nav class="breadcrumbs">
+    <ol>
+        <li><a href="/">主页 </a></li><li><a href="/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">TF2.1学习笔记 </a></li><li>TensorFlow2.1入门学习笔记(9)——神经网络参数优化器(优化器性能比较)</li>
+    </ol>
+</nav>
+                    <h1 class="single-title flipInX">TensorFlow2.1入门学习笔记(9)——神经网络参数优化器(优化器性能比较)</h1><div class="post-meta">
+                        <div class="post-meta-line"><span class="post-category">
+                                <a href="/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"><i class="svg-icon icon-folder"></i>TF2.1学习笔记</a>
+                            </span><span class="post-meta-date">
+                                <i class="svg-icon icon-clock"></i><time class="timeago" datetime="2020-05-21">2020-05-21</time>
+                            </span><span class="post-meta-words">
+                                <i class="svg-icon icon-pencil"></i>约 9066 字
+                            </span>
+                            <span class="post-meta-reading">
+                                <i class="svg-icon icon-stopwatch"></i>预计阅读 19 分钟
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+
+    <article class="single toc-start">
+
+        <div class="content-block content-block-first content-block-position">
+
+        <div class="post"><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#常用符号">常用符号</a></li>
+        <li><a href="#更新参数的过程">更新参数的过程</a></li>
+        <li><a href="#五种常见优化器">五种常见优化器</a>
+          <ul>
+            <li><a href="#sgd无moment随机梯度下降">SGD（无moment）：随机梯度下降</a></li>
+            <li><a href="#sgdm含moment的sgd在sgd基础上增加了一阶动量">SGDM（含moment的SGD），在SGD基础上增加了一阶动量</a></li>
+            <li><a href="#adagrad在sgd基础上增加二阶动量">Adagrad：在SGD基础上增加二阶动量</a></li>
+            <li><a href="#rmspropsgd基础上增加了二阶动量">RMSProp：SGD基础上增加了二阶动量</a></li>
+            <li><a href="#adam同时结合sgdm一阶动量和rmsprop的二阶动量">Adam：同时结合SGDM一阶动量和RMSProp的二阶动量</a>
+              <ul>
+                <li><a href="#统计结果如下">统计结果如下</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div style="margin: 20px 0 20px 0;">
+                    <span class="post-update">
+                        <b>更新于 2021-03-29</b>
+                    </span>
+                </div><p>神经网络是基于链接的人工智能，当网络结构固定后，不同参数的选取对模型的表达力影响很大，优化器就是引导更新模型参数的工具</p>
+<!-- more -->
+<h3 id="常用符号">常用符号</h3>
+<ul>
+<li>待优化参数w</li>
+<li>损失函数loss</li>
+<li>学习率lr</li>
+<li>每次迭代一个batch（以batch为单位批量喂入神经网络，batch常为$2^n$）</li>
+<li>t表示当前batch迭代的总次数</li>
+</ul>
+<h3 id="更新参数的过程">更新参数的过程</h3>
+<ol>
+<li>计算t时刻损失函数关于当前参数的梯度$g_t=\nabla loss=\frac{\partial loss}{\partial(w_t)}$</li>
+<li>计算t时刻一阶动量$m_t$和二阶动量$V_t$</li>
+<li>计算t时刻下降梯度：$\eta_t=lr*{\frac {m_t}{\sqrt V_t}}$</li>
+<li>计算t+1时刻参数：$w_{t+1}=w_t-\eta_t=w_t-lr*{\frac {m_t}{\sqrt V_t}}$</li>
+</ol>
+<p>一阶动量：与梯度相关的函数
+二阶动量：与梯度平方相关的函数
+<font color=red><strong>不同的优化器实质上是定义了不同的一阶动量和二阶动量公式</strong></font></p>
+<h3 id="五种常见优化器">五种常见优化器</h3>
+<p>使用鸢尾花分类问题代码检测五种优化器性能。</p>
+<h4 id="sgd无moment随机梯度下降">SGD（无moment）：随机梯度下降</h4>
+<p>$m_t=g_t$</p>
+<p>$V_t=1$</p>
+<p>$\eta_t=lr*{\frac {m_t}{\sqrt V_t}}=lr*g_t$</p>
+<p>$w_{t+1}=w_t-\eta_t=w_t-lr*{\frac {m_t}{\sqrt V_t}}=w_t-lr*g_t$</p>
+<p><font size=5 color=red>${\Rightarrow \boxed{w_{t+1}=w_t-lr*{\frac {\partial loss}{\partial w_t}}}}$</font></p>
+<ul>
+<li>代码实现：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># sgd</span>
+<span class="n">w1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span><span class="o">*</span><span class="n">grads</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>	<span class="c1"># 参数w1自更新</span>
+<span class="n">b1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span><span class="o">*</span><span class="n">grads</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>	<span class="c1"># 参数b1自更新</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>例：</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 利用鸢尾花数据集，实现前向传播、反向传播，可视化loss曲线</span>
+
+<span class="c1"># 导入所需模块</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">time</span>  <span class="c1">##1##</span>
+
+<span class="c1"># 导入数据，分别为输入特征和标签</span>
+<span class="n">x_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span><span class="o">.</span><span class="n">target</span>
+
+<span class="c1"># 随机打乱数据（因为原始数据是顺序的，顺序不打乱会影响准确率）</span>
+<span class="c1"># seed: 随机数种子，是一个整数，当设置之后，每次生成的随机数都一样（为方便教学，以保每位同学结果一致）</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>  <span class="c1"># 使用相同的seed，保证输入特征和标签一一对应</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">y_data</span><span class="p">)</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>
+
+<span class="c1"># 将打乱后的数据集分割为训练集和测试集，训练集为前120行，测试集为后30行</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">x_data</span><span class="p">[:</span><span class="o">-</span><span class="mi">30</span><span class="p">]</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">y_data</span><span class="p">[:</span><span class="o">-</span><span class="mi">30</span><span class="p">]</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">x_data</span><span class="p">[</span><span class="o">-</span><span class="mi">30</span><span class="p">:]</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">y_data</span><span class="p">[</span><span class="o">-</span><span class="mi">30</span><span class="p">:]</span>
+
+<span class="c1"># 转换x的数据类型，否则后面矩阵相乘时会因数据类型不一致报错</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="c1"># from_tensor_slices函数使输入特征和标签值一一对应。（把数据集分批次，每个批次batch组数据）</span>
+<span class="n">train_db</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<span class="n">test_db</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="c1"># 生成神经网络的参数，4个输入特征故，输入层为4个输入节点；因为3分类，故输出层为3个神经元</span>
+<span class="c1"># 用tf.Variable()标记参数可训练</span>
+<span class="c1"># 使用seed使每次生成的随机数相同（方便教学，使大家结果都一致，在现实使用时不写seed）</span>
+<span class="n">w1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">truncated_normal</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">truncated_normal</span><span class="p">([</span><span class="mi">3</span><span class="p">],</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># 学习率为0.1</span>
+<span class="n">train_loss_results</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 将每轮的loss记录在此列表中，为后续画loss曲线提供数据</span>
+<span class="n">test_acc</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 将每轮的acc记录在此列表中，为后续画acc曲线提供数据</span>
+<span class="n">epoch</span> <span class="o">=</span> <span class="mi">500</span>  <span class="c1"># 循环500轮</span>
+<span class="n">loss_all</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 每轮分4个step，loss_all记录四个step生成的4个loss的和</span>
+
+<span class="c1"># 训练部分</span>
+<span class="n">now_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1">##2##</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epoch</span><span class="p">):</span>  <span class="c1"># 数据集级别的循环，每个epoch循环一次数据集</span>
+    <span class="k">for</span> <span class="n">step</span><span class="p">,</span> <span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_db</span><span class="p">):</span>  <span class="c1"># batch级别的循环 ，每个step循环一个batch</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>  <span class="c1"># with结构记录梯度信息</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">w1</span><span class="p">)</span> <span class="o">+</span> <span class="n">b1</span>  <span class="c1"># 神经网络乘加运算</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># 使输出y符合概率分布（此操作后与独热码同量级，可相减求loss）</span>
+            <span class="n">y_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># 将标签值转换为独热码格式，方便计算loss和accuracy</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_</span> <span class="o">-</span> <span class="n">y</span><span class="p">))</span>  <span class="c1"># 采用均方误差损失函数mse = mean(sum(y-out)^2)</span>
+            <span class="n">loss_all</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>  <span class="c1"># 将每个step计算出的loss累加，为后续求loss平均值提供数据，这样计算的loss更准确</span>
+        <span class="c1"># 计算loss对各个参数的梯度</span>
+        <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="p">[</span><span class="n">w1</span><span class="p">,</span> <span class="n">b1</span><span class="p">])</span>
+
+        <span class="c1"># 实现梯度更新 w1 = w1 - lr * w1_grad    b = b - lr * b_grad</span>
+        <span class="n">w1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span> <span class="o">*</span> <span class="n">grads</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># 参数w1自更新</span>
+        <span class="n">b1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span> <span class="o">*</span> <span class="n">grads</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># 参数b自更新</span>
+
+    <span class="c1"># 每个epoch，打印loss信息</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Epoch {}, loss: {}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">loss_all</span> <span class="o">/</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">train_loss_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_all</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># 将4个step的loss求平均记录在此变量中</span>
+    <span class="n">loss_all</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># loss_all归零，为记录下一个epoch的loss做准备</span>
+
+    <span class="c1"># 测试部分</span>
+    <span class="c1"># total_correct为预测对的样本个数, total_number为测试的总样本数，将这两个变量都初始化为0</span>
+    <span class="n">total_correct</span><span class="p">,</span> <span class="n">total_number</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="ow">in</span> <span class="n">test_db</span><span class="p">:</span>
+        <span class="c1"># 使用更新后的参数进行预测</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">w1</span><span class="p">)</span> <span class="o">+</span> <span class="n">b1</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 返回y中最大值的索引，即预测的分类</span>
+        <span class="c1"># 将pred转换为y_test的数据类型</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">y_test</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="c1"># 若分类正确，则correct=1，否则为0，将bool型的结果转换为int型</span>
+        <span class="n">correct</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y_test</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="c1"># 将每个batch的correct数加起来</span>
+        <span class="n">correct</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">correct</span><span class="p">)</span>
+        <span class="c1"># 将所有batch中的correct数加起来</span>
+        <span class="n">total_correct</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">correct</span><span class="p">)</span>
+        <span class="c1"># total_number为测试的总样本数，也就是x_test的行数，shape[0]返回变量的行数</span>
+        <span class="n">total_number</span> <span class="o">+=</span> <span class="n">x_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># 总的准确率等于total_correct/total_number</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">total_correct</span> <span class="o">/</span> <span class="n">total_number</span>
+    <span class="n">test_acc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">acc</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Test_acc:&#34;</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;--------------------------&#34;</span><span class="p">)</span>
+<span class="n">total_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">now_time</span>  <span class="c1">##3##</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;total_time&#34;</span><span class="p">,</span> <span class="n">total_time</span><span class="p">)</span>  <span class="c1">##4##</span>
+
+<span class="c1"># 绘制 loss 曲线</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Loss Function Curve&#39;</span><span class="p">)</span>  <span class="c1"># 图片标题</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epoch&#39;</span><span class="p">)</span>  <span class="c1"># x轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Loss&#39;</span><span class="p">)</span>  <span class="c1"># y轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_loss_results</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&#34;$Loss$&#34;</span><span class="p">)</span>  <span class="c1"># 逐点画出trian_loss_results值并连线，连线图标是Loss</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>  <span class="c1"># 画出曲线图标</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># 画出图像</span>
+
+<span class="c1"># 绘制 Accuracy 曲线</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Acc Curve&#39;</span><span class="p">)</span>  <span class="c1"># 图片标题</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epoch&#39;</span><span class="p">)</span>  <span class="c1"># x轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Acc&#39;</span><span class="p">)</span>  <span class="c1"># y轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">test_acc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&#34;$Accuracy$&#34;</span><span class="p">)</span>  <span class="c1"># 逐点画出test_acc值并连线，连线图标是Accuracy</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="sgdm含moment的sgd在sgd基础上增加了一阶动量">SGDM（含moment的SGD），在SGD基础上增加了一阶动量</h4>
+<p>$m_{t}$表示各个时刻梯度方向的指数滑动平均值
+$m_{t-1}$表示上一时刻的一阶动量
+$\beta$是一个超参数，接近1，经验值0.9</p>
+<p>$m_t=\beta*m_{t-1}+(1-\beta)*g_t$</p>
+<p>$V_t=1$</p>
+<p>$\eta_t=lr*{\frac {m_t}{\sqrt V_t}}=lr*m_t=lr*(\beta*m_{t-1}+(1-\beta)*g_t)$</p>
+<p>$w_{t+1}=w_t-\eta_t=w_t-lr*{\beta*m_{t-1}+(1-\beta)*g_t}$</p>
+<ul>
+<li>代码实现</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">m_w</span><span class="p">,</span> <span class="n">m_b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mf">0.9</span>
+<span class="c1"># sgd-momentun</span>
+<span class="n">m_w</span> <span class="o">=</span> <span class="n">beta</span><span class="o">*</span><span class="n">m_w</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">beta</span><span class="p">)</span><span class="o">*</span><span class="n">grads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">m_b</span> <span class="o">=</span> <span class="n">beta</span><span class="o">*</span><span class="n">m_b</span><span class="o">+</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">beta</span><span class="p">)</span><span class="o">*</span><span class="n">grads</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">w1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span><span class="o">*</span><span class="n">m_w</span><span class="p">)</span>
+<span class="n">b1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span><span class="o">*</span><span class="n">m_b</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>例</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 利用鸢尾花数据集，实现前向传播、反向传播，可视化loss曲线</span>
+
+<span class="c1"># 导入所需模块</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">time</span>  <span class="c1">##1##</span>
+
+<span class="c1"># 导入数据，分别为输入特征和标签</span>
+<span class="n">x_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span><span class="o">.</span><span class="n">target</span>
+
+<span class="c1"># 随机打乱数据（因为原始数据是顺序的，顺序不打乱会影响准确率）</span>
+<span class="c1"># seed: 随机数种子，是一个整数，当设置之后，每次生成的随机数都一样（为方便教学，以保每位同学结果一致）</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>  <span class="c1"># 使用相同的seed，保证输入特征和标签一一对应</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">y_data</span><span class="p">)</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>
+
+<span class="c1"># 将打乱后的数据集分割为训练集和测试集，训练集为前120行，测试集为后30行</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">x_data</span><span class="p">[:</span><span class="o">-</span><span class="mi">30</span><span class="p">]</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">y_data</span><span class="p">[:</span><span class="o">-</span><span class="mi">30</span><span class="p">]</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">x_data</span><span class="p">[</span><span class="o">-</span><span class="mi">30</span><span class="p">:]</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">y_data</span><span class="p">[</span><span class="o">-</span><span class="mi">30</span><span class="p">:]</span>
+
+<span class="c1"># 转换x的数据类型，否则后面矩阵相乘时会因数据类型不一致报错</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="c1"># from_tensor_slices函数使输入特征和标签值一一对应。（把数据集分批次，每个批次batch组数据）</span>
+<span class="n">train_db</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<span class="n">test_db</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="c1"># 生成神经网络的参数，4个输入特征故，输入层为4个输入节点；因为3分类，故输出层为3个神经元</span>
+<span class="c1"># 用tf.Variable()标记参数可训练</span>
+<span class="c1"># 使用seed使每次生成的随机数相同（方便教学，使大家结果都一致，在现实使用时不写seed）</span>
+<span class="n">w1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">truncated_normal</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">truncated_normal</span><span class="p">([</span><span class="mi">3</span><span class="p">],</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># 学习率为0.1</span>
+<span class="n">train_loss_results</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 将每轮的loss记录在此列表中，为后续画loss曲线提供数据</span>
+<span class="n">test_acc</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 将每轮的acc记录在此列表中，为后续画acc曲线提供数据</span>
+<span class="n">epoch</span> <span class="o">=</span> <span class="mi">500</span>  <span class="c1"># 循环500轮</span>
+<span class="n">loss_all</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 每轮分4个step，loss_all记录四个step生成的4个loss的和</span>
+
+<span class="c1">##########################################################################</span>
+<span class="n">m_w</span><span class="p">,</span> <span class="n">m_b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mf">0.9</span>
+<span class="c1">##########################################################################</span>
+
+<span class="c1"># 训练部分</span>
+<span class="n">now_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1">##2##</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epoch</span><span class="p">):</span>  <span class="c1"># 数据集级别的循环，每个epoch循环一次数据集</span>
+    <span class="k">for</span> <span class="n">step</span><span class="p">,</span> <span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_db</span><span class="p">):</span>  <span class="c1"># batch级别的循环 ，每个step循环一个batch</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>  <span class="c1"># with结构记录梯度信息</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">w1</span><span class="p">)</span> <span class="o">+</span> <span class="n">b1</span>  <span class="c1"># 神经网络乘加运算</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># 使输出y符合概率分布（此操作后与独热码同量级，可相减求loss）</span>
+            <span class="n">y_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># 将标签值转换为独热码格式，方便计算loss和accuracy</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_</span> <span class="o">-</span> <span class="n">y</span><span class="p">))</span>  <span class="c1"># 采用均方误差损失函数mse = mean(sum(y-out)^2)</span>
+            <span class="n">loss_all</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>  <span class="c1"># 将每个step计算出的loss累加，为后续求loss平均值提供数据，这样计算的loss更准确</span>
+        <span class="c1"># 计算loss对各个参数的梯度</span>
+        <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="p">[</span><span class="n">w1</span><span class="p">,</span> <span class="n">b1</span><span class="p">])</span>
+
+        <span class="c1">##########################################################################</span>
+        <span class="c1"># sgd-momentun  </span>
+        <span class="n">m_w</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">m_w</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta</span><span class="p">)</span> <span class="o">*</span> <span class="n">grads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">m_b</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">m_b</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta</span><span class="p">)</span> <span class="o">*</span> <span class="n">grads</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">w1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span> <span class="o">*</span> <span class="n">m_w</span><span class="p">)</span>
+        <span class="n">b1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span> <span class="o">*</span> <span class="n">m_b</span><span class="p">)</span>
+    <span class="c1">##########################################################################</span>
+
+    <span class="c1"># 每个epoch，打印loss信息</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Epoch {}, loss: {}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">loss_all</span> <span class="o">/</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">train_loss_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_all</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># 将4个step的loss求平均记录在此变量中</span>
+    <span class="n">loss_all</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># loss_all归零，为记录下一个epoch的loss做准备</span>
+
+    <span class="c1"># 测试部分</span>
+    <span class="c1"># total_correct为预测对的样本个数, total_number为测试的总样本数，将这两个变量都初始化为0</span>
+    <span class="n">total_correct</span><span class="p">,</span> <span class="n">total_number</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="ow">in</span> <span class="n">test_db</span><span class="p">:</span>
+        <span class="c1"># 使用更新后的参数进行预测</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">w1</span><span class="p">)</span> <span class="o">+</span> <span class="n">b1</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 返回y中最大值的索引，即预测的分类</span>
+        <span class="c1"># 将pred转换为y_test的数据类型</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">y_test</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="c1"># 若分类正确，则correct=1，否则为0，将bool型的结果转换为int型</span>
+        <span class="n">correct</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y_test</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="c1"># 将每个batch的correct数加起来</span>
+        <span class="n">correct</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">correct</span><span class="p">)</span>
+        <span class="c1"># 将所有batch中的correct数加起来</span>
+        <span class="n">total_correct</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">correct</span><span class="p">)</span>
+        <span class="c1"># total_number为测试的总样本数，也就是x_test的行数，shape[0]返回变量的行数</span>
+        <span class="n">total_number</span> <span class="o">+=</span> <span class="n">x_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># 总的准确率等于total_correct/total_number</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">total_correct</span> <span class="o">/</span> <span class="n">total_number</span>
+    <span class="n">test_acc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">acc</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Test_acc:&#34;</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;--------------------------&#34;</span><span class="p">)</span>
+<span class="n">total_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">now_time</span>  <span class="c1">##3##</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;total_time&#34;</span><span class="p">,</span> <span class="n">total_time</span><span class="p">)</span>  <span class="c1">##4##</span>
+
+<span class="c1"># 绘制 loss 曲线</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Loss Function Curve&#39;</span><span class="p">)</span>  <span class="c1"># 图片标题</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epoch&#39;</span><span class="p">)</span>  <span class="c1"># x轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Loss&#39;</span><span class="p">)</span>  <span class="c1"># y轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_loss_results</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&#34;$Loss$&#34;</span><span class="p">)</span>  <span class="c1"># 逐点画出trian_loss_results值并连线，连线图标是Loss</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>  <span class="c1"># 画出曲线图标</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># 画出图像</span>
+
+<span class="c1"># 绘制 Accuracy 曲线</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Acc Curve&#39;</span><span class="p">)</span>  <span class="c1"># 图片标题</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epoch&#39;</span><span class="p">)</span>  <span class="c1"># x轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Acc&#39;</span><span class="p">)</span>  <span class="c1"># y轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">test_acc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&#34;$Accuracy$&#34;</span><span class="p">)</span>  <span class="c1"># 逐点画出test_acc值并连线，连线图标是Accuracy</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="adagrad在sgd基础上增加二阶动量">Adagrad：在SGD基础上增加二阶动量</h4>
+<p>$m_t=g_t$</p>
+<p>$V_t=\sum_{t=1}^{t}g_t^2$</p>
+<p>$\eta_t=lr*{\frac {m_t}{\sqrt V_t}}=lr*\frac{g_t}{\sqrt{\sum_{t=1}^{t}g_t^2}}$</p>
+<p>$w_{t+1}=w_t-\eta_t=w_t-lr*\frac{g_t}{\sqrt{\sum_{t=1}^{t}g_t^2}}$</p>
+<ul>
+<li>代码实现</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">v_w</span><span class="p">,</span> <span class="n">v_b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+<span class="c1"># adagrad</span>
+<span class="n">v_w</span> <span class="o">+=</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">grads</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">v_b</span> <span class="o">+=</span> <span class="n">tf</span><span class="o">.</span><span class="n">aquare</span><span class="p">(</span><span class="n">grads</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">w1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span><span class="o">*</span><span class="n">grads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v_w</span><span class="p">))</span>
+<span class="n">b1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span><span class="o">*</span><span class="n">grads</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">tf</span><span class="o">.</span><span class="n">aqrt</span><span class="p">(</span><span class="n">v_b</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>例</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 利用鸢尾花数据集，实现前向传播、反向传播，可视化loss曲线</span>
+
+<span class="c1"># 导入所需模块</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">time</span>  <span class="c1">##1##</span>
+
+<span class="c1"># 导入数据，分别为输入特征和标签</span>
+<span class="n">x_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span><span class="o">.</span><span class="n">target</span>
+
+<span class="c1"># 随机打乱数据（因为原始数据是顺序的，顺序不打乱会影响准确率）</span>
+<span class="c1"># seed: 随机数种子，是一个整数，当设置之后，每次生成的随机数都一样（为方便教学，以保每位同学结果一致）</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>  <span class="c1"># 使用相同的seed，保证输入特征和标签一一对应</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">y_data</span><span class="p">)</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>
+
+<span class="c1"># 将打乱后的数据集分割为训练集和测试集，训练集为前120行，测试集为后30行</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">x_data</span><span class="p">[:</span><span class="o">-</span><span class="mi">30</span><span class="p">]</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">y_data</span><span class="p">[:</span><span class="o">-</span><span class="mi">30</span><span class="p">]</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">x_data</span><span class="p">[</span><span class="o">-</span><span class="mi">30</span><span class="p">:]</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">y_data</span><span class="p">[</span><span class="o">-</span><span class="mi">30</span><span class="p">:]</span>
+
+<span class="c1"># 转换x的数据类型，否则后面矩阵相乘时会因数据类型不一致报错</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="c1"># from_tensor_slices函数使输入特征和标签值一一对应。（把数据集分批次，每个批次batch组数据）</span>
+<span class="n">train_db</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<span class="n">test_db</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="c1"># 生成神经网络的参数，4个输入特征故，输入层为4个输入节点；因为3分类，故输出层为3个神经元</span>
+<span class="c1"># 用tf.Variable()标记参数可训练</span>
+<span class="c1"># 使用seed使每次生成的随机数相同（方便教学，使大家结果都一致，在现实使用时不写seed）</span>
+<span class="n">w1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">truncated_normal</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">truncated_normal</span><span class="p">([</span><span class="mi">3</span><span class="p">],</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># 学习率为0.1</span>
+<span class="n">train_loss_results</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 将每轮的loss记录在此列表中，为后续画loss曲线提供数据</span>
+<span class="n">test_acc</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 将每轮的acc记录在此列表中，为后续画acc曲线提供数据</span>
+<span class="n">epoch</span> <span class="o">=</span> <span class="mi">500</span>  <span class="c1"># 循环500轮</span>
+<span class="n">loss_all</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 每轮分4个step，loss_all记录四个step生成的4个loss的和</span>
+
+<span class="c1">##########################################################################</span>
+<span class="n">v_w</span><span class="p">,</span> <span class="n">v_b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+<span class="c1">##########################################################################</span>
+
+<span class="c1"># 训练部分</span>
+<span class="n">now_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1">##2##</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epoch</span><span class="p">):</span>  <span class="c1"># 数据集级别的循环，每个epoch循环一次数据集</span>
+    <span class="k">for</span> <span class="n">step</span><span class="p">,</span> <span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_db</span><span class="p">):</span>  <span class="c1"># batch级别的循环 ，每个step循环一个batch</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>  <span class="c1"># with结构记录梯度信息</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">w1</span><span class="p">)</span> <span class="o">+</span> <span class="n">b1</span>  <span class="c1"># 神经网络乘加运算</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># 使输出y符合概率分布（此操作后与独热码同量级，可相减求loss）</span>
+            <span class="n">y_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># 将标签值转换为独热码格式，方便计算loss和accuracy</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_</span> <span class="o">-</span> <span class="n">y</span><span class="p">))</span>  <span class="c1"># 采用均方误差损失函数mse = mean(sum(y-out)^2)</span>
+            <span class="n">loss_all</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>  <span class="c1"># 将每个step计算出的loss累加，为后续求loss平均值提供数据，这样计算的loss更准确</span>
+        <span class="c1"># 计算loss对各个参数的梯度</span>
+        <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="p">[</span><span class="n">w1</span><span class="p">,</span> <span class="n">b1</span><span class="p">])</span>
+
+        <span class="c1">##########################################################################</span>
+        <span class="c1"># adagrad</span>
+        <span class="n">v_w</span> <span class="o">+=</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">grads</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">v_b</span> <span class="o">+=</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">grads</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">w1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span> <span class="o">*</span> <span class="n">grads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v_w</span><span class="p">))</span>
+        <span class="n">b1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span> <span class="o">*</span> <span class="n">grads</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v_b</span><span class="p">))</span>
+    <span class="c1">##########################################################################</span>
+
+    <span class="c1"># 每个epoch，打印loss信息</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Epoch {}, loss: {}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">loss_all</span> <span class="o">/</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">train_loss_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_all</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># 将4个step的loss求平均记录在此变量中</span>
+    <span class="n">loss_all</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># loss_all归零，为记录下一个epoch的loss做准备</span>
+
+    <span class="c1"># 测试部分</span>
+    <span class="c1"># total_correct为预测对的样本个数, total_number为测试的总样本数，将这两个变量都初始化为0</span>
+    <span class="n">total_correct</span><span class="p">,</span> <span class="n">total_number</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="ow">in</span> <span class="n">test_db</span><span class="p">:</span>
+        <span class="c1"># 使用更新后的参数进行预测</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">w1</span><span class="p">)</span> <span class="o">+</span> <span class="n">b1</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 返回y中最大值的索引，即预测的分类</span>
+        <span class="c1"># 将pred转换为y_test的数据类型</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">y_test</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="c1"># 若分类正确，则correct=1，否则为0，将bool型的结果转换为int型</span>
+        <span class="n">correct</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y_test</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="c1"># 将每个batch的correct数加起来</span>
+        <span class="n">correct</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">correct</span><span class="p">)</span>
+        <span class="c1"># 将所有batch中的correct数加起来</span>
+        <span class="n">total_correct</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">correct</span><span class="p">)</span>
+        <span class="c1"># total_number为测试的总样本数，也就是x_test的行数，shape[0]返回变量的行数</span>
+        <span class="n">total_number</span> <span class="o">+=</span> <span class="n">x_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># 总的准确率等于total_correct/total_number</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">total_correct</span> <span class="o">/</span> <span class="n">total_number</span>
+    <span class="n">test_acc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">acc</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Test_acc:&#34;</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;--------------------------&#34;</span><span class="p">)</span>
+<span class="n">total_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">now_time</span>  <span class="c1">##3##</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;total_time&#34;</span><span class="p">,</span> <span class="n">total_time</span><span class="p">)</span>  <span class="c1">##4##</span>
+
+<span class="c1"># 绘制 loss 曲线</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Loss Function Curve&#39;</span><span class="p">)</span>  <span class="c1"># 图片标题</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epoch&#39;</span><span class="p">)</span>  <span class="c1"># x轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Loss&#39;</span><span class="p">)</span>  <span class="c1"># y轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_loss_results</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&#34;$Loss$&#34;</span><span class="p">)</span>  <span class="c1"># 逐点画出trian_loss_results值并连线，连线图标是Loss</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>  <span class="c1"># 画出曲线图标</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># 画出图像</span>
+
+<span class="c1"># 绘制 Accuracy 曲线</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Acc Curve&#39;</span><span class="p">)</span>  <span class="c1"># 图片标题</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epoch&#39;</span><span class="p">)</span>  <span class="c1"># x轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Acc&#39;</span><span class="p">)</span>  <span class="c1"># y轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">test_acc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&#34;$Accuracy$&#34;</span><span class="p">)</span>  <span class="c1"># 逐点画出test_acc值并连线，连线图标是Accuracy</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="rmspropsgd基础上增加了二阶动量">RMSProp：SGD基础上增加了二阶动量</h4>
+<p>$m_t=g_t$</p>
+<p>$V_t=\beta*V_{t-1}+(1-\beta)*g_t^2$</p>
+<p>$\eta_t=lr*{\frac {m_t}{\sqrt V_t}}=lr*\frac{g_t}{\sqrt{\beta*V_{t-1}+(1-\beta)*g_t^2}}$</p>
+<p>$w_{t+1}=w_t-\eta_t=w_t-lr*\frac{g_t}{\sqrt{\beta*V_{t-1}+(1-\beta)*g_t^2}}$</p>
+<ul>
+<li>代码实现</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">v_w</span><span class="p">,</span> <span class="n">v_b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mf">0.9</span>
+<span class="c1"># rmsprop</span>
+<span class="n">v_w</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">v_w</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta</span><span class="p">)</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">grads</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">v_b</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">v_b</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta</span><span class="p">)</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">grads</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">w1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span> <span class="o">*</span> <span class="n">grads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v_w</span><span class="p">))</span>
+<span class="n">b1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span> <span class="o">*</span> <span class="n">grads</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v_b</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>例</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 利用鸢尾花数据集，实现前向传播、反向传播，可视化loss曲线</span>
+
+<span class="c1"># 导入所需模块</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">time</span>  <span class="c1">##1##</span>
+
+<span class="c1"># 导入数据，分别为输入特征和标签</span>
+<span class="n">x_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span><span class="o">.</span><span class="n">target</span>
+
+<span class="c1"># 随机打乱数据（因为原始数据是顺序的，顺序不打乱会影响准确率）</span>
+<span class="c1"># seed: 随机数种子，是一个整数，当设置之后，每次生成的随机数都一样（为方便教学，以保每位同学结果一致）</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>  <span class="c1"># 使用相同的seed，保证输入特征和标签一一对应</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">y_data</span><span class="p">)</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>
+
+<span class="c1"># 将打乱后的数据集分割为训练集和测试集，训练集为前120行，测试集为后30行</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">x_data</span><span class="p">[:</span><span class="o">-</span><span class="mi">30</span><span class="p">]</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">y_data</span><span class="p">[:</span><span class="o">-</span><span class="mi">30</span><span class="p">]</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">x_data</span><span class="p">[</span><span class="o">-</span><span class="mi">30</span><span class="p">:]</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">y_data</span><span class="p">[</span><span class="o">-</span><span class="mi">30</span><span class="p">:]</span>
+
+<span class="c1"># 转换x的数据类型，否则后面矩阵相乘时会因数据类型不一致报错</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="c1"># from_tensor_slices函数使输入特征和标签值一一对应。（把数据集分批次，每个批次batch组数据）</span>
+<span class="n">train_db</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<span class="n">test_db</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="c1"># 生成神经网络的参数，4个输入特征故，输入层为4个输入节点；因为3分类，故输出层为3个神经元</span>
+<span class="c1"># 用tf.Variable()标记参数可训练</span>
+<span class="c1"># 使用seed使每次生成的随机数相同（方便教学，使大家结果都一致，在现实使用时不写seed）</span>
+<span class="n">w1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">truncated_normal</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">truncated_normal</span><span class="p">([</span><span class="mi">3</span><span class="p">],</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># 学习率为0.1</span>
+<span class="n">train_loss_results</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 将每轮的loss记录在此列表中，为后续画loss曲线提供数据</span>
+<span class="n">test_acc</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 将每轮的acc记录在此列表中，为后续画acc曲线提供数据</span>
+<span class="n">epoch</span> <span class="o">=</span> <span class="mi">500</span>  <span class="c1"># 循环500轮</span>
+<span class="n">loss_all</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 每轮分4个step，loss_all记录四个step生成的4个loss的和</span>
+
+<span class="c1">##########################################################################</span>
+<span class="n">v_w</span><span class="p">,</span> <span class="n">v_b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="mf">0.9</span>
+<span class="c1">##########################################################################</span>
+
+<span class="c1"># 训练部分</span>
+<span class="n">now_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1">##2##</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epoch</span><span class="p">):</span>  <span class="c1"># 数据集级别的循环，每个epoch循环一次数据集</span>
+    <span class="k">for</span> <span class="n">step</span><span class="p">,</span> <span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_db</span><span class="p">):</span>  <span class="c1"># batch级别的循环 ，每个step循环一个batch</span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>  <span class="c1"># with结构记录梯度信息</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">w1</span><span class="p">)</span> <span class="o">+</span> <span class="n">b1</span>  <span class="c1"># 神经网络乘加运算</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># 使输出y符合概率分布（此操作后与独热码同量级，可相减求loss）</span>
+            <span class="n">y_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># 将标签值转换为独热码格式，方便计算loss和accuracy</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_</span> <span class="o">-</span> <span class="n">y</span><span class="p">))</span>  <span class="c1"># 采用均方误差损失函数mse = mean(sum(y-out)^2)</span>
+            <span class="n">loss_all</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>  <span class="c1"># 将每个step计算出的loss累加，为后续求loss平均值提供数据，这样计算的loss更准确</span>
+        <span class="c1"># 计算loss对各个参数的梯度</span>
+        <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="p">[</span><span class="n">w1</span><span class="p">,</span> <span class="n">b1</span><span class="p">])</span>
+
+        <span class="c1">##########################################################################</span>
+        <span class="c1"># rmsprop</span>
+        <span class="n">v_w</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">v_w</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta</span><span class="p">)</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">grads</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">v_b</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">v_b</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta</span><span class="p">)</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">grads</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">w1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span> <span class="o">*</span> <span class="n">grads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v_w</span><span class="p">))</span>
+        <span class="n">b1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span> <span class="o">*</span> <span class="n">grads</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v_b</span><span class="p">))</span>
+    <span class="c1">##########################################################################</span>
+
+    <span class="c1"># 每个epoch，打印loss信息</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Epoch {}, loss: {}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">loss_all</span> <span class="o">/</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">train_loss_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_all</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># 将4个step的loss求平均记录在此变量中</span>
+    <span class="n">loss_all</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># loss_all归零，为记录下一个epoch的loss做准备</span>
+
+    <span class="c1"># 测试部分</span>
+    <span class="c1"># total_correct为预测对的样本个数, total_number为测试的总样本数，将这两个变量都初始化为0</span>
+    <span class="n">total_correct</span><span class="p">,</span> <span class="n">total_number</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="ow">in</span> <span class="n">test_db</span><span class="p">:</span>
+        <span class="c1"># 使用更新后的参数进行预测</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">w1</span><span class="p">)</span> <span class="o">+</span> <span class="n">b1</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 返回y中最大值的索引，即预测的分类</span>
+        <span class="c1"># 将pred转换为y_test的数据类型</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">y_test</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="c1"># 若分类正确，则correct=1，否则为0，将bool型的结果转换为int型</span>
+        <span class="n">correct</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y_test</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="c1"># 将每个batch的correct数加起来</span>
+        <span class="n">correct</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">correct</span><span class="p">)</span>
+        <span class="c1"># 将所有batch中的correct数加起来</span>
+        <span class="n">total_correct</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">correct</span><span class="p">)</span>
+        <span class="c1"># total_number为测试的总样本数，也就是x_test的行数，shape[0]返回变量的行数</span>
+        <span class="n">total_number</span> <span class="o">+=</span> <span class="n">x_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># 总的准确率等于total_correct/total_number</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">total_correct</span> <span class="o">/</span> <span class="n">total_number</span>
+    <span class="n">test_acc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">acc</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Test_acc:&#34;</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;--------------------------&#34;</span><span class="p">)</span>
+<span class="n">total_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">now_time</span>  <span class="c1">##3##</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;total_time&#34;</span><span class="p">,</span> <span class="n">total_time</span><span class="p">)</span>  <span class="c1">##4##</span>
+
+<span class="c1"># 绘制 loss 曲线</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Loss Function Curve&#39;</span><span class="p">)</span>  <span class="c1"># 图片标题</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epoch&#39;</span><span class="p">)</span>  <span class="c1"># x轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Loss&#39;</span><span class="p">)</span>  <span class="c1"># y轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_loss_results</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&#34;$Loss$&#34;</span><span class="p">)</span>  <span class="c1"># 逐点画出trian_loss_results值并连线，连线图标是Loss</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>  <span class="c1"># 画出曲线图标</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># 画出图像</span>
+
+<span class="c1"># 绘制 Accuracy 曲线</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Acc Curve&#39;</span><span class="p">)</span>  <span class="c1"># 图片标题</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epoch&#39;</span><span class="p">)</span>  <span class="c1"># x轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Acc&#39;</span><span class="p">)</span>  <span class="c1"># y轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">test_acc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&#34;$Accuracy$&#34;</span><span class="p">)</span>  <span class="c1"># 逐点画出test_acc值并连线，连线图标是Accuracy</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="adam同时结合sgdm一阶动量和rmsprop的二阶动量">Adam：同时结合SGDM一阶动量和RMSProp的二阶动量</h4>
+<p>$m_t=\beta*m_{t-1}+(1-\beta)*g_t$</p>
+<p>修正一阶动量的偏差：$\hat{m_t}=\frac{m_t}{1-\beta_1^t}$</p>
+<p>$V_t=\beta*V_{t-1}+(1-\beta)*g_t^2$</p>
+<p>修正二阶动量的偏差：$\hat{V_t}=\frac{V_t}{1-\beta_2^t}$</p>
+<p>$\eta_t=lr*\frac{\hat{m_t}}{\sqrt{\hat{V_t}}}=lr*\frac{\frac{m_t}{1-\beta_1^t}}{\sqrt{\frac{V_t}{1-\beta_2^t}}}$</p>
+<p>$w_{t+1}=w_t-\eta_t=w_t-lr*\frac{\frac{m_t}{1-\beta_1^t}}{\sqrt{\frac{V_t}{1-\beta_2^t}}}$</p>
+<ul>
+<li>代码实现</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">m_w</span><span class="p">,</span> <span class="n">m_b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+<span class="n">v_w</span><span class="p">,</span> <span class="n">v_b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+<span class="n">beta1</span><span class="p">,</span> <span class="n">beta2</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.999</span>
+<span class="n">delta_w</span><span class="p">,</span> <span class="n">delta_b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+<span class="n">global_step</span> <span class="o">=</span> <span class="mi">0</span>
+
+ <span class="c1"># adam</span>
+<span class="n">m_w</span> <span class="o">=</span> <span class="n">beta1</span> <span class="o">*</span> <span class="n">m_w</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta1</span><span class="p">)</span> <span class="o">*</span> <span class="n">grads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">m_b</span> <span class="o">=</span> <span class="n">beta1</span> <span class="o">*</span> <span class="n">m_b</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta1</span><span class="p">)</span> <span class="o">*</span> <span class="n">grads</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">v_w</span> <span class="o">=</span> <span class="n">beta2</span> <span class="o">*</span> <span class="n">v_w</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta2</span><span class="p">)</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">grads</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">v_b</span> <span class="o">=</span> <span class="n">beta2</span> <span class="o">*</span> <span class="n">v_b</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta2</span><span class="p">)</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">grads</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">m_w_correction</span> <span class="o">=</span> <span class="n">m_w</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">tf</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">beta1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">global_step</span><span class="p">)))</span>
+<span class="n">m_b_correction</span> <span class="o">=</span> <span class="n">m_b</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">tf</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">beta1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">global_step</span><span class="p">)))</span>
+<span class="n">v_w_correction</span> <span class="o">=</span> <span class="n">v_w</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">tf</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">beta2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">global_step</span><span class="p">)))</span>
+<span class="n">v_b_correction</span> <span class="o">=</span> <span class="n">v_b</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">tf</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">beta2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">global_step</span><span class="p">)))</span>
+
+<span class="n">w1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span> <span class="o">*</span> <span class="n">m_w_correction</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v_w_correction</span><span class="p">))</span>
+<span class="n">b1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span> <span class="o">*</span> <span class="n">m_b_correction</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v_b_correction</span><span class="p">))</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>例</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">  1
+</span><span class="lnt">  2
+</span><span class="lnt">  3
+</span><span class="lnt">  4
+</span><span class="lnt">  5
+</span><span class="lnt">  6
+</span><span class="lnt">  7
+</span><span class="lnt">  8
+</span><span class="lnt">  9
+</span><span class="lnt"> 10
+</span><span class="lnt"> 11
+</span><span class="lnt"> 12
+</span><span class="lnt"> 13
+</span><span class="lnt"> 14
+</span><span class="lnt"> 15
+</span><span class="lnt"> 16
+</span><span class="lnt"> 17
+</span><span class="lnt"> 18
+</span><span class="lnt"> 19
+</span><span class="lnt"> 20
+</span><span class="lnt"> 21
+</span><span class="lnt"> 22
+</span><span class="lnt"> 23
+</span><span class="lnt"> 24
+</span><span class="lnt"> 25
+</span><span class="lnt"> 26
+</span><span class="lnt"> 27
+</span><span class="lnt"> 28
+</span><span class="lnt"> 29
+</span><span class="lnt"> 30
+</span><span class="lnt"> 31
+</span><span class="lnt"> 32
+</span><span class="lnt"> 33
+</span><span class="lnt"> 34
+</span><span class="lnt"> 35
+</span><span class="lnt"> 36
+</span><span class="lnt"> 37
+</span><span class="lnt"> 38
+</span><span class="lnt"> 39
+</span><span class="lnt"> 40
+</span><span class="lnt"> 41
+</span><span class="lnt"> 42
+</span><span class="lnt"> 43
+</span><span class="lnt"> 44
+</span><span class="lnt"> 45
+</span><span class="lnt"> 46
+</span><span class="lnt"> 47
+</span><span class="lnt"> 48
+</span><span class="lnt"> 49
+</span><span class="lnt"> 50
+</span><span class="lnt"> 51
+</span><span class="lnt"> 52
+</span><span class="lnt"> 53
+</span><span class="lnt"> 54
+</span><span class="lnt"> 55
+</span><span class="lnt"> 56
+</span><span class="lnt"> 57
+</span><span class="lnt"> 58
+</span><span class="lnt"> 59
+</span><span class="lnt"> 60
+</span><span class="lnt"> 61
+</span><span class="lnt"> 62
+</span><span class="lnt"> 63
+</span><span class="lnt"> 64
+</span><span class="lnt"> 65
+</span><span class="lnt"> 66
+</span><span class="lnt"> 67
+</span><span class="lnt"> 68
+</span><span class="lnt"> 69
+</span><span class="lnt"> 70
+</span><span class="lnt"> 71
+</span><span class="lnt"> 72
+</span><span class="lnt"> 73
+</span><span class="lnt"> 74
+</span><span class="lnt"> 75
+</span><span class="lnt"> 76
+</span><span class="lnt"> 77
+</span><span class="lnt"> 78
+</span><span class="lnt"> 79
+</span><span class="lnt"> 80
+</span><span class="lnt"> 81
+</span><span class="lnt"> 82
+</span><span class="lnt"> 83
+</span><span class="lnt"> 84
+</span><span class="lnt"> 85
+</span><span class="lnt"> 86
+</span><span class="lnt"> 87
+</span><span class="lnt"> 88
+</span><span class="lnt"> 89
+</span><span class="lnt"> 90
+</span><span class="lnt"> 91
+</span><span class="lnt"> 92
+</span><span class="lnt"> 93
+</span><span class="lnt"> 94
+</span><span class="lnt"> 95
+</span><span class="lnt"> 96
+</span><span class="lnt"> 97
+</span><span class="lnt"> 98
+</span><span class="lnt"> 99
+</span><span class="lnt">100
+</span><span class="lnt">101
+</span><span class="lnt">102
+</span><span class="lnt">103
+</span><span class="lnt">104
+</span><span class="lnt">105
+</span><span class="lnt">106
+</span><span class="lnt">107
+</span><span class="lnt">108
+</span><span class="lnt">109
+</span><span class="lnt">110
+</span><span class="lnt">111
+</span><span class="lnt">112
+</span><span class="lnt">113
+</span><span class="lnt">114
+</span><span class="lnt">115
+</span><span class="lnt">116
+</span><span class="lnt">117
+</span><span class="lnt">118
+</span><span class="lnt">119
+</span><span class="lnt">120
+</span><span class="lnt">121
+</span><span class="lnt">122
+</span><span class="lnt">123
+</span><span class="lnt">124
+</span><span class="lnt">125
+</span><span class="lnt">126
+</span><span class="lnt">127
+</span><span class="lnt">128
+</span><span class="lnt">129
+</span><span class="lnt">130
+</span><span class="lnt">131
+</span><span class="lnt">132
+</span><span class="lnt">133
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 利用鸢尾花数据集，实现前向传播、反向传播，可视化loss曲线</span>
+
+<span class="c1"># 导入所需模块</span>
+<span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">time</span>  <span class="c1">##1##</span>
+
+<span class="c1"># 导入数据，分别为输入特征和标签</span>
+<span class="n">x_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span><span class="o">.</span><span class="n">target</span>
+
+<span class="c1"># 随机打乱数据（因为原始数据是顺序的，顺序不打乱会影响准确率）</span>
+<span class="c1"># seed: 随机数种子，是一个整数，当设置之后，每次生成的随机数都一样（为方便教学，以保每位同学结果一致）</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>  <span class="c1"># 使用相同的seed，保证输入特征和标签一一对应</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">x_data</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">y_data</span><span class="p">)</span>
+<span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>
+
+<span class="c1"># 将打乱后的数据集分割为训练集和测试集，训练集为前120行，测试集为后30行</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">x_data</span><span class="p">[:</span><span class="o">-</span><span class="mi">30</span><span class="p">]</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">y_data</span><span class="p">[:</span><span class="o">-</span><span class="mi">30</span><span class="p">]</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">x_data</span><span class="p">[</span><span class="o">-</span><span class="mi">30</span><span class="p">:]</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">y_data</span><span class="p">[</span><span class="o">-</span><span class="mi">30</span><span class="p">:]</span>
+
+<span class="c1"># 转换x的数据类型，否则后面矩阵相乘时会因数据类型不一致报错</span>
+<span class="n">x_train</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="n">x_test</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="c1"># from_tensor_slices函数使输入特征和标签值一一对应。（把数据集分批次，每个批次batch组数据）</span>
+<span class="n">train_db</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<span class="n">test_db</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">Dataset</span><span class="o">.</span><span class="n">from_tensor_slices</span><span class="p">((</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="c1"># 生成神经网络的参数，4个输入特征故，输入层为4个输入节点；因为3分类，故输出层为3个神经元</span>
+<span class="c1"># 用tf.Variable()标记参数可训练</span>
+<span class="c1"># 使用seed使每次生成的随机数相同（方便教学，使大家结果都一致，在现实使用时不写seed）</span>
+<span class="n">w1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">truncated_normal</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">truncated_normal</span><span class="p">([</span><span class="mi">3</span><span class="p">],</span> <span class="n">stddev</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">lr</span> <span class="o">=</span> <span class="mf">0.1</span>  <span class="c1"># 学习率为0.1</span>
+<span class="n">train_loss_results</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 将每轮的loss记录在此列表中，为后续画loss曲线提供数据</span>
+<span class="n">test_acc</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 将每轮的acc记录在此列表中，为后续画acc曲线提供数据</span>
+<span class="n">epoch</span> <span class="o">=</span> <span class="mi">500</span>  <span class="c1"># 循环500轮</span>
+<span class="n">loss_all</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 每轮分4个step，loss_all记录四个step生成的4个loss的和</span>
+
+<span class="c1">##########################################################################</span>
+<span class="n">m_w</span><span class="p">,</span> <span class="n">m_b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+<span class="n">v_w</span><span class="p">,</span> <span class="n">v_b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+<span class="n">beta1</span><span class="p">,</span> <span class="n">beta2</span> <span class="o">=</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.999</span>
+<span class="n">delta_w</span><span class="p">,</span> <span class="n">delta_b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+<span class="n">global_step</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="c1">##########################################################################</span>
+
+<span class="c1"># 训练部分</span>
+<span class="n">now_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>  <span class="c1">##2##</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epoch</span><span class="p">):</span>  <span class="c1"># 数据集级别的循环，每个epoch循环一次数据集</span>
+    <span class="k">for</span> <span class="n">step</span><span class="p">,</span> <span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_db</span><span class="p">):</span>  <span class="c1"># batch级别的循环 ，每个step循环一个batch</span>
+ <span class="c1">##########################################################################       </span>
+        <span class="n">global_step</span> <span class="o">+=</span> <span class="mi">1</span>
+ <span class="c1">##########################################################################       </span>
+        <span class="k">with</span> <span class="n">tf</span><span class="o">.</span><span class="n">GradientTape</span><span class="p">()</span> <span class="k">as</span> <span class="n">tape</span><span class="p">:</span>  <span class="c1"># with结构记录梯度信息</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">w1</span><span class="p">)</span> <span class="o">+</span> <span class="n">b1</span>  <span class="c1"># 神经网络乘加运算</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># 使输出y符合概率分布（此操作后与独热码同量级，可相减求loss）</span>
+            <span class="n">y_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>  <span class="c1"># 将标签值转换为独热码格式，方便计算loss和accuracy</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_mean</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">y_</span> <span class="o">-</span> <span class="n">y</span><span class="p">))</span>  <span class="c1"># 采用均方误差损失函数mse = mean(sum(y-out)^2)</span>
+            <span class="n">loss_all</span> <span class="o">+=</span> <span class="n">loss</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>  <span class="c1"># 将每个step计算出的loss累加，为后续求loss平均值提供数据，这样计算的loss更准确</span>
+        <span class="c1"># 计算loss对各个参数的梯度</span>
+        <span class="n">grads</span> <span class="o">=</span> <span class="n">tape</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">loss</span><span class="p">,</span> <span class="p">[</span><span class="n">w1</span><span class="p">,</span> <span class="n">b1</span><span class="p">])</span>
+
+<span class="c1">##########################################################################</span>
+ <span class="c1"># adam</span>
+        <span class="n">m_w</span> <span class="o">=</span> <span class="n">beta1</span> <span class="o">*</span> <span class="n">m_w</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta1</span><span class="p">)</span> <span class="o">*</span> <span class="n">grads</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">m_b</span> <span class="o">=</span> <span class="n">beta1</span> <span class="o">*</span> <span class="n">m_b</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta1</span><span class="p">)</span> <span class="o">*</span> <span class="n">grads</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">v_w</span> <span class="o">=</span> <span class="n">beta2</span> <span class="o">*</span> <span class="n">v_w</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta2</span><span class="p">)</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">grads</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">v_b</span> <span class="o">=</span> <span class="n">beta2</span> <span class="o">*</span> <span class="n">v_b</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">beta2</span><span class="p">)</span> <span class="o">*</span> <span class="n">tf</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">grads</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="n">m_w_correction</span> <span class="o">=</span> <span class="n">m_w</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">tf</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">beta1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">global_step</span><span class="p">)))</span>
+        <span class="n">m_b_correction</span> <span class="o">=</span> <span class="n">m_b</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">tf</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">beta1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">global_step</span><span class="p">)))</span>
+        <span class="n">v_w_correction</span> <span class="o">=</span> <span class="n">v_w</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">tf</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">beta2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">global_step</span><span class="p">)))</span>
+        <span class="n">v_b_correction</span> <span class="o">=</span> <span class="n">v_b</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">tf</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">beta2</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">global_step</span><span class="p">)))</span>
+
+        <span class="n">w1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span> <span class="o">*</span> <span class="n">m_w_correction</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v_w_correction</span><span class="p">))</span>
+        <span class="n">b1</span><span class="o">.</span><span class="n">assign_sub</span><span class="p">(</span><span class="n">lr</span> <span class="o">*</span> <span class="n">m_b_correction</span> <span class="o">/</span> <span class="n">tf</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v_b_correction</span><span class="p">))</span>
+<span class="c1">##########################################################################</span>
+
+    <span class="c1"># 每个epoch，打印loss信息</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Epoch {}, loss: {}&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">epoch</span><span class="p">,</span> <span class="n">loss_all</span> <span class="o">/</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">train_loss_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss_all</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># 将4个step的loss求平均记录在此变量中</span>
+    <span class="n">loss_all</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># loss_all归零，为记录下一个epoch的loss做准备</span>
+
+    <span class="c1"># 测试部分</span>
+    <span class="c1"># total_correct为预测对的样本个数, total_number为测试的总样本数，将这两个变量都初始化为0</span>
+    <span class="n">total_correct</span><span class="p">,</span> <span class="n">total_number</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="ow">in</span> <span class="n">test_db</span><span class="p">:</span>
+        <span class="c1"># 使用更新后的参数进行预测</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">w1</span><span class="p">)</span> <span class="o">+</span> <span class="n">b1</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># 返回y中最大值的索引，即预测的分类</span>
+        <span class="c1"># 将pred转换为y_test的数据类型</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">y_test</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="c1"># 若分类正确，则correct=1，否则为0，将bool型的结果转换为int型</span>
+        <span class="n">correct</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y_test</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="c1"># 将每个batch的correct数加起来</span>
+        <span class="n">correct</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">reduce_sum</span><span class="p">(</span><span class="n">correct</span><span class="p">)</span>
+        <span class="c1"># 将所有batch中的correct数加起来</span>
+        <span class="n">total_correct</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">correct</span><span class="p">)</span>
+        <span class="c1"># total_number为测试的总样本数，也就是x_test的行数，shape[0]返回变量的行数</span>
+        <span class="n">total_number</span> <span class="o">+=</span> <span class="n">x_test</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># 总的准确率等于total_correct/total_number</span>
+    <span class="n">acc</span> <span class="o">=</span> <span class="n">total_correct</span> <span class="o">/</span> <span class="n">total_number</span>
+    <span class="n">test_acc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">acc</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;Test_acc:&#34;</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&#34;--------------------------&#34;</span><span class="p">)</span>
+<span class="n">total_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">now_time</span>  <span class="c1">##3##</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&#34;total_time&#34;</span><span class="p">,</span> <span class="n">total_time</span><span class="p">)</span>  <span class="c1">##4##</span>
+
+<span class="c1"># 绘制 loss 曲线</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Loss Function Curve&#39;</span><span class="p">)</span>  <span class="c1"># 图片标题</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epoch&#39;</span><span class="p">)</span>  <span class="c1"># x轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Loss&#39;</span><span class="p">)</span>  <span class="c1"># y轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">train_loss_results</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&#34;$Loss$&#34;</span><span class="p">)</span>  <span class="c1"># 逐点画出trian_loss_results值并连线，连线图标是Loss</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>  <span class="c1"># 画出曲线图标</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># 画出图像</span>
+
+<span class="c1"># 绘制 Accuracy 曲线</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Acc Curve&#39;</span><span class="p">)</span>  <span class="c1"># 图片标题</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Epoch&#39;</span><span class="p">)</span>  <span class="c1"># x轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Acc&#39;</span><span class="p">)</span>  <span class="c1"># y轴变量名称</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">test_acc</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&#34;$Accuracy$&#34;</span><span class="p">)</span>  <span class="c1"># 逐点画出test_acc值并连线，连线图标是Accuracy</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="统计结果如下">统计结果如下</h5>
+<p>不同主机结果一般不同</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>SGD</th>
+<th>SGDM</th>
+<th>Adagrad</th>
+<th>RMSProp</th>
+<th>Adam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TotalTime</td>
+<td>11.8842</td>
+<td>13.1298</td>
+<td>12.1814</td>
+<td>13.7126</td>
+<td>21.4873</td>
+</tr>
+</tbody>
+</table>
+<p>主要学习的资料，西安科技大学：<a href="https://www.icourse163.org/learn/XUST-1206363802#/learn/announce" target="_blank" rel="noopener noreffer">神经网络与深度学习——TensorFlow2.0实战</a>，北京大学：<a href="https://www.icourse163.org/learn/PKU-1002536002#/learn/announce" target="_blank" rel="noopener noreffer">人工智能实践Tensorflow笔记</a></p>
+</div>
+
+            <div class="post" style="padding-top: 0">
+
+
+<div class="post-share"><div class="share-link">
+        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://xmoon5.github.io/optimizer/" data-title="TensorFlow2.1入门学习笔记(9)——神经网络参数优化器(优化器性能比较)" data-via="MoonXiaomu" data-hashtags="optimizer"><span class="svg-social-icon icon-twitter"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://xmoon5.github.io/optimizer/" data-hashtag="optimizer"><span class="svg-social-icon icon-facebook"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://xmoon5.github.io/optimizer/" data-title="TensorFlow2.1入门学习笔记(9)——神经网络参数优化器(优化器性能比较)" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://xmoon5.github.io/optimizer/" data-title="TensorFlow2.1入门学习笔记(9)——神经网络参数优化器(优化器性能比较)" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
+    </div></div>
+<div class="post-tags"><a href="/tags/optimizer/" class="tag">optimizer</a></div></div>
+        </div>
+    <div id="toc-final"></div>
+    </article><div class="page single comments content-block-position"><div id="comments"></div></div></div>
+
+</main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><div><span id="timeDate">正在烧脑计算建站时间...</span><span id="times"></span><script>var now = new Date();function createtime(){var grt= new Date("05/20/2020 00:00:00");now.setTime(now.getTime()+250);days = (now - grt ) / 1000 / 60 / 60 / 24;dnum = Math.floor(days);hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);hnum = Math.floor(hours);if(String(hnum).length ==1 ){hnum = "0" + hnum; }minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);mnum = Math.floor(minutes);if(String(mnum).length ==1 ){mnum = "0" + mnum;}seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);snum = Math.round(seconds);if(String(snum).length ==1 ){snum = "0" + snum;}document.getElementById("timeDate").innerHTML = "&nbsp"+dnum+"&nbsp天";document.getElementById("times").innerHTML = hnum + "&nbsp小时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";}setInterval("createtime()",250);</script></div>___<i class="fa fa-biking fa-fw"></i>______</div><div class="footer-line"><i class="svg-icon icon-copyright"></i><span>2020 - 2021</span><span class="author">&nbsp;<a href="/" target="_blank"></a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="http://www.beian.miit.gov.cn" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://blog.pangao.vip/icp/xmoon.info">🧑ICP证000000号</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="svg-icon icon-arrow-up"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="svg-icon icon-comments-fixed"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/twemoji@13.0.0/dist/twemoji.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"","algoliaIndex":"","algoliaSearchKey":"","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"algolia"},"twemoji":true};</script><script src="/js/theme.min.js"></script><script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	        ga('create', 'UA-167439955-2', 'auto');
+	        ga('set', 'anonymizeIp', true);
+	        ga('send', 'pageview');
+	    </script></body>
+</html>

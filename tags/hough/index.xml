@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Hough - 标签 - Moon&#39;s Blog</title>
+        <link>https://xmoon5.github.io/tags/hough/</link>
+        <description>Hough - 标签 - Moon&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 29 Jul 2020 17:30:45 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/tags/hough/" rel="self" type="application/rss+xml" /><item>
+    <title>python实现Canny与Hough算法</title>
+    <link>https://xmoon5.github.io/cannyhough/</link>
+    <pubDate>Wed, 29 Jul 2020 17:30:45 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/cannyhough/</guid>
+    <description><![CDATA[任务说明：编写一个钱币定位系统，其不仅能够检测出输入图像中各个钱币的边缘，同时，还能给出各个钱币的圆心坐标与半径。 效果 代码实现 Canny边缘]]></description>
+</item></channel>
+</rss>

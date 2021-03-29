@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noodp"/><title>边缘检测(Edge Detection) | Moon&#39;s Blog</title><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content=""/>
+<meta name="twitter:title" content="边缘检测(Edge Detection)"/>
+<meta name="twitter:description" content=""/><meta name="twitter:creator" content="@MoonXiaomu"/><meta name="Description" content="KEEP KWARKING"><meta property="og:title" content="边缘检测(Edge Detection)" />
+<meta property="og:description" content="边缘提取 在大多数时候图像的边缘可以承载大部分的信息，并且提取边缘可以除去很多干扰信息，提高处理数据的效率 目标 识别图像中的突然变化(不连续) 图" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xmoon5.github.io/edgedetection/" />
+<meta property="og:image" content="https://xmoon5.github.io/images/favicon.svg"/>
+<meta property="article:published_time" content="2020-07-10T16:50:26+08:00" />
+<meta property="article:modified_time" content="2021-03-29T11:34:14+08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+<meta name="application-name" content="MOON">
+<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://xmoon5.github.io/edgedetection/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "边缘检测(Edge Detection)",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/xmoon5.github.io\/edgedetection\/"
+        },"image": ["https:\/\/xmoon5.github.io\/images\/cover.png"],"genre": "posts","keywords": "高斯滤波, Canny edge detector","wordCount":  1531 ,
+        "url": "https:\/\/xmoon5.github.io\/edgedetection\/","datePublished": "2020-07-10T16:50:26+08:00","dateModified": "2021-03-29T11:34:14+08:00","description": ""
+    }
+    </script><script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "主页",
+            "item": "https:\/\/xmoon5.github.io"
+        },{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "计算机视觉",
+            "item": "https://xmoon5.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"
+        },{
+                "@type": "ListItem",
+                "position": 3,
+                "name": "边缘检测(Edge Detection)"
+            }]
+    }
+</script></head>
+    <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Moon&#39;s Blog" class="header-logo logo-svg"><span class="header-title-pre"><i class='fas fa-pencil-alt fa-fw'></i></span>Moon&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <nav>
+                <ul class="menu-inner"><li>
+                        <a class="menu-item" href="/posts/"> 目录 </a>
+                    </li><li>
+                        <a class="menu-item" href="/tags/"> 标签 </a>
+                    </li><li>
+                        <a class="menu-item" href="/categories/"> 归档 </a>
+                    </li><li>
+                        <a class="menu-item" href="/music/"> 歌单 </a>
+                    </li><li>
+                        <a class="menu-item" href="/comments/"> 留言板 </a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/" rel="noopener noreffer" target="_blank"> 小工具 </a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/GithubGo/index.html" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a>
+                    </li></ul>
+            </nav><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="search……" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <span class="svg-icon icon-search"></span>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <span class="svg-icon icon-cancel"></span>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <span class="svg-icon icon-loading"></span>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <span class="svg-icon icon-moon"></span>
+                </a>
+            </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Moon&#39;s Blog" class="header-logo"><span class="header-title-pre"><i class='fas fa-pencil-alt fa-fw'></i></span>Moon&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="search……" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <span class="svg-icon icon-search"></span>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <span class="svg-icon icon-cancel"></span>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <span class="svg-icon icon-loading"></span>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><nav>
+                <ul><li>
+                        <a class="menu-item" href="/posts/" title="">目录</a>
+                    </li><li>
+                        <a class="menu-item" href="/tags/" title="">标签</a>
+                    </li><li>
+                        <a class="menu-item" href="/categories/" title="">归档</a>
+                    </li><li>
+                        <a class="menu-item" href="/music/" title="">歌单</a>
+                    </li><li>
+                        <a class="menu-item" href="/comments/" title="">留言板</a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/" title="" rel="noopener noreffer" target="_blank">小工具</a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/GithubGo/index.html" title="" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a>
+                    </li></ul>
+            </nav>
+            <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <span class="svg-icon icon-moon"></span>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+<div class="container content-article page-toc theme-classic"><div class="toc" id="toc-auto">
+            <div class="toc-title">目录</div>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div>
+
+    <div class="header-post">
+
+        
+
+        
+        <div class="post-title">
+
+                <div class="post-all-meta">
+                    <nav class="breadcrumbs">
+    <ol>
+        <li><a href="/">主页 </a></li><li><a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/">计算机视觉 </a></li><li>边缘检测(Edge Detection)</li>
+    </ol>
+</nav>
+                    <h1 class="single-title flipInX">边缘检测(Edge Detection)</h1><div class="post-meta">
+                        <div class="post-meta-line"><span class="post-category">
+                                <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"><i class="svg-icon icon-folder"></i>计算机视觉</a>
+                            </span><span class="post-meta-date">
+                                <i class="svg-icon icon-clock"></i><time class="timeago" datetime="2020-07-10">2020-07-10</time>
+                            </span><span class="post-meta-words">
+                                <i class="svg-icon icon-pencil"></i>约 1531 字
+                            </span>
+                            <span class="post-meta-reading">
+                                <i class="svg-icon icon-stopwatch"></i>预计阅读 4 分钟
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+
+    <article class="single toc-start">
+
+        <div class="content-block content-block-first content-block-position">
+
+        <div class="post"><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#边缘提取">边缘提取</a></li>
+    <li><a href="#目标">目标</a></li>
+    <li><a href="#边缘的种类">边缘的种类</a></li>
+    <li><a href="#边缘的特征">边缘的特征</a></li>
+    <li><a href="#图像梯度">图像梯度</a></li>
+    <li><a href="#高斯滤波器">高斯滤波器</a></li>
+    <li><a href="#canny-边缘检测">Canny 边缘检测</a></li>
+  </ul>
+</nav></div>
+            </div><div style="margin: 20px 0 20px 0;">
+                    <span class="post-update">
+                        <b>更新于 2021-03-29</b>
+                    </span>
+                </div><h2 id="边缘提取">边缘提取</h2>
+<p>在大多数时候图像的边缘可以承载大部分的信息，并且提取边缘可以除去很多干扰信息，提高处理数据的效率</p>
+<h2 id="目标">目标</h2>
+<p><strong>识别图像中的突然变化(不连续)</strong></p>
+<ul>
+<li>图像的大部分语义信息和形状信息都可以编码在边缘上</li>
+<li>理想:艺术家使用线条勾勒画(但艺术家也使用对象层次的知识)</li>
+</ul>
+<h2 id="边缘的种类">边缘的种类</h2>
+<ul>
+<li>表面形状的突变</li>
+<li>深度方向的不连续</li>
+<li>表面颜色的突变</li>
+<li>光线阴影的不连续</li>
+</ul>
+<h2 id="边缘的特征">边缘的特征</h2>
+<p>边缘是图像强度函数中快速变化的地方，变化的地方就存在梯度，对灰度值求导，导数为0的点即为<strong>边界点</strong></p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200709230650310.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200709230650310.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p><strong>卷积的导数</strong></p>
+<ul>
+<li><strong>偏导数公式：</strong></li>
+</ul>
+<p>$$\frac {\partial f(x,y)}{\partial x}  = \lim_{\varepsilon \rightarrow 0} \frac{f(x+\varepsilon ,y)-f(x,y)}{\varepsilon}$$</p>
+<ul>
+<li>在卷积中为描述数据，采取 <strong>近似化处理：</strong>
+$$\frac {\partial f(x,y)}{\partial x}  \approx  \frac{f(x+1,y)-f(x,y)}{1}$$</li>
+</ul>
+<p>显然在x方向的导数就是与该像素自身与右边相邻像素的<strong>差值</strong></p>
+<p><strong>卷积描述偏导</strong></p>
+<p>使用卷积核处理</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200709232639610.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200709232639610.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure>
+对灰度图的x和y方向分别处理后的效果如下图：
+
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200709233052117.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200709233052117.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p><strong>有限差分滤波器（卷积核）</strong></p>
+<ul>
+<li><strong>Roberts 算子</strong>
+Roberts 算子是一种最简单的算子，是一种利用局部差分算子寻找边缘的算子。他采用对角线方向相邻两象素之差近似梯度幅值检测边缘。检测垂直边缘的效果好于斜向边缘，定位精度高，对噪声敏感，无法抑制噪声的影响。
+1963年， Roberts 提出了这种寻找边缘的算子。 Roberts 边缘算子是一个 2x2 的模版，采用的是对角方向相邻的两个像素之差。
+Roberts 算子的模板分为水平方向和垂直方向，如下所示，从其模板可以看出， Roberts 算子能较好的增强正负 45 度的图像边缘。</li>
+</ul>
+<div>
+$$
+dx = \left[
+ \begin{matrix}
+   -1 & 0\\
+   0 & 1 \\
+  \end{matrix} 
+\right]
+$$
+</div>
+<div>
+$$
+dy = \left[
+ \begin{matrix}
+   0 & -1\\
+   1 & 0 \\
+  \end{matrix} 
+\right]
+$$
+</div>
+<ul>
+<li><strong>Prewitt算子</strong>
+Prewitt 算子是一种一阶微分算子的边缘检测，利用像素点上下、左右邻点的灰度差，在边缘处达到极值检测边缘，去掉部分伪边缘，对噪声具有平滑作用。Prewitt算子适合用来识别噪声较多、灰度渐变的图像。</li>
+</ul>
+<div>
+$$
+dx = \left[
+ \begin{matrix}
+   1 & 0 & -1\\
+   1 & 0 & -1\\
+   1 & 0 & -1\\
+  \end{matrix} 
+\right]
+$$
+</div>
+<div>
+$$
+dy = \left[
+ \begin{matrix}
+   -1 & -1 & -1\\
+   0 & 0 & 0\\
+   1 & 1 & 1\\
+  \end{matrix} 
+\right]
+$$
+</div>
+<ul>
+<li><strong>Sobel算子</strong>
+Sobel算子是一种用于边缘检测的离散微分算子，它结合了高斯平滑和微分求导。Sobel 算子在 Prewitt 算子的基础上增加了权重的概念，认为相邻点的距离远近对当前像素点的影响是不同的，距离越近的像素点对应当前像素的影响越大，从而实现图像锐化并突出边缘轮廓。</li>
+</ul>
+<div>
+$$
+dx = \left[
+ \begin{matrix}
+   1 & 0 & -1\\
+   2 & 0 & -2\\
+   1 & 0 & -1\\
+  \end{matrix} 
+\right]
+$$
+</div>
+<div>
+$$
+dy = \left[
+ \begin{matrix}
+   -1 & -2 & -1\\
+   0 & 0 & 0\\
+   1 & 2 & 1\\
+  \end{matrix} 
+\right]
+$$
+</div>
+<h2 id="图像梯度">图像梯度</h2>
+<p>$$\nabla f=[\frac{\partial f}{\partial x},\frac{\partial f}{\partial y}]$$</p>
+<ul>
+<li><strong>梯度指向强度增长最快的方向</strong></li>
+</ul>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200710112756581.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200710112756581.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<ul>
+<li>
+<p><strong>梯度的角度</strong>
+边的方向与梯度方向垂直
+$$\theta = tan^{-1} (\frac{\partial f}{\partial y}/\frac{\partial f}{\partial x})$$</p>
+</li>
+<li>
+<p><strong>梯度的模长（幅值）</strong>
+可以说明是边缘的可能性大小
+$$||\nabla f|| = \sqrt{(\frac{\partial f}{\partial x})^2+(\frac{\partial f}{\partial y})^2}$$</p>
+</li>
+<li>
+<p>处理图像后：
+
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200710114847529.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200710114847529.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+</li>
+</ul>
+<h2 id="高斯滤波器">高斯滤波器</h2>
+<p>当图像的像素存在大量噪点时，相邻的像素差异大，所求梯度也会偏大，无法提取边缘信息。
+
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/2020071012030185.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/2020071012030185.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure>
+<strong>解决方案</strong></p>
+<ol>
+<li>
+<p>平滑处理：使用平滑滤波器去噪，使图像信号变得平滑</p>
+</li>
+<li>
+<p>再对处理后的信号求导，取极值
+
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200710121354767.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200710121354767.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+</li>
+<li>
+<p>根据卷积的计算性质：$\frac{d}{dx}(f*g) = f * \frac{d}{dx}g$，先对平滑核求导，再进行卷积相乘来简化运算，减少运算量</p>
+</li>
+</ol>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200710123012114.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200710123012114.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p><strong>高斯滤波器</strong>
+
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200710125348951.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200710125348951.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p><strong>高斯滤波器的导数</strong></p>
+<p>参数选择的越小则保留的细节越多
+
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200710124831980.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200710124831980.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<h2 id="canny-边缘检测">Canny 边缘检测</h2>
+<p><strong>门限化</strong></p>
+<p>经过处理后，可以得到边缘图，但存在很多高频噪点，通过设置更高的门限，过滤噪点，使得到的边缘更“纯粹”</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200710161702718.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200710161702718.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p><strong>非最大化抑制</strong></p>
+<p>在通过高斯滤波后可以得到图像的大致轮廓线，由于图像的像素变换通常是缓慢改变的， 在处理后的图像中仍然存在大量的粗的“<strong>边</strong>”</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/2020071015573229.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/2020071015573229.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure>
+<strong>方案</strong></p>
+<ol>
+<li>检查像素是否沿梯度方向为局部最大值，选择沿边缘宽度的最大值作为边缘
+
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/2020071016033444.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/2020071016033444.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></li>
+<li>处理后
+
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200710162723699.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200710162723699.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure>
+经过上面的处理后，已经可以较为粗糙的得到图像的边缘图，但仍然存在问题，在有些部分的边	缘不连续，失去了很多信息如上图的 <code>黄色区域</code> ，这是由于在门限化的过程中，设置过小，导致将需要的边缘滤除。</li>
+</ol>
+<p><strong>双门限法</strong></p>
+<ol>
+<li>先使用高门限将较粗的边检测出来，这些边都是比较鲁棒的，是噪声的可能性极低</li>
+<li>再降低门限，将较细的边显现出来</li>
+<li>将与高门限过滤出的边连接的低门限边保留，滤除没有连接的（不连续的）噪声</li>
+</ol>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200710164509675.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200710164509675.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<ol start="4">
+<li>处理后可以得到更好的边缘效果</li>
+</ol>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200710164831228.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200710164831228.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p><strong>学习资源：<a href="https://www.bilibili.com/video/BV1nz4y197Qv" target="_blank" rel="noopener noreffer">北京邮电大学计算机视觉——鲁鹏</a></strong></p>
+</div>
+
+            <div class="post" style="padding-top: 0">
+
+
+<div class="post-share"><div class="share-link">
+        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://xmoon5.github.io/edgedetection/" data-title="边缘检测(Edge Detection)" data-via="MoonXiaomu" data-hashtags="高斯滤波,Canny edge detector"><span class="svg-social-icon icon-twitter"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://xmoon5.github.io/edgedetection/" data-hashtag="高斯滤波"><span class="svg-social-icon icon-facebook"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://xmoon5.github.io/edgedetection/" data-title="边缘检测(Edge Detection)" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://xmoon5.github.io/edgedetection/" data-title="边缘检测(Edge Detection)" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
+    </div></div>
+<div class="post-tags"><a href="/tags/%E9%AB%98%E6%96%AF%E6%BB%A4%E6%B3%A2/" class="tag">高斯滤波</a><a href="/tags/canny-edge-detector/" class="tag">Canny edge detector</a></div></div>
+        </div>
+    <div id="toc-final"></div>
+    </article><div class="page single comments content-block-position"><div id="comments"></div></div></div>
+
+</main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><div><span id="timeDate">正在烧脑计算建站时间...</span><span id="times"></span><script>var now = new Date();function createtime(){var grt= new Date("05/20/2020 00:00:00");now.setTime(now.getTime()+250);days = (now - grt ) / 1000 / 60 / 60 / 24;dnum = Math.floor(days);hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);hnum = Math.floor(hours);if(String(hnum).length ==1 ){hnum = "0" + hnum; }minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);mnum = Math.floor(minutes);if(String(mnum).length ==1 ){mnum = "0" + mnum;}seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);snum = Math.round(seconds);if(String(snum).length ==1 ){snum = "0" + snum;}document.getElementById("timeDate").innerHTML = "&nbsp"+dnum+"&nbsp天";document.getElementById("times").innerHTML = hnum + "&nbsp小时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";}setInterval("createtime()",250);</script></div>___<i class="fa fa-biking fa-fw"></i>______</div><div class="footer-line"><i class="svg-icon icon-copyright"></i><span>2020 - 2021</span><span class="author">&nbsp;<a href="/" target="_blank"></a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="http://www.beian.miit.gov.cn" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://blog.pangao.vip/icp/xmoon.info">🧑ICP证000000号</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="svg-icon icon-arrow-up"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="svg-icon icon-comments-fixed"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/twemoji@13.0.0/dist/twemoji.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"","algoliaIndex":"","algoliaSearchKey":"","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"algolia"},"twemoji":true};</script><script src="/js/theme.min.js"></script><script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	        ga('create', 'UA-167439955-2', 'auto');
+	        ga('set', 'anonymizeIp', true);
+	        ga('send', 'pageview');
+	    </script></body>
+</html>

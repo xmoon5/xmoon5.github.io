@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>等压 - 标签 - Moon&#39;s Blog</title>
+        <link>https://xmoon5.github.io/tags/%E7%AD%89%E5%8E%8B/</link>
+        <description>等压 - 标签 - Moon&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 30 May 2020 06:52:33 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/tags/%E7%AD%89%E5%8E%8B/" rel="self" type="application/rss+xml" /><item>
+    <title>热力学第一定律 等值过程 绝热过程</title>
+    <link>https://xmoon5.github.io/thermodynamic1/</link>
+    <pubDate>Sat, 30 May 2020 06:52:33 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/thermodynamic1/</guid>
+    <description><![CDATA[热力学第一定律 内能，功和热量 实际气体内能：所有热分子热运动的动能和分子势能的总和 内能是状态量: $E=E(T,V)$ 理想气体内能: $E={\frac{M}{M_{mol}}{\frac{i}{2}}RT}$ 是状态参量T的单值函数 系统内]]></description>
+</item></channel>
+</rss>

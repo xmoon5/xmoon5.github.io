@@ -1,0 +1,79 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Moon&#39;s Blog</title>
+        <link>https://xmoon5.github.io/</link>
+        <description>KEEP KWARKING</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 22 May 2020 17:36:47 &#43;0000</lastBuildDate>
+            <atom:link href="https://xmoon5.github.io/index.xml" rel="self" type="application/rss+xml" />
+        <item>
+    <title>经典算法：Batch Normalization</title>
+    <link>https://xmoon5.github.io/batchnormalization/</link>
+    <pubDate>Thu, 13 Aug 2020 12:50:45 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/batchnormalization/</guid>
+    <description><![CDATA[在卷积网络六大模块中的BN（批批标准化）所指的就是Batch Normalization，该算法15年提出，现在已经成为深度学习中经常使用的技]]></description>
+</item><item>
+    <title>Python实现图像全景拼接</title>
+    <link>https://xmoon5.github.io/panorama/</link>
+    <pubDate>Sun, 09 Aug 2020 11:06:26 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/panorama/</guid>
+    <description><![CDATA[目标：将数张有重叠部分的图像通过特征点检测，匹配，图像变换拼成一幅无缝的全景图或高分辨率图像 在图像拼接中首先利用SIFT算法提取图像特征进而]]></description>
+</item><item>
+    <title>图像分割(Segmentation)——K-Means, 最小割, 归一化图割</title>
+    <link>https://xmoon5.github.io/segmentstionclustering/</link>
+    <pubDate>Fri, 31 Jul 2020 17:50:45 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/segmentstionclustering/</guid>
+    <description><![CDATA[图像分割是将图片将相似的部分分割成相同的块 Gestalt理论 解释物体分割的底层原理 将同一个东西群组在一起,集合中的元素可以具有由关系产生的属]]></description>
+</item><item>
+    <title>python实现Canny与Hough算法</title>
+    <link>https://xmoon5.github.io/cannyhough/</link>
+    <pubDate>Wed, 29 Jul 2020 17:30:45 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/cannyhough/</guid>
+    <description><![CDATA[任务说明：编写一个钱币定位系统，其不仅能够检测出输入图像中各个钱币的边缘，同时，还能给出各个钱币的圆心坐标与半径。 效果 代码实现 Canny边缘]]></description>
+</item><item>
+    <title>纹理表示(Texture)</title>
+    <link>https://xmoon5.github.io/texture/</link>
+    <pubDate>Sun, 26 Jul 2020 15:30:26 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/texture/</guid>
+    <description><![CDATA[纹理是由一些基元以某种方式组合起来，虽然看起来很“乱”，但任然存在一些规律 规则的纹理与不规则的纹理 纹理描述 使用高斯偏导核，对图像进行卷积，x]]></description>
+</item><item>
+    <title>区域检测——Blob &amp; SIFT</title>
+    <link>https://xmoon5.github.io/edgedetection2/</link>
+    <pubDate>Wed, 22 Jul 2020 13:20:26 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/edgedetection2/</guid>
+    <description><![CDATA[针对Harris无法拟合尺度问题而提出 目标:独立检测同一图像缩放版本的对应区域 需要通过尺度选择机制来寻找与图像变换协变的特征区域大小 “当尺度]]></description>
+</item><item>
+    <title>区域检测——Harris角点</title>
+    <link>https://xmoon5.github.io/localfeature/</link>
+    <pubDate>Fri, 17 Jul 2020 20:30:26 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/localfeature/</guid>
+    <description><![CDATA[对于图像处理时经常需要提取特征点分析图片结构，将照片进行拼接，实现全景拍摄，那么在照片特征点提取时所采用的具体算法是什么呢？ 解决思路 提取特征]]></description>
+</item><item>
+    <title>拟合(Fitting)</title>
+    <link>https://xmoon5.github.io/fitting/</link>
+    <pubDate>Wed, 15 Jul 2020 18:30:26 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/fitting/</guid>
+    <description><![CDATA[提取完边缘后如何使用数学模型来描述边缘？ 例如：在桌子上有几枚硬币，在经过边缘提取后，需要描述出硬币的圆心坐标和圆的大小 难点 噪声：噪声的存在使]]></description>
+</item><item>
+    <title>边缘检测(Edge Detection)</title>
+    <link>https://xmoon5.github.io/edgedetection/</link>
+    <pubDate>Fri, 10 Jul 2020 16:50:26 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/edgedetection/</guid>
+    <description><![CDATA[边缘提取 在大多数时候图像的边缘可以承载大部分的信息，并且提取边缘可以除去很多干扰信息，提高处理数据的效率 目标 识别图像中的突然变化(不连续) 图]]></description>
+</item><item>
+    <title>高驱动注意网络(HANET)</title>
+    <link>https://xmoon5.github.io/hanet/</link>
+    <pubDate>Fri, 03 Jul 2020 00:20:26 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/hanet/</guid>
+    <description><![CDATA[PAPER: Cars Can’t Fly up in the Sky: Improving Urban-Scene Segmentation via Height-driven Attention Networks CityScape数据集 介绍 ​Cityscapes是关于城市街道场景的语义理解图片数据集。它主要包含来]]></description>
+</item></channel>
+</rss>

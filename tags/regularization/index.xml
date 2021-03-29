@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>regularization - 标签 - Moon&#39;s Blog</title>
+        <link>https://xmoon5.github.io/tags/regularization/</link>
+        <description>regularization - 标签 - Moon&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 21 May 2020 18:14:58 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/tags/regularization/" rel="self" type="application/rss+xml" /><item>
+    <title>TensorFlow2.1入门学习笔记(8)——欠拟合与过拟合(正则化)</title>
+    <link>https://xmoon5.github.io/regularization/</link>
+    <pubDate>Thu, 21 May 2020 18:14:58 &#43;0800</pubDate>
+    <author>Moon</author>
+    <guid>https://xmoon5.github.io/regularization/</guid>
+    <description><![CDATA[欠拟合与过拟合 欠拟合：模型不能有效拟合数据集对现有数据集学习的不够彻底 过拟合：模型对训练集拟合的太好，而缺失了泛化力 欠拟合的解决方法： 增加输]]></description>
+</item></channel>
+</rss>

@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noodp"/><title>经典算法：Batch Normalization | Moon&#39;s Blog</title><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content=""/>
+<meta name="twitter:title" content="经典算法：Batch Normalization"/>
+<meta name="twitter:description" content=""/><meta name="twitter:creator" content="@MoonXiaomu"/><meta name="Description" content="KEEP KWARKING"><meta property="og:title" content="经典算法：Batch Normalization" />
+<meta property="og:description" content="在卷积网络六大模块中的BN（批批标准化）所指的就是Batch Normalization，该算法15年提出，现在已经成为深度学习中经常使用的技" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://xmoon5.github.io/batchnormalization/" />
+<meta property="og:image" content="https://xmoon5.github.io/images/favicon.svg"/>
+<meta property="article:published_time" content="2020-08-13T12:50:45+08:00" />
+<meta property="article:modified_time" content="2021-03-29T11:34:14+08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+<meta name="application-name" content="MOON">
+<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://xmoon5.github.io/batchnormalization/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "经典算法：Batch Normalization",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/xmoon5.github.io\/batchnormalization\/"
+        },"image": ["https:\/\/xmoon5.github.io\/images\/cover.png"],"genre": "posts","keywords": "Batch Normalization, 算法","wordCount":  3274 ,
+        "url": "https:\/\/xmoon5.github.io\/batchnormalization\/","datePublished": "2020-08-13T12:50:45+08:00","dateModified": "2021-03-29T11:34:14+08:00","description": ""
+    }
+    </script><script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "主页",
+            "item": "https:\/\/xmoon5.github.io"
+        },{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "深度学习",
+            "item": "https://xmoon5.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"
+        },{
+                "@type": "ListItem",
+                "position": 3,
+                "name": "经典算法：Batch Normalization"
+            }]
+    }
+</script></head>
+    <body data-header-desktop="auto" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('dark' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'dark' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Moon&#39;s Blog" class="header-logo logo-svg"><span class="header-title-pre"><i class='fas fa-pencil-alt fa-fw'></i></span>Moon&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <nav>
+                <ul class="menu-inner"><li>
+                        <a class="menu-item" href="/posts/"> 目录 </a>
+                    </li><li>
+                        <a class="menu-item" href="/tags/"> 标签 </a>
+                    </li><li>
+                        <a class="menu-item" href="/categories/"> 归档 </a>
+                    </li><li>
+                        <a class="menu-item" href="/music/"> 歌单 </a>
+                    </li><li>
+                        <a class="menu-item" href="/comments/"> 留言板 </a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/" rel="noopener noreffer" target="_blank"> 小工具 </a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/GithubGo/index.html" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a>
+                    </li></ul>
+            </nav><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="search……" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <span class="svg-icon icon-search"></span>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <span class="svg-icon icon-cancel"></span>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <span class="svg-icon icon-loading"></span>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <span class="svg-icon icon-moon"></span>
+                </a>
+            </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Moon&#39;s Blog" class="header-logo"><span class="header-title-pre"><i class='fas fa-pencil-alt fa-fw'></i></span>Moon&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="search……" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <span class="svg-icon icon-search"></span>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <span class="svg-icon icon-cancel"></span>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <span class="svg-icon icon-loading"></span>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><nav>
+                <ul><li>
+                        <a class="menu-item" href="/posts/" title="">目录</a>
+                    </li><li>
+                        <a class="menu-item" href="/tags/" title="">标签</a>
+                    </li><li>
+                        <a class="menu-item" href="/categories/" title="">归档</a>
+                    </li><li>
+                        <a class="menu-item" href="/music/" title="">歌单</a>
+                    </li><li>
+                        <a class="menu-item" href="/comments/" title="">留言板</a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/" title="" rel="noopener noreffer" target="_blank">小工具</a>
+                    </li><li>
+                        <a class="menu-item" href="https://tools.cyfan.top/GithubGo/index.html" title="" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a>
+                    </li></ul>
+            </nav>
+            <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <span class="svg-icon icon-moon"></span>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+<div class="container content-article page-toc theme-classic"><div class="toc" id="toc-auto">
+            <div class="toc-title">目录</div>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div>
+
+    <div class="header-post">
+
+        
+
+        
+        <div class="post-title">
+
+                <div class="post-all-meta">
+                    <nav class="breadcrumbs">
+    <ol>
+        <li><a href="/">主页 </a></li><li><a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习 </a></li><li>经典算法：Batch Normalization</li>
+    </ol>
+</nav>
+                    <h1 class="single-title flipInX">经典算法：Batch Normalization</h1><div class="post-meta">
+                        <div class="post-meta-line"><span class="post-category">
+                                <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"><i class="svg-icon icon-folder"></i>深度学习</a>
+                            </span><span class="post-meta-date">
+                                <i class="svg-icon icon-clock"></i><time class="timeago" datetime="2020-08-13">2020-08-13</time>
+                            </span><span class="post-meta-words">
+                                <i class="svg-icon icon-pencil"></i>约 3274 字
+                            </span>
+                            <span class="post-meta-reading">
+                                <i class="svg-icon icon-stopwatch"></i>预计阅读 7 分钟
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+
+    <article class="single toc-start">
+
+        <div class="content-block content-block-first content-block-position">
+
+        <div class="post"><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#feature-scaling-特征缩放">Feature Scaling 特征缩放</a></li>
+    <li><a href="#经典的feature-scaling">经典的Feature Scaling</a></li>
+    <li><a href="#internal-covariate-shift">Internal Covariate Shift</a></li>
+    <li><a href="#batch-normalization原理">Batch Normalization原理</a></li>
+    <li><a href="#batch-normalization的优势">Batch Normalization的优势</a></li>
+  </ul>
+</nav></div>
+            </div><div style="margin: 20px 0 20px 0;">
+                    <span class="post-update">
+                        <b>更新于 2021-03-29</b>
+                    </span>
+                </div><p>在<a href="https://xmoon.info/2020/06/convolutional1/#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C" target="_blank" rel="noopener noreffer"><strong>卷积网络六大模块</strong></a>中的<strong>BN</strong>（<strong>批批标准化</strong>）所指的就是Batch Normalization，该算法15年提出，现在已经成为深度学习中经常使用的技术，可以极大的提高网络的处理能力。</p>
+<h2 id="feature-scaling-特征缩放">Feature Scaling 特征缩放</h2>
+<p>在没有进行Feature Scaling之前，如果两个输入数据$x_1,x_2$的distribution很不均匀的话，导致对$w_2$计算结果的影响比较大，所以训练的时候，横纵方向上需要给与一个不同的training rate，在$w_1$方向需要一个更大的learning rate，$w_2$方向给与一个较小的learning rate，不过这样做的办法却不见得很简单。所以对不同Feature做了normalization之后，使得error surface看起来比较接近正圆的话，就可以使训练容易得多。</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200813105328551.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200813105328551.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p><strong>优势</strong>：</p>
+<p>经过处理后error surface更接近一个<strong>圆</strong>，gradient在横的方向上和纵的方向上变化<strong>差不多</strong>，使得training变得更容易，如果error suface是一个<strong>椭圆</strong>，不同的方向上<strong>要非常不一样的学习率</strong>，例如：在横的方向上给比较大的学习率，纵的方向上给比较小的学习率，给不同的参数不同的学习率是有办法的，但不见得那么好做。如果可以把不同的feature做Normalization，让error surface看起来比较接近正圆的话，是会让training容易得多。</p>
+<h2 id="经典的feature-scaling">经典的Feature Scaling</h2>
+<p>现在有一大堆的数据，训练数据总共有$R$笔data。然后对每一个dimension去计算dimension的<strong>mean</strong>跟dimension的<strong>standard deviation</strong>，假设下图的input是39维，所以就算出39个mean跟39个standard deviation；然后对每一维中的数值，$\frac{x^r_i-m_i}{\sigma_i}$作为一个<strong>Normalization</strong>，你就使第$i$维的feature的分布为$mean=0，variance=1$。</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/2020081311041288.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/2020081311041288.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<h2 id="internal-covariate-shift">Internal Covariate Shift</h2>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200813110919726.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200813110919726.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure>
+如上图所示：每一个人代表1个layer，然后他们中间是用话筒连在一起，而当一个人手上的两边的话筒被接在一起的时候，整个network的传输才会顺利，才会得到好的效果。</p>
+<p>看到上面一排中间那个人，左手边的话筒比较高，右手边的话筒比较低。在训练的时候为了将两个话筒拉到同一个水平高度，它会将左手边的话筒放低一点，同时右手的话筒放高一点，因为是同时两边都变，所以就可能出现了下面的图，最后还是没对上。</p>
+<p>在过去的解决方法是<strong>调小learning rate</strong>，因为没对上就是因为学习率太大导致的，小的learnin rate又会导致训练速度变得很慢。</p>
+<h2 id="batch-normalization原理">Batch Normalization原理</h2>
+<p>batch Normalization就是对每一个layer做Feature Scaling，就可以解决Internal Covariate Shift问题。</p>
+<p>训练过程参数在调整的时候前一个层是后一个层的输入，当前一个层的参数改变之后也会改变后一层的参数。当后面的参数按照前面的参数学好了之后前面的layer就变了，因为前面的layer也是不断在变的。如果输入normalization的数据，因为输入是固定下来的，具有相同的均值和方差，training就会更容易。</p>
+<p>定义网络总共有$L$层（不包含输入层）</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200813112807966.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200813112807966.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p><strong>相关参数</strong>：</p>
+<ul>
+<li>
+<p>$l$ ：网络中的层标号</p>
+</li>
+<li>
+<p>$L$ ：网络中的最后一层或总层数</p>
+</li>
+<li>
+<p>$d_l$ ：第 $l$ 层的维度，即神经元结点数</p>
+</li>
+<li>
+<p>$W^{[l]}$ ：第 $l$ 层的权重矩阵， $W^{[l]} \in \R^{d_l\times d_{l-1}}$</p>
+</li>
+<li>
+<p>$b^{[l]}$ ：第 $l$ 层的偏置向量， $b^{l}\in  \R^{d_l\times 1}$</p>
+</li>
+<li>
+<p>$Z^{[l]}$ ：第$l$ 层的线性计算结果，$Z^{[l]}=W^{[l]}\times input +b^{[l]}$</p>
+</li>
+<li>
+<p>$g^{[l]}(\cdot)$ ：第 $l$ 层的激活函数</p>
+</li>
+<li>
+<p>$A^{[l]}$ ：第 $l$ 层的非线性激活结果，$A^{[l]} = g^{[l]}(Z^{[l]})$</p>
+</li>
+</ul>
+<p><strong>相关样本</strong>：</p>
+<ul>
+<li>
+<p>$M$ ：训练样本的数量</p>
+</li>
+<li>
+<p>$N$ ：训练样本的特征数</p>
+</li>
+<li>
+<p>$X$ ：训练样本集，$X=\lbrace x^{(1)},x^{(2)}, … ,x^{(M)}\rbrace$ （注意这里 $M$ 的一列是一个样本）</p>
+</li>
+<li>
+<p>$m$ ：batch size，即每个batch中样本的数量</p>
+</li>
+<li>
+<p>$X^{(i)}$：第 $i$ 个mini-batch的训练数据， $X=\lbrace x^{(1)},x^{(2)}, … ,x^{(k)}\rbrace$，其中 $X^{(i)}\in \R^{N\times m}$</p>
+</li>
+</ul>
+<p><strong>计算</strong>：</p>
+<p>对每个特征进行独立的normalization。考虑一个batch的训练，传入m个训练样本，并关注网络中的某一层，忽略上标 $l$</p>
+<p>$$Z\in  \R^{d_l\times m}$$</p>
+<p>当前层的第 $j$ 个维度，也就是第 $j$ 个神经元结点	，则有$Z\in  \R^{1\times m}$。
+当前维度进行规范化：</p>
+<p>$$\mu_j = \frac1m\sum^m_{i=1}Z^{(i)}_j$$</p>
+<p>$$\sigma^2_j = \frac 1m\sum^m_{i=1}(Z^{(i)}_j-\mu_j)^2$$</p>
+<p>$$\hat Z_j=\frac{Z_j-\mu _j}{\sqrt{\sigma^2_j+\epsilon}}$$</p>
+<blockquote>
+<p>其中$\epsilon$是为了防止方差为0产生无效计算。</p>
+</blockquote>
+<p><strong>结合个具体的例子来进行计算</strong>：
+下图只关注第 $l$ 层的计算结果，左边的矩阵是 $Z^{[l]}=W^{[l]}A^{[l-1]}+b^{[l]}$ 线性计算结果，还未进行激活函数的非线性变换。此时每一列是一个样本，图中可以看到共有8列，代表当前训练样本的batch中共有8个样本，每一行代表当前 $l$ 层神经元的一个节点，可以看到当前 $l$ 层共有4个神经元结点，即第 $l$ 层维度为4。</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200813120533517.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200813120533517.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p>对于第一个神经元，我们求得 $\mu_1 = 1.65, \sigma^2_1=0.44$ （其中 $\epsilon = 10^{-8}$ ），此时我们利用 $\mu_1 ;\sigma^2_1$ 对第一行数据（第一个维度）进行normalization得到新的值 $[-0.98, -0.23, -0.68, -1.13, 0.08, 2.19, 0.08]$ 。同理计算出其他输入维度归一化后的值。如下图：</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200813121158695.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200813121158695.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<p>通过上面的变换,用更加简化的方式来对数据进行规范化，<strong>使得第 $l$ 层的输入每个特征的分布均值为0，方差为1。</strong></p>
+<p>Normalization操作虽然缓解了ICS（Internal Covariate Shift）问题，让每一层网络的输入数据分布都变得稳定，但却导致了数据表达能力的缺失。也就是通过变换操作改变了原有数据的信息表达（representation ability of the network），使得底层网络学习到的参数信息丢失。另一方面，通过让每一层的输入分布均值为0，方差为1，会使得输入在经过sigmoid或tanh激活函数时，容易陷入非线性激活函数的线性区域。</p>
+<p>为了解决这个问题，BN又引入了两个可学习（learnable）的参数 $\gamma$ 与 $\beta$ 。这两个参数的引入是为了恢复数据本身的表达能力，对规范化后的数据进行线性变换，即 $\hat Z_j=\gamma_j\hat Z_j+\beta_j$ 。特别地，当 $\gamma^2=\sigma^2,\beta=\mu$ 时，可以实现等价变换（identity transform）并且保留了原始输入特征的分布信息。</p>
+<blockquote>
+<p>补充： 在进行normalization的过程中，由于我们的规范化操作会对减去均值，因此，偏置项 $b$ 可以被忽略掉或可以被置为0，即 $BN(Wu+b)=BN(Wu)$</p>
+</blockquote>
+<p><strong>算法总结</strong>：</p>
+<p>
+
+
+
+
+<figure><a target="_blank" href="https://img-blog.csdnimg.cn/20200813124903665.png" title=" " >
+        <img loading="lazy" decoding="async"
+            data-sizes="auto"
+             src="https://img-blog.csdnimg.cn/20200813124903665.png"
+            alt=" "
+        />
+    </a><figcaption class="image-caption"> </figcaption>
+</figure></p>
+<h2 id="batch-normalization的优势">Batch Normalization的优势</h2>
+<ul>
+<li>
+<p><strong>解决了Internal Covariate Shift的问题</strong>：Internal Covariate Shift让学习率需要设很小，Batch Normalization以后学习率可以设大一点，所以training就快一点。</p>
+</li>
+<li>
+<p><strong>对防止梯度消失是有帮助的</strong>：用sigmoid函数，你很容易遇到gradient vanish的问题。如果有加Batch Normalization，就可以确保说激活函数的input都在零附近，都是斜率比较大的地方，就是gradient比较大的地方就不会有gradient vanish的问题，所以他特别对sigmoid，tanh这种特别有帮助。</p>
+</li>
+<li>
+<p><strong>对参数的定义的initialization影响是比较小的</strong>：很多方法对参数的initialization非常明显，但是当加了Batch Normalization以后，参数的initialization的影响比较小
+假设把 $W^1$ 都乘 $k$ 倍， $z$ 当然也就乘上 $k$ ，Normalization的时候， $\mu,\sigma$ 也是乘上 $k$.
+分子乘 $k$ 倍，分母 $k$ 乘，做完Normalization以后没有变化。所以如果在initialize的时候， $W$ 的参数乘上 $k$ 倍，对它的output的结果是没有影响。</p>
+<p>
+
+
+
+
+<img loading="lazy" decoding="async"
+         src="https://img-blog.csdnimg.cn/20200813122829990.png"
+         alt="https://img-blog.csdnimg.cn/20200813122829990.png"
+         title="20200813122829990.png"
+    /></p>
+</li>
+<li>
+<p><strong>能够缓解部分过拟合</strong>：在Batch Normalization的时候等同于是做了regularization，这个也是很直观，因为现在如果把所有的feature都固定到一样的mean，variance，如果在test的时候有一个异常数据进来，导致mean有一个变化，但做Normalization就会解决这个问题，所以batch Normalization有一些对抗Over Fitting的效果。所以如果training已经很好，而testing不好，可能也有很多其他的方法可以改进，不见得要Batch Normalization。</p>
+</li>
+</ul>
+<p>参考资源：</p>
+<p><a href="https://www.bilibili.com/video/av9770302?p=10" target="_blank" rel="noopener noreffer">李宏毅深度学习</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/34879333" target="_blank" rel="noopener noreffer">Batch Normalization原理与实战</a></p>
+</div>
+
+            <div class="post" style="padding-top: 0">
+
+
+<div class="post-share"><div class="share-link">
+        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://xmoon5.github.io/batchnormalization/" data-title="经典算法：Batch Normalization" data-via="MoonXiaomu" data-hashtags="Batch Normalization,算法"><span class="svg-social-icon icon-twitter"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://xmoon5.github.io/batchnormalization/" data-hashtag="Batch Normalization"><span class="svg-social-icon icon-facebook"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://xmoon5.github.io/batchnormalization/" data-title="经典算法：Batch Normalization" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
+    </div><div class="share-link">
+        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://xmoon5.github.io/batchnormalization/" data-title="经典算法：Batch Normalization" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
+    </div></div>
+<div class="post-tags"><a href="/tags/batch-normalization/" class="tag">Batch Normalization</a><a href="/tags/%E7%AE%97%E6%B3%95/" class="tag">算法</a></div></div>
+        </div>
+    <div id="toc-final"></div>
+    </article><div class="page single comments content-block-position"><div id="comments"></div></div></div>
+
+</main><footer class="footer">
+        <div class="footer-container"><div class="footer-line"><div><span id="timeDate">正在烧脑计算建站时间...</span><span id="times"></span><script>var now = new Date();function createtime(){var grt= new Date("05/20/2020 00:00:00");now.setTime(now.getTime()+250);days = (now - grt ) / 1000 / 60 / 60 / 24;dnum = Math.floor(days);hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);hnum = Math.floor(hours);if(String(hnum).length ==1 ){hnum = "0" + hnum; }minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);mnum = Math.floor(minutes);if(String(mnum).length ==1 ){mnum = "0" + mnum;}seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);snum = Math.round(seconds);if(String(snum).length ==1 ){snum = "0" + snum;}document.getElementById("timeDate").innerHTML = "&nbsp"+dnum+"&nbsp天";document.getElementById("times").innerHTML = hnum + "&nbsp小时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";}setInterval("createtime()",250);</script></div>___<i class="fa fa-biking fa-fw"></i>______</div><div class="footer-line"><i class="svg-icon icon-copyright"></i><span>2020 - 2021</span><span class="author">&nbsp;<a href="/" target="_blank"></a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="http://www.beian.miit.gov.cn" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
+                    <span class="icp"><a href="https://blog.pangao.vip/icp/xmoon.info">🧑ICP证000000号</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="svg-icon icon-arrow-up"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="svg-icon icon-comments-fixed"></i>
+            </a>
+        </div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><script src="https://cdn.jsdelivr.net/npm/smooth-scroll@16.1.3/dist/smooth-scroll.min.js"></script><script src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.37.1/dist/autocomplete.min.js"></script><script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.2.0/dist/algoliasearch-lite.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/twemoji@13.0.0/dist/twemoji.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js"></script><script src="https://cdn.jsdelivr.net/npm/sharer.js@0.4.0/sharer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/copy-tex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/mhchem.min.js"></script><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"cookieconsent":{"content":{"dismiss":"同意","link":"了解更多","message":"本网站使用 Cookies 来改善您的浏览体验."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"algoliaAppID":"","algoliaIndex":"","algoliaSearchKey":"","highlightTag":"em","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":30,"type":"algolia"},"twemoji":true};</script><script src="/js/theme.min.js"></script><script>
+                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	        ga('create', 'UA-167439955-2', 'auto');
+	        ga('set', 'anonymizeIp', true);
+	        ga('send', 'pageview');
+	    </script></body>
+</html>

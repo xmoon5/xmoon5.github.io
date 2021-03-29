@@ -1,0 +1,19 @@
+{
+    "name": "Moon",
+    "short_name": "Moon",
+    "icons": [
+        {
+            "src": "/logo.png",
+            "sizes": "192x192",
+            "type": "images/png"
+        },
+        {
+            "src": "/logo.png",
+            "sizes": "512x512",
+            "type": "images/png"
+        }
+    ],
+    "theme_color": "#ffffff",
+    "background_color": "#ffffff",
+    "display": "standalone"
+}
