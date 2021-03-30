@@ -9,35 +9,35 @@
     <title>罚函数法</title>
     <link>https://xmoon5.github.io/penaltyfunmethod/</link>
     <pubDate>Sat, 28 Nov 2020 14:58:24 &#43;0800</pubDate>
-    <author>Moon</author>
+    <author>moon.zh-cn</author>
     <guid>https://xmoon5.github.io/penaltyfunmethod/</guid>
     <description><![CDATA[罚函数法]]></description>
 </item><item>
     <title>单纯形法</title>
     <link>https://xmoon5.github.io/simplexmethod/</link>
     <pubDate>Sat, 28 Nov 2020 14:56:36 &#43;0800</pubDate>
-    <author>Moon</author>
+    <author>moon.zh-cn</author>
     <guid>https://xmoon5.github.io/simplexmethod/</guid>
     <description><![CDATA[单纯形法]]></description>
 </item><item>
     <title>共轭梯度法</title>
     <link>https://xmoon5.github.io/cg-method/</link>
     <pubDate>Sat, 28 Nov 2020 14:51:16 &#43;0800</pubDate>
-    <author>Moon</author>
+    <author>moon.zh-cn</author>
     <guid>https://xmoon5.github.io/cg-method/</guid>
     <description><![CDATA[共轭梯度法]]></description>
 </item><item>
     <title>信号处理的几种变换</title>
     <link>https://xmoon5.github.io/severaltransformationsofsignalprocessing/</link>
     <pubDate>Sun, 25 Oct 2020 17:34:31 &#43;0800</pubDate>
-    <author>Moon</author>
+    <author>moon.zh-cn</author>
     <guid>https://xmoon5.github.io/severaltransformationsofsignalprocessing/</guid>
     <description><![CDATA[信号处理中通常会进行转换，使信号便于处理，提取信息，最基本的变换是傅里叶变换，后又衍生处了小波波变换，希尔伯特变换，希尔伯特黄变换，曲波变换]]></description>
 </item><item>
     <title>经典算法：Batch Normalization</title>
     <link>https://xmoon5.github.io/batchnormalization/</link>
     <pubDate>Thu, 13 Aug 2020 12:50:45 &#43;0800</pubDate>
-    <author>Moon</author>
+    <author>moon.zh-cn</author>
     <guid>https://xmoon5.github.io/batchnormalization/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="https://img-blog.csdnimg.cn/20200813125930659.png" referrerpolicy="no-referrer">
@@ -46,7 +46,7 @@
     <title>Python实现图像全景拼接</title>
     <link>https://xmoon5.github.io/panorama/</link>
     <pubDate>Sun, 09 Aug 2020 11:06:26 &#43;0800</pubDate>
-    <author>Moon</author>
+    <author>moon.zh-cn</author>
     <guid>https://xmoon5.github.io/panorama/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="https://img-blog.csdnimg.cn/20200809110956387.png" referrerpolicy="no-referrer">
@@ -55,7 +55,7 @@
     <title>图像分割(Segmentation)——K-Means, 最小割, 归一化图割</title>
     <link>https://xmoon5.github.io/segmentstionclustering/</link>
     <pubDate>Fri, 31 Jul 2020 17:50:45 &#43;0800</pubDate>
-    <author>Moon</author>
+    <author>moon.zh-cn</author>
     <guid>https://xmoon5.github.io/segmentstionclustering/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="https://img-blog.csdnimg.cn/20200731151831291.png" referrerpolicy="no-referrer">
@@ -64,7 +64,7 @@
     <title>python实现Canny与Hough算法</title>
     <link>https://xmoon5.github.io/cannyhough/</link>
     <pubDate>Wed, 29 Jul 2020 17:30:45 &#43;0800</pubDate>
-    <author>Moon</author>
+    <author>moon.zh-cn</author>
     <guid>https://xmoon5.github.io/cannyhough/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="https://img-blog.csdnimg.cn/20200729181503649.png" referrerpolicy="no-referrer">
@@ -73,7 +73,7 @@
     <title>纹理表示(Texture)</title>
     <link>https://xmoon5.github.io/texture/</link>
     <pubDate>Sun, 26 Jul 2020 15:30:26 &#43;0800</pubDate>
-    <author>Moon</author>
+    <author>moon.zh-cn</author>
     <guid>https://xmoon5.github.io/texture/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="https://img-blog.csdnimg.cn/20200726121818902.png" referrerpolicy="no-referrer">
@@ -82,7 +82,7 @@
     <title>区域检测——Blob &amp; SIFT</title>
     <link>https://xmoon5.github.io/edgedetection2/</link>
     <pubDate>Wed, 22 Jul 2020 13:20:26 &#43;0800</pubDate>
-    <author>Moon</author>
+    <author>moon.zh-cn</author>
     <guid>https://xmoon5.github.io/edgedetection2/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="https://img-blog.csdnimg.cn/20200721151228568.png" referrerpolicy="no-referrer">

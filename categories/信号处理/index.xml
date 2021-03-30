@@ -7,7 +7,7 @@
     <title>信号处理的几种变换</title>
     <link>https://xmoon5.github.io/severaltransformationsofsignalprocessing/</link>
     <pubDate>Sun, 25 Oct 2020 17:34:31 &#43;0800</pubDate>
-    <author>Moon</author>
+    <author>moon.zh-cn</author>
     <guid>https://xmoon5.github.io/severaltransformationsofsignalprocessing/</guid>
     <description><![CDATA[信号处理中通常会进行转换，使信号便于处理，提取信息，最基本的变换是傅里叶变换，后又衍生处了小波波变换，希尔伯特变换，希尔伯特黄变换，曲波变换]]></description>
 </item></channel>

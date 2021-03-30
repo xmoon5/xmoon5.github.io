@@ -7,7 +7,7 @@
     <title>TensorFlow2.1入门学习笔记(7)——损失函数</title>
     <link>https://xmoon5.github.io/loss/</link>
     <pubDate>Wed, 20 May 2020 10:34:53 &#43;0800</pubDate>
-    <author>Moon</author>
+    <author>moon.zh-cn</author>
     <guid>https://xmoon5.github.io/loss/</guid>
     <description><![CDATA[损失函数（loss）： 预测值（y）与已知答案（y_）的差距 神经网络的优化目标： loss最小: $\Rightarrow\left\{\begin{array}{lr}{mse(Mean Aquared Error)}\\{自定义}\\{ce(Cr]]></description>
 </item></channel>
