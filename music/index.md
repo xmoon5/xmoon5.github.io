@@ -13,7 +13,7 @@
 
 站名: 一颗小木
 
-首页: [xmoon.info](xmoon.info)
+首页: [aimoon.top](aimoon.top)
 
 描述: KEEP WORKING
 
