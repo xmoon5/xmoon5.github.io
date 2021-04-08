@@ -210,10 +210,6 @@
     <li><a href="#batch-normalization的优势">Batch Normalization的优势</a></li>
   </ul>
 </nav></div>
-                    </div><div style="margin: 20px 0 20px 0;">
-                        <span class="post-update">
-                            <span class="s">更新于 2021-03-29</span>
-                        </span>
                     </div><p>在<a href="https://aimoon.top/2020/06/convolutional1/#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C" target="_blank" rel="noopener noreffer"><strong>卷积网络六大模块</strong></a>中的<strong>BN</strong>（<strong>批批标准化</strong>）所指的就是Batch Normalization，该算法15年提出，现在已经成为深度学习中经常使用的技术，可以极大的提高网络的处理能力。</p>
 <h2 id="feature-scaling-特征缩放">Feature Scaling 特征缩放</h2>
 <p>在没有进行Feature Scaling之前，如果两个输入数据$x_1,x_2$的distribution很不均匀的话，导致对$w_2$计算结果的影响比较大，所以训练的时候，横纵方向上需要给与一个不同的training rate，在$w_1$方向需要一个更大的learning rate，$w_2$方向给与一个较小的learning rate，不过这样做的办法却不见得很简单。所以对不同Feature做了normalization之后，使得error surface看起来比较接近正圆的话，就可以使训练容易得多。</p>
