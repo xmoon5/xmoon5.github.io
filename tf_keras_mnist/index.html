@@ -8,12 +8,12 @@
 <meta name="twitter:description" content=""/><meta name="twitter:creator" content="@MoonXiaomu"/><meta name="Description" content="KEEP KWARKING"><meta property="og:title" content="TensorFlow2.1入门学习笔记(10)——使用keras搭建神经网络(Mnist,Fashion)" />
 <meta property="og:description" content="前面已经使用TensorFlow2的原生代码搭建神经网络，接下来将使用keras搭建神经网络，并改写鸢尾花分类问题的代码，将原本100多行的" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xmoon5.github.io/tf_keras_mnist/" />
-<meta property="og:image" content="https://xmoon5.github.io/images/lighthouse.jpg" />
-<meta property="article:published_time" content="2020-05-31T12:16:26+08:00" />
-<meta property="article:modified_time" content="2021-03-29T11:34:14+08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+<meta property="og:url" content="https://blog.aimoon.top/tf_keras_mnist/" /><meta property="og:image" content="https://blog.aimoon.top/images/lighthouse.jpg" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-05-31T12:16:26&#43;08:00" />
+<meta property="article:modified_time" content="2021-03-29T11:34:14&#43;08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+
 <meta name="application-name" content="MOON">
-<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://xmoon5.github.io/tf_keras_mnist/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.aimoon.top/tf_keras_mnist/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -21,15 +21,15 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/xmoon5.github.io\/tf_keras_mnist\/"
-        },"image": ["https:\/\/xmoon5.github.io\/images\/cover.png"],"genre": "posts","keywords": "keras, MNIST, FASHION, 神经网络","wordCount":  2248 ,
-        "url": "https:\/\/xmoon5.github.io\/tf_keras_mnist\/","datePublished": "2020-05-31T12:16:26+08:00","dateModified": "2021-03-29T11:34:14+08:00",
+            "@id": "https:\/\/blog.aimoon.top\/tf_keras_mnist\/"
+        },"image": ["https:\/\/blog.aimoon.top\/images\/cover.png"],"genre": "posts","keywords": "keras, MNIST, FASHION, 神经网络","wordCount":  2256 ,
+        "url": "https:\/\/blog.aimoon.top\/tf_keras_mnist\/","datePublished": "2020-05-31T12:16:26+08:00","dateModified": "2021-03-29T11:34:14+08:00",
         "publisher": {
             "@type": "Person",
             "name": "Wang Yuexin", "image": [
             {
             "@type": "ImageObject",
-            "url": "https:\/\/aimoon.top\/images\/avatars.png"
+            "url": "https:\/\/blog.aimoon.top\/images\/avatars.png"
             }
             ]},"author": {
                 "@type": "Person",
@@ -44,12 +44,12 @@
             "@type": "ListItem",
             "position": 1,
             "name": "主页",
-            "item": "https:\/\/xmoon5.github.io"
+            "item": "https:\/\/blog.aimoon.top"
         },{
             "@type": "ListItem",
             "position": 2,
             "name": "TF2.1学习笔记",
-            "item": "https://xmoon5.github.io/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+            "item": "https://blog.aimoon.top/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
         },{
                 "@type": "ListItem",
                 "position": 3,
@@ -75,11 +75,11 @@
                         </li><li>
                             <a class="menu-item" href="/categories/"> 归档 </a>
                         </li><li>
+                            <a class="menu-item" href="https://aimoon.top" rel="noopener noreffer" target="_blank"> 关于 </a>
+                        </li><li>
                             <a class="menu-item" href="/music/"> 歌单 </a>
                         </li><li>
                             <a class="menu-item" href="/comments/"> 留言板 </a>
-                        </li><li>
-                            <a class="menu-item" href="https://tools.cyfan.top/" rel="noopener noreffer" target="_blank"> 小工具 </a>
                         </li></ul>
                 </nav><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="search……" id="search-input-desktop">
@@ -132,11 +132,11 @@
                         </li><li>
                             <a class="menu-item" href="/categories/" title="">归档</a>
                         </li><li>
+                            <a class="menu-item" href="https://aimoon.top" title="" rel="noopener noreffer" target="_blank">关于</a>
+                        </li><li>
                             <a class="menu-item" href="/music/" title="">歌单</a>
                         </li><li>
                             <a class="menu-item" href="/comments/" title="">留言板</a>
-                        </li><li>
-                            <a class="menu-item" href="https://tools.cyfan.top/" title="" rel="noopener noreffer" target="_blank">小工具</a>
                         </li></ul>
                 </nav>
                 <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
@@ -178,7 +178,7 @@
                             </span><span class="post-meta-date meta-item">
                                 <span class="svg-icon icon-clock"></span><time class="timeago" datetime="2020-05-31">2020-05-31</time>
                             </span><span class="post-meta-words meta-item">
-                                <span class="svg-icon icon-pencil"></span>约 2248 字
+                                <span class="svg-icon icon-pencil"></span>约 2256 字
                             </span>
                             <span class="post-meta-reading meta-item">
                                 <span class="svg-icon icon-stopwatch"></span>预计阅读 5 分钟
@@ -242,10 +242,7 @@
   </ul>
 </nav></div>
                     </div><p>前面已经使用TensorFlow2的原生代码搭建神经网络，接下来将使用keras搭建神经网络，并改写鸢尾花分类问题的代码，将原本100多行的代码用不到20行代码实现。</p>
-<h2 id="用tensorflow-apitfkeras搭建网络">用TensorFlow API：tf.keras搭建网络</h2>
-<h3 id="使用sequential">使用Sequential</h3>
-<h4 id="六步法">六步法：</h4>
-<ol>
+<h2 id="用tensorflow-apitfkeras搭建网络" class="headerLink"><a href="#%e7%94%a8tensorflow-apitfkeras%e6%90%ad%e5%bb%ba%e7%bd%91%e7%bb%9c" class="header-mark"></a>用TensorFlow API：tf.keras搭建网络</h2><h3 id="使用sequential" class="headerLink"><a href="#%e4%bd%bf%e7%94%a8sequential" class="header-mark"></a>使用Sequential</h3><h4 id="六步法" class="headerLink"><a href="#%e5%85%ad%e6%ad%a5%e6%b3%95" class="header-mark"></a>六步法：</h4><ol>
 <li>import，相关模块</li>
 <li>train, test，指定训练集的输入特征，和训练集的标签</li>
 <li>model = tf.keras.models.Sequential，搭建网络结构,（顺序神经网络）</li>
@@ -253,8 +250,7 @@
 <li>model.fit，执行训练</li>
 <li>model.summary，打印出网络结构和参数统计</li>
 </ol>
-<h4 id="model--tfkerasmodelssequential网络结构">model = tf.keras.models.Sequential([网络结构])</h4>
-<p><strong>描述各层网络：</strong></p>
+<h4 id="model--tfkerasmodelssequential网络结构" class="headerLink"><a href="#model--tfkerasmodelssequential%e7%bd%91%e7%bb%9c%e7%bb%93%e6%9e%84" class="header-mark"></a>model = tf.keras.models.Sequential([网络结构])</h4><p><strong>描述各层网络：</strong></p>
 <ul>
 <li>
 <p>拉直层：tf.keras.layers.Flatten()，将输入特征拉直</p>
@@ -265,14 +261,13 @@
 <p>kernel_regularizer可选: tf.keras.regularizers.l1()、tf.keras.regularizers.l2()</p>
 </li>
 <li>
-<p>卷积层： tf.keras.layers.Conv2D(filters = 卷积核个数, kernel_size = 卷积核尺寸, strides = 卷积步长， padding = &quot; valid&rdquo; or &ldquo;same&rdquo;)</p>
+<p>卷积层： tf.keras.layers.Conv2D(filters = 卷积核个数, kernel_size = 卷积核尺寸, strides = 卷积步长， padding = &quot; valid&quot; or &ldquo;same&rdquo;)</p>
 </li>
 <li>
 <p>LSTM层： tf.keras.layers.LSTM()</p>
 </li>
 </ul>
-<h4 id="modelcompileoptimizer--优化器-loss--损失函数-metrics--准确率-">model.compile(optimizer = 优化器, loss = 损失函数, metrics = [“准确率”] )</h4>
-<ul>
+<h4 id="modelcompileoptimizer--优化器-loss--损失函数-metrics--准确率-" class="headerLink"><a href="#modelcompileoptimizer--%e4%bc%98%e5%8c%96%e5%99%a8-loss--%e6%8d%9f%e5%a4%b1%e5%87%bd%e6%95%b0-metrics--%e5%87%86%e7%a1%ae%e7%8e%87-" class="header-mark"></a>model.compile(optimizer = 优化器, loss = 损失函数, metrics = [“准确率”] )</h4><ul>
 <li>
 <p>Optimizer可选:
 ‘sgd’ or tf.keras.optimizers.SGD (lr=学习率,momentum=动量参数)</p>
@@ -292,10 +287,8 @@
 <p>‘sparse_categorical_accuracy’ ：y_是数值，y是独热码(概率分布),如y_=[1] y=[0.256,0.695,0.048]</p>
 </li>
 </ul>
-<h4 id="modelfit-执行训练过程">model.fit ()执行训练过程</h4>
-<p>model.fit (训练集的输入特征, 训练集的标签, batch_size= , epochs= , validation_data=(测试集的输入特征，测试集的标签), validation_split=从训练集划分多少比例给测试集, validation_freq = 多少次epoch测试一次)</p>
-<h4 id="modelsummary">model.summary（）</h4>
-<p>打印网络的结构和参数统计</p>
+<h4 id="modelfit-执行训练过程" class="headerLink"><a href="#modelfit-%e6%89%a7%e8%a1%8c%e8%ae%ad%e7%bb%83%e8%bf%87%e7%a8%8b" class="header-mark"></a>model.fit ()执行训练过程</h4><p>model.fit (训练集的输入特征, 训练集的标签, batch_size= , epochs= , validation_data=(测试集的输入特征，测试集的标签), validation_split=从训练集划分多少比例给测试集, validation_freq = 多少次epoch测试一次)</p>
+<h4 id="modelsummary" class="headerLink"><a href="#modelsummary" class="header-mark"></a>model.summary（）</h4><p>打印网络的结构和参数统计</p>
 <ul>
 <li>例如鸢尾花分类问题</li>
 </ul>
@@ -312,8 +305,7 @@
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h4 id="鸢尾花问题使用六步法复现">鸢尾花问题使用六步法复现</h4>
-<div class="highlight"><div class="chroma">
+<h4 id="鸢尾花问题使用六步法复现" class="headerLink"><a href="#%e9%b8%a2%e5%b0%be%e8%8a%b1%e9%97%ae%e9%a2%98%e4%bd%bf%e7%94%a8%e5%85%ad%e6%ad%a5%e6%b3%95%e5%a4%8d%e7%8e%b0" class="header-mark"></a>鸢尾花问题使用六步法复现</h4><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -348,12 +340,12 @@
 </span><span class="lnt">31
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 1.import</span>
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 1.import</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
 <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
-<span class="c1"># train,test</span>
+<span class="c1"># train,test</span>
 <span class="n">x_train</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span><span class="o">.</span><span class="n">data</span>
 <span class="n">y_train</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span><span class="o">.</span><span class="n">target</span>
 
@@ -363,27 +355,25 @@
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
 <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>
 
-<span class="c1"># 3.model.Sequential</span>
+<span class="c1"># 3.model.Sequential</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
     <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">,</span> <span class="n">kernel_regularizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">regularizers</span><span class="o">.</span><span class="n">l2</span><span class="p">())</span>
 <span class="p">])</span>
 
-<span class="c1"># 4.model.compile</span>
+<span class="c1"># 4.model.compile</span>
 <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">),</span>
               <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">from_logits</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
               <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sparse_categorical_accuracy&#39;</span><span class="p">])</span>
 
-<span class="c1"># 5.model.fit</span>
+<span class="c1"># 5.model.fit</span>
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">validation_freq</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 
-<span class="c1"># 6.model.summary</span>
+<span class="c1"># 6.model.summary</span>
 <span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
 
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="使用class类">使用class类</h3>
-<h4 id="六步法-1">六步法：</h4>
-<ol>
+</div><h3 id="使用class类" class="headerLink"><a href="#%e4%bd%bf%e7%94%a8class%e7%b1%bb" class="header-mark"></a>使用class类</h3><h4 id="六步法-1" class="headerLink"><a href="#%e5%85%ad%e6%ad%a5%e6%b3%95-1" class="header-mark"></a>六步法：</h4><ol>
 <li>import，相关模块</li>
 <li>train, test，指定训练集的输入特征，和训练集的标签</li>
 <li>class MyModel(Model) model=MyModel,（Sequential无法写出带有跳连的非顺序神经网络）</li>
@@ -391,8 +381,7 @@
 <li>model.fit，执行训练</li>
 <li>model.summary，打印出网络结构和参数统计</li>
 </ol>
-<h5 id="使用class类封装一个神经网络结构">使用class类封装一个神经网络结构</h5>
-<ul>
+<h5 id="使用class类封装一个神经网络结构" class="headerLink"><a href="#%e4%bd%bf%e7%94%a8class%e7%b1%bb%e5%b0%81%e8%a3%85%e4%b8%80%e4%b8%aa%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9c%e7%bb%93%e6%9e%84" class="header-mark"></a>使用class类封装一个神经网络结构</h5><ul>
 <li>
 <p>_<em>init</em>_( ) 定义所需网络结构块</p>
 </li>
@@ -423,7 +412,7 @@
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">###############################</span>
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1">###############################</span>
 <span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 		<span class="nb">super</span><span class="p">(</span><span class="n">MyModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -432,7 +421,7 @@
 		<span class="err">调用网络结构块，实现前向传播</span>
 		<span class="k">return</span> <span class="n">y</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">MyModel</span><span class="p">()</span>
-<span class="c1">###############################</span>
+<span class="c1">###############################</span>
 
 <span class="k">class</span> <span class="nc">IrisModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
 	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -492,16 +481,16 @@
 </span><span class="lnt">41
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 1.import</span>
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 1.import</span>
 <span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
 <span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
-<span class="c1">######</span>
+<span class="c1">######</span>
 <span class="kn">from</span> <span class="nn">tensorflow.keras.layers</span> <span class="kn">import</span> <span class="n">Dense</span>
 <span class="kn">from</span> <span class="nn">tensorflow.keras</span> <span class="kn">import</span> <span class="n">Model</span>
-<span class="c1">######</span>
+<span class="c1">######</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
-<span class="c1"># train,test</span>
+<span class="c1"># train,test</span>
 <span class="n">x_train</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span><span class="o">.</span><span class="n">data</span>
 <span class="n">y_train</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span><span class="o">.</span><span class="n">target</span>
 
@@ -511,7 +500,7 @@
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
 <span class="n">tf</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">set_seed</span><span class="p">(</span><span class="mi">116</span><span class="p">)</span>
 
-<span class="c1">###### 3.class MyModel ######</span>
+<span class="c1">###### 3.class MyModel ######</span>
 <span class="k">class</span> <span class="nc">IrisModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">IrisModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
@@ -522,15 +511,15 @@
         <span class="k">return</span> <span class="n">y</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">IrisModel</span><span class="p">()</span>
 
-<span class="c1"># 4.model.compile</span>
+<span class="c1"># 4.model.compile</span>
 <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">optimizer</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">optimizers</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">lr</span><span class="o">=</span><span class="mf">0.1</span><span class="p">),</span>
               <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">SparseCategoricalCrossentropy</span><span class="p">(</span><span class="n">from_logits</span><span class="o">=</span><span class="bp">False</span><span class="p">),</span>
               <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;sparse_categorical_accuracy&#39;</span><span class="p">])</span>
 
-<span class="c1"># 5.model.fit</span>
+<span class="c1"># 5.model.fit</span>
 <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">validation_freq</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 
-<span class="c1"># 6.model.summary</span>
+<span class="c1"># 6.model.summary</span>
 <span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
 
 </code></pre></td></tr></table>
@@ -549,9 +538,7 @@
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h2 id="mnist数据集">MNIST数据集：</h2>
-<h3 id="介绍">介绍</h3>
-<ul>
+<h2 id="mnist数据集" class="headerLink"><a href="#mnist%e6%95%b0%e6%8d%ae%e9%9b%86" class="header-mark"></a>MNIST数据集：</h2><h3 id="介绍" class="headerLink"><a href="#%e4%bb%8b%e7%bb%8d" class="header-mark"></a>介绍</h3><ul>
 <li>
 <p><a href="http://yann.lecun.com/exdb/mnist/" target="_blank" rel="noopener noreffer">Yann LeCun</a></p>
 </li>
@@ -605,7 +592,7 @@ tf.keras.layers.Flatten( )
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">x_train</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span><span class="c1">#绘制灰度图</span>
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">x_train</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span><span class="c1">#绘制灰度图</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></td></tr></table>
 </div>
@@ -676,13 +663,13 @@ tf.keras.layers.Flatten( )
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 打印出整个训练集输入特征形状</span>
+<pre class="chroma"><code class="language-python" data-lang="python"><span class="c1"># 打印出整个训练集输入特征形状</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">&#34;x_train.shape:</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="c1"># 打印出整个训练集标签的形状</span>
+<span class="c1"># 打印出整个训练集标签的形状</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">&#34;y_train.shape:</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y_train</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="c1"># 打印出整个测试集输入特征的形状</span>
+<span class="c1"># 打印出整个测试集输入特征的形状</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">&#34;x_test.shape:</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">x_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="c1"># 打印出整个测试集标签的形状</span>
+<span class="c1"># 打印出整个测试集标签的形状</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">&#34;y_test.shape:</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">y_test</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </code></pre></td></tr></table>
 </div>
@@ -699,8 +686,7 @@ tf.keras.layers.Flatten( )
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h3 id="使用sequential实现手写字体识别">使用Sequential实现手写字体识别</h3>
-<div class="highlight"><div class="chroma">
+<h3 id="使用sequential实现手写字体识别" class="headerLink"><a href="#%e4%bd%bf%e7%94%a8sequential%e5%ae%9e%e7%8e%b0%e6%89%8b%e5%86%99%e5%ad%97%e4%bd%93%e8%af%86%e5%88%ab" class="header-mark"></a>使用Sequential实现手写字体识别</h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -757,8 +743,7 @@ tf.keras.layers.Flatten( )
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h3 id="使用class-mymodel实现手写字体识别">使用class MyModel实现手写字体识别</h3>
-<div class="highlight"><div class="chroma">
+<h3 id="使用class-mymodel实现手写字体识别" class="headerLink"><a href="#%e4%bd%bf%e7%94%a8class-mymodel%e5%ae%9e%e7%8e%b0%e6%89%8b%e5%86%99%e5%ad%97%e4%bd%93%e8%af%86%e5%88%ab" class="header-mark"></a>使用class MyModel实现手写字体识别</h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -847,8 +832,7 @@ tf.keras.layers.Flatten( )
   <iframe src="https://www.youtube-nocookie.com/embed/ZXvE_lhFJnE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
 </div>
 </p>
-<h2 id="fashino数据集">FASHINO数据集</h2>
-<ul>
+<h2 id="fashino数据集" class="headerLink"><a href="#fashino%e6%95%b0%e6%8d%ae%e9%9b%86" class="header-mark"></a>FASHINO数据集</h2><ul>
 <li>提供 6万张 28*28 像素点的衣裤等图片和标签，用于训练。</li>
 <li>提供 1万张 28*28 像素点的衣裤等图片和标签，用于测试。</li>
 </ul>
@@ -878,8 +862,7 @@ tf.keras.layers.Flatten( )
 <span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">),(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span> <span class="o">=</span> <span class="n">fashion</span><span class="o">.</span><span class="n">load_data</span><span class="p">()</span>
 </code></pre></td></tr></table>
 </div>
-</div><h3 id="使用sequential实现手写字体识别-1">使用Sequential实现手写字体识别</h3>
-<div class="highlight"><div class="chroma">
+</div><h3 id="使用sequential实现手写字体识别-1" class="headerLink"><a href="#%e4%bd%bf%e7%94%a8sequential%e5%ae%9e%e7%8e%b0%e6%89%8b%e5%86%99%e5%ad%97%e4%bd%93%e8%af%86%e5%88%ab-1" class="header-mark"></a>使用Sequential实现手写字体识别</h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -936,8 +919,7 @@ tf.keras.layers.Flatten( )
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h3 id="使用class-mymodel实现手写字体识别-1">使用class MyModel实现手写字体识别</h3>
-<div class="highlight"><div class="chroma">
+<h3 id="使用class-mymodel实现手写字体识别-1" class="headerLink"><a href="#%e4%bd%bf%e7%94%a8class-mymodel%e5%ae%9e%e7%8e%b0%e6%89%8b%e5%86%99%e5%ad%97%e4%bd%93%e8%af%86%e5%88%ab-1" class="header-mark"></a>使用class MyModel实现手写字体识别</h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -1017,20 +999,20 @@ tf.keras.layers.Flatten( )
 
 
 <div class="post-share"><div class="share-link">
-        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://xmoon5.github.io/tf_keras_mnist/" data-title="TensorFlow2.1入门学习笔记(10)——使用keras搭建神经网络(Mnist,Fashion)" data-via="MoonXiaomu" data-hashtags="keras,MNIST,FASHION,神经网络"><span class="svg-social-icon icon-twitter"></span></a>
+        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.aimoon.top/tf_keras_mnist/" data-title="TensorFlow2.1入门学习笔记(10)——使用keras搭建神经网络(Mnist,Fashion)" data-via="MoonXiaomu" data-hashtags="keras,MNIST,FASHION,神经网络"><span class="svg-social-icon icon-twitter"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://xmoon5.github.io/tf_keras_mnist/" data-hashtag="keras"><span class="svg-social-icon icon-facebook"></span></a>
+        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.aimoon.top/tf_keras_mnist/" data-hashtag="keras"><span class="svg-social-icon icon-facebook"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://xmoon5.github.io/tf_keras_mnist/" data-title="TensorFlow2.1入门学习笔记(10)——使用keras搭建神经网络(Mnist,Fashion)" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
+        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://blog.aimoon.top/tf_keras_mnist/" data-title="TensorFlow2.1入门学习笔记(10)——使用keras搭建神经网络(Mnist,Fashion)" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://xmoon5.github.io/tf_keras_mnist/" data-title="TensorFlow2.1入门学习笔记(10)——使用keras搭建神经网络(Mnist,Fashion)" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
+        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://blog.aimoon.top/tf_keras_mnist/" data-title="TensorFlow2.1入门学习笔记(10)——使用keras搭建神经网络(Mnist,Fashion)" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
     </div></div>
 
 <div class="footer-post-author">
-    <div class="author-avatar"><a href="https://aimoon.top" target="_blank"><img alt="A Student" src="https://aimoon.top/images/avatars.png"></a></div>
+    <div class="author-avatar"><a href="https://aimoon.top" target="_blank"><img alt="Undergraduate Student of Artificial Intelligence 😜" src="https://blog.aimoon.top/images/avatars.png"></a></div>
     <div class="author-info">
         <div class="name"><a href="https://aimoon.top" target="_blank">Wang Yuexin</a></div>
-        <div class="number-posts">A Student</span></div>
+        <div class="number-posts">Undergraduate Student of Artificial Intelligence 😜</span></div>
     </div>
 </div><div class="post-tags"><a href="/tags/keras/" class="tag">keras</a><a href="/tags/mnist/" class="tag">mnist</a><a href="/tags/fashion/" class="tag">FASHION</a><a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" class="tag">神经网络</a></div></div>
                 </footer></div>
@@ -1044,7 +1026,7 @@ tf.keras.layers.Flatten( )
 
 </main><footer class="footer">
         <div class="footer-container"><div class="footer-line"><div><span id="timeDate">正在烧脑计算建站时间...</span><span id="times"></span><script>var now = new Date();function createtime(){var grt= new Date("05/20/2020 00:00:00");now.setTime(now.getTime()+250);days = (now - grt ) / 1000 / 60 / 60 / 24;dnum = Math.floor(days);hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);hnum = Math.floor(hours);if(String(hnum).length ==1 ){hnum = "0" + hnum; }minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);mnum = Math.floor(minutes);if(String(mnum).length ==1 ){mnum = "0" + mnum;}seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);snum = Math.round(seconds);if(String(snum).length ==1 ){snum = "0" + snum;}document.getElementById("timeDate").innerHTML = "&nbsp"+dnum+"&nbsp天";document.getElementById("times").innerHTML = hnum + "&nbsp小时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";}setInterval("createtime()",250);</script></div></div><div class="footer-line"><i class="svg-icon icon-copyright"></i><span>2020 - 2021</span><span class="author">&nbsp;<a href="https://aimoon.top" target="_blank">MOON</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="http://www.beian.miit.gov.cn" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
-                    <span class="icp"><a href="https://blog.pangao.vip/icp/aimoon.top">🧑ICP证000000号</a></span></div>
+                    <span class="icp"><a href="https://blog.pangao.vip/icp/xmoon,info">🧑ICP证000000号</a></span></div>
         </div>
     </footer></div>
 

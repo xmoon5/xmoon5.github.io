@@ -13,7 +13,7 @@
 
 站名: 一颗小木
 
-首页: [aimoon.top](aimoon.top)
+主页: [aimoon.top](aimoon.top)
 
 描述: KEEP WORKING
 
@@ -21,7 +21,6 @@
 
 框架: [Hugo](https://github.com/gohugoio/hugo)
 
-小工具: [陈YF的工具箱](https://github.com/ChenYFan/tools)
 
 
 </center>

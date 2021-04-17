@@ -10,7 +10,7 @@
 
 ## 代码实现
 
-**[Canny边缘检测](https://aimoon.top/2020/07/edgedetection/#canny-%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B)**：
+**[Canny边缘检测](https://blog.aimoon.top/2020/07/edgedetection/#canny-%E8%BE%B9%E7%BC%98%E6%A3%80%E6%B5%8B)**：
 
 
 ```python
@@ -188,7 +188,7 @@ class Canny:
 ```
 
 
-**[Hough变换](https://aimoon.top/2020/07/fitting/#%E9%9C%8D%E5%A4%AB%E5%8F%98%E6%8D%A2hough-transfrom)**
+**[Hough变换](https://blog.aimoon.top/2020/07/fitting/#%E9%9C%8D%E5%A4%AB%E5%8F%98%E6%8D%A2hough-transfrom)**
 
 ```python
 # Author: Ji Qiu （BUPT）

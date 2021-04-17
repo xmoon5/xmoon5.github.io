@@ -6,14 +6,14 @@
 <meta name="twitter:image" content=""/>
 <meta name="twitter:title" content="TensorFlow2.1入门学习笔记(6)——激活函数"/>
 <meta name="twitter:description" content=""/><meta name="twitter:creator" content="@MoonXiaomu"/><meta name="Description" content="KEEP KWARKING"><meta property="og:title" content="TensorFlow2.1入门学习笔记(6)——激活函数" />
-<meta property="og:description" content="常见函数 tf.where(条件语句，真返回A，假返回B) 1 2 3 4 5 6 import tensorflow as tf a = tf.constant([1, 2, 3, 1, 1]) b = tf.constant([0, 1, 3, 4, 5]) # 若a&gt;b，返回a对应位置的元" />
+<meta property="og:description" content="常见函数tf.where(条件语句，真返回A，假返回B)1 2 3 4 5 6 import tensorflow as tf a = tf.constant([1, 2, 3, 1, 1]) b = tf.constant([0, 1, 3, 4, 5]) # 若a&gt;b，返回a对应位置的元" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xmoon5.github.io/activation/" />
-<meta property="og:image" content="https://xmoon5.github.io/images/favicon.svg"/>
-<meta property="article:published_time" content="2020-05-20T09:34:53+08:00" />
-<meta property="article:modified_time" content="2021-03-29T11:34:14+08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+<meta property="og:url" content="https://blog.aimoon.top/activation/" /><meta property="og:image" content="https://blog.aimoon.top/images/favicon.svg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-05-20T09:34:53&#43;08:00" />
+<meta property="article:modified_time" content="2021-03-29T11:34:14&#43;08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+
 <meta name="application-name" content="MOON">
-<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://xmoon5.github.io/activation/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.aimoon.top/activation/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -21,15 +21,15 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/xmoon5.github.io\/activation\/"
-        },"image": ["https:\/\/xmoon5.github.io\/images\/cover.png"],"genre": "posts","keywords": "activation, function","wordCount":  1567 ,
-        "url": "https:\/\/xmoon5.github.io\/activation\/","datePublished": "2020-05-20T09:34:53+08:00","dateModified": "2021-03-29T11:34:14+08:00",
+            "@id": "https:\/\/blog.aimoon.top\/activation\/"
+        },"image": ["https:\/\/blog.aimoon.top\/images\/cover.png"],"genre": "posts","keywords": "activation, function","wordCount":  1667 ,
+        "url": "https:\/\/blog.aimoon.top\/activation\/","datePublished": "2020-05-20T09:34:53+08:00","dateModified": "2021-03-29T11:34:14+08:00",
         "publisher": {
             "@type": "Person",
             "name": "Wang Yuexin", "image": [
             {
             "@type": "ImageObject",
-            "url": "https:\/\/aimoon.top\/images\/avatars.png"
+            "url": "https:\/\/blog.aimoon.top\/images\/avatars.png"
             }
             ]},"author": {
                 "@type": "Person",
@@ -44,12 +44,12 @@
             "@type": "ListItem",
             "position": 1,
             "name": "主页",
-            "item": "https:\/\/xmoon5.github.io"
+            "item": "https:\/\/blog.aimoon.top"
         },{
             "@type": "ListItem",
             "position": 2,
             "name": "TF2.1学习笔记",
-            "item": "https://xmoon5.github.io/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+            "item": "https://blog.aimoon.top/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
         },{
                 "@type": "ListItem",
                 "position": 3,
@@ -75,11 +75,11 @@
                         </li><li>
                             <a class="menu-item" href="/categories/"> 归档 </a>
                         </li><li>
+                            <a class="menu-item" href="https://aimoon.top" rel="noopener noreffer" target="_blank"> 关于 </a>
+                        </li><li>
                             <a class="menu-item" href="/music/"> 歌单 </a>
                         </li><li>
                             <a class="menu-item" href="/comments/"> 留言板 </a>
-                        </li><li>
-                            <a class="menu-item" href="https://tools.cyfan.top/" rel="noopener noreffer" target="_blank"> 小工具 </a>
                         </li></ul>
                 </nav><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="search……" id="search-input-desktop">
@@ -132,11 +132,11 @@
                         </li><li>
                             <a class="menu-item" href="/categories/" title="">归档</a>
                         </li><li>
+                            <a class="menu-item" href="https://aimoon.top" title="" rel="noopener noreffer" target="_blank">关于</a>
+                        </li><li>
                             <a class="menu-item" href="/music/" title="">歌单</a>
                         </li><li>
                             <a class="menu-item" href="/comments/" title="">留言板</a>
-                        </li><li>
-                            <a class="menu-item" href="https://tools.cyfan.top/" title="" rel="noopener noreffer" target="_blank">小工具</a>
                         </li></ul>
                 </nav>
                 <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
@@ -178,7 +178,7 @@
                             </span><span class="post-meta-date meta-item">
                                 <span class="svg-icon icon-clock"></span><time class="timeago" datetime="2020-05-20">2020-05-20</time>
                             </span><span class="post-meta-words meta-item">
-                                <span class="svg-icon icon-pencil"></span>约 1567 字
+                                <span class="svg-icon icon-pencil"></span>约 1667 字
                             </span>
                             <span class="post-meta-reading meta-item">
                                 <span class="svg-icon icon-stopwatch"></span>预计阅读 4 分钟
@@ -246,9 +246,7 @@
     </li>
   </ul>
 </nav></div>
-                    </div><h3 id="常见函数">常见函数</h3>
-<h5 id="tfwhere条件语句真返回a假返回b">tf.where(条件语句，真返回A，假返回B)</h5>
-<div class="highlight"><div class="chroma">
+                    </div><h3 id="常见函数" class="headerLink"><a href="#%e5%b8%b8%e8%a7%81%e5%87%bd%e6%95%b0" class="header-mark"></a>常见函数</h3><h5 id="tfwhere条件语句真返回a假返回b" class="headerLink"><a href="#tfwhere%e6%9d%a1%e4%bb%b6%e8%af%ad%e5%8f%a5%e7%9c%9f%e8%bf%94%e5%9b%9ea%e5%81%87%e8%bf%94%e5%9b%9eb" class="header-mark"></a>tf.where(条件语句，真返回A，假返回B)</h5><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -266,8 +264,7 @@
 <span class="k">print</span><span class="p">(</span><span class="s2">&#34;c：&#34;</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>		<span class="c1"># c： tf.Tensor([1 2 3 4 5], shape=(5,), dtype=int32)</span>
 </code></pre></td></tr></table>
 </div>
-</div><h5 id="nprandomrandomstaterand维度">np.random.RandomState.rand(维度)</h5>
-<p>返回一个[0, 1)之间的随机数</p>
+</div><h5 id="nprandomrandomstaterand维度" class="headerLink"><a href="#nprandomrandomstaterand%e7%bb%b4%e5%ba%a6" class="header-mark"></a>np.random.RandomState.rand(维度)</h5><p>返回一个[0, 1)之间的随机数</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -286,8 +283,7 @@
 <span class="k">print</span><span class="p">(</span><span class="s2">&#34;b:&#34;</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>		<span class="c1"># b: [[7.20324493e-01 1.14374817e-04 3.02332573e-01][1.46755891e-01 9.23385948e-02 1.86260211e-01]]</span>
 </code></pre></td></tr></table>
 </div>
-</div><h5 id="npvstack数组1数组2">np.vstack(数组1，数组2)</h5>
-<p>将两个数组按垂直方向叠加</p>
+</div><h5 id="npvstack数组1数组2" class="headerLink"><a href="#npvstack%e6%95%b0%e7%bb%841%e6%95%b0%e7%bb%842" class="header-mark"></a>np.vstack(数组1，数组2)</h5><p>将两个数组按垂直方向叠加</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -304,17 +300,13 @@
 <span class="k">print</span><span class="p">(</span><span class="s2">&#34;c:&#34;</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>		<span class="c1"># c:[[1 2 3][4 5 6]]</span>
 </code></pre></td></tr></table>
 </div>
-</div><h5 id="npmgrid">np.mgrid[]</h5>
-<p>np.mgrid[起始值 : 结束值 : 步长，起始值 : 结束值 : 步长, ……]
+</div><h5 id="npmgrid" class="headerLink"><a href="#npmgrid" class="header-mark"></a>np.mgrid[]</h5><p>np.mgrid[起始值 : 结束值 : 步长，起始值 : 结束值 : 步长, ……]
 包含起始值，不包含结束值</p>
-<h5 id="xravel">x.ravel()</h5>
-<p>x.ravel()
+<h5 id="xravel" class="headerLink"><a href="#xravel" class="header-mark"></a>x.ravel()</h5><p>x.ravel()
 将x变为一维数组，将变量拉直</p>
-<h5 id="npc_">np.c_[]</h5>
-<p>np.c_[数组1，数组2，……]
+<h5 id="npc_" class="headerLink"><a href="#npc_" class="header-mark"></a>np.c_[]</h5><p>np.c_[数组1，数组2，……]
 使返回的间隔数值点配对</p>
-<h6 id="例">例：</h6>
-<div class="highlight"><div class="chroma">
+<h6 id="例" class="headerLink"><a href="#%e4%be%8b" class="header-mark"></a>例：</h6><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -346,8 +338,7 @@
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h3 id="神经网络nn复杂度">神经网络（NN）复杂度</h3>
-<ul>
+<h3 id="神经网络nn复杂度" class="headerLink"><a href="#%e7%a5%9e%e7%bb%8f%e7%bd%91%e7%bb%9cnn%e5%a4%8d%e6%9d%82%e5%ba%a6" class="header-mark"></a>神经网络（NN）复杂度</h3><ul>
 <li>NN复杂度：用NN层数和NN参数的个数表示</li>
 <li>空间复杂度：层数 = 隐藏层的层数 + 1个输出层</li>
 <li>总参数：总w数 + 总b数</li>
@@ -366,8 +357,7 @@
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h3 id="学习率">学习率</h3>
-<p>选择合适的学习率来更新参数</p>
+<h3 id="学习率" class="headerLink"><a href="#%e5%ad%a6%e4%b9%a0%e7%8e%87" class="header-mark"></a>学习率</h3><p>选择合适的学习率来更新参数</p>
 <p>
 
 
@@ -439,8 +429,7 @@ $指数衰减学习率 = 初始学习率*学习率衰减率^\frac{当前层数}{
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h3 id="激活函数">激活函数</h3>
-<p>简化模型始终是线性函数，影响模型的表达力
+<h3 id="激活函数" class="headerLink"><a href="#%e6%bf%80%e6%b4%bb%e5%87%bd%e6%95%b0" class="header-mark"></a>激活函数</h3><p>简化模型始终是线性函数，影响模型的表达力
 MP模型多了一个非线性函数（激活函数），使得多层神经网络不再是线性，提高层数来提高模型表达力</p>
 <p>
 
@@ -455,21 +444,17 @@ MP模型多了一个非线性函数（激活函数），使得多层神经网络
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h5 id="好的激活函数的特点">好的激活函数的特点：</h5>
-<ul>
+<h5 id="好的激活函数的特点" class="headerLink"><a href="#%e5%a5%bd%e7%9a%84%e6%bf%80%e6%b4%bb%e5%87%bd%e6%95%b0%e7%9a%84%e7%89%b9%e7%82%b9" class="header-mark"></a>好的激活函数的特点：</h5><ul>
 <li>非线性：激活函数非线性时，多层神经网络可以逼近所有函数</li>
 <li>可微性：优化器大多用梯度下降更新参数</li>
 <li>单调性 ：当激活函数是单调的，能保证单层神经网络的损失函数是凸函数（更容易收敛）</li>
 <li>近似恒等性：$f(x)\approx x$当参数初始化为随机小值时，神经网路更稳定</li>
 </ul>
-<h5 id="激活函数输出值的范围">激活函数输出值的范围：</h5>
-<ul>
+<h5 id="激活函数输出值的范围" class="headerLink"><a href="#%e6%bf%80%e6%b4%bb%e5%87%bd%e6%95%b0%e8%be%93%e5%87%ba%e5%80%bc%e7%9a%84%e8%8c%83%e5%9b%b4" class="header-mark"></a>激活函数输出值的范围：</h5><ul>
 <li>激活函数为有限值时，基于梯度下降的优化方法更稳定</li>
 <li>激活函数输出为无限值时，可调小学习率</li>
 </ul>
-<h5 id="常用的激活函数">常用的激活函数</h5>
-<h6 id="sigmoid函数tfnnsigmoidx">Sigmoid函数：tf.nn.sigmoid(x)</h6>
-<p><strong><font color=red>$f(x)=\frac{1}{1+e^{-x}}$</strong></font></p>
+<h5 id="常用的激活函数" class="headerLink"><a href="#%e5%b8%b8%e7%94%a8%e7%9a%84%e6%bf%80%e6%b4%bb%e5%87%bd%e6%95%b0" class="header-mark"></a>常用的激活函数</h5><h6 id="sigmoid函数tfnnsigmoidx" class="headerLink"><a href="#sigmoid%e5%87%bd%e6%95%b0tfnnsigmoidx" class="header-mark"></a>Sigmoid函数：tf.nn.sigmoid(x)</h6><p><strong><font color=red>$f(x)=\frac{1}{1+e^{-x}}$</strong></font></p>
 <ul>
 <li>特点:</li>
 </ul>
@@ -494,8 +479,7 @@ MP模型多了一个非线性函数（激活函数），使得多层神经网络
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h6 id="tanh函数tfmathtanhx">Tanh函数：tf.math.tanh(x)</h6>
-<p><strong><font color=red>$f(x)=\frac{1-e^{-2x}}{1+e^{-2x}}$</strong></font></p>
+<h6 id="tanh函数tfmathtanhx" class="headerLink"><a href="#tanh%e5%87%bd%e6%95%b0tfmathtanhx" class="header-mark"></a>Tanh函数：tf.math.tanh(x)</h6><p><strong><font color=red>$f(x)=\frac{1-e^{-2x}}{1+e^{-2x}}$</strong></font></p>
 <ul>
 <li>特点</li>
 </ul>
@@ -520,8 +504,7 @@ MP模型多了一个非线性函数（激活函数），使得多层神经网络
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h6 id="relu函数tfnnrelux">Relu函数：tf.nn.relu(x)</h6>
-<p><strong><font color=red>$f(x)=max(x,0)$</strong></font></p>
+<h6 id="relu函数tfnnrelux" class="headerLink"><a href="#relu%e5%87%bd%e6%95%b0tfnnrelux" class="header-mark"></a>Relu函数：tf.nn.relu(x)</h6><p><strong><font color=red>$f(x)=max(x,0)$</strong></font></p>
 <ul>
 <li>优点</li>
 </ul>
@@ -553,8 +536,7 @@ MP模型多了一个非线性函数（激活函数），使得多层神经网络
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h6 id="leaky-relu函数tfnnleaky_relux">Leaky Relu函数：tf.nn.leaky_relu(x)</h6>
-<p><strong><font color=red>$f(x)=max(\alpha x,x)$</strong></font></p>
+<h6 id="leaky-relu函数tfnnleaky_relux" class="headerLink"><a href="#leaky-relu%e5%87%bd%e6%95%b0tfnnleaky_relux" class="header-mark"></a>Leaky Relu函数：tf.nn.leaky_relu(x)</h6><p><strong><font color=red>$f(x)=max(\alpha x,x)$</strong></font></p>
 <ul>
 <li>特点：理论上来说，Leaky Relu有Relu的所有优点，也不会出现Dead Relu问题，但是在实际使用过程中，并没有完全证明比Relu好用</li>
 <li>函数图像</li>
@@ -572,8 +554,7 @@ MP模型多了一个非线性函数（激活函数），使得多层神经网络
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h6 id="summarize">SUMMARIZE</h6>
-<ul>
+<h6 id="summarize" class="headerLink"><a href="#summarize" class="header-mark"></a>SUMMARIZE</h6><ul>
 <li>首选relu函数</li>
 <li>学习率设置较小值</li>
 <li>输入特征标准化，即让输入特征满足以0为均值，1为标准差的正态分布</li>
@@ -585,20 +566,20 @@ MP模型多了一个非线性函数（激活函数），使得多层神经网络
 
 
 <div class="post-share"><div class="share-link">
-        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://xmoon5.github.io/activation/" data-title="TensorFlow2.1入门学习笔记(6)——激活函数" data-via="MoonXiaomu" data-hashtags="activation,function"><span class="svg-social-icon icon-twitter"></span></a>
+        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.aimoon.top/activation/" data-title="TensorFlow2.1入门学习笔记(6)——激活函数" data-via="MoonXiaomu" data-hashtags="activation,function"><span class="svg-social-icon icon-twitter"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://xmoon5.github.io/activation/" data-hashtag="activation"><span class="svg-social-icon icon-facebook"></span></a>
+        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.aimoon.top/activation/" data-hashtag="activation"><span class="svg-social-icon icon-facebook"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://xmoon5.github.io/activation/" data-title="TensorFlow2.1入门学习笔记(6)——激活函数" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
+        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://blog.aimoon.top/activation/" data-title="TensorFlow2.1入门学习笔记(6)——激活函数" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://xmoon5.github.io/activation/" data-title="TensorFlow2.1入门学习笔记(6)——激活函数" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
+        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://blog.aimoon.top/activation/" data-title="TensorFlow2.1入门学习笔记(6)——激活函数" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
     </div></div>
 
 <div class="footer-post-author">
-    <div class="author-avatar"><a href="https://aimoon.top" target="_blank"><img alt="A Student" src="https://aimoon.top/images/avatars.png"></a></div>
+    <div class="author-avatar"><a href="https://aimoon.top" target="_blank"><img alt="Undergraduate Student of Artificial Intelligence 😜" src="https://blog.aimoon.top/images/avatars.png"></a></div>
     <div class="author-info">
         <div class="name"><a href="https://aimoon.top" target="_blank">Wang Yuexin</a></div>
-        <div class="number-posts">A Student</span></div>
+        <div class="number-posts">Undergraduate Student of Artificial Intelligence 😜</span></div>
     </div>
 </div><div class="post-tags"><a href="/tags/activation/" class="tag">activation</a><a href="/tags/function/" class="tag">function</a></div></div>
                 </footer></div>
@@ -612,7 +593,7 @@ MP模型多了一个非线性函数（激活函数），使得多层神经网络
 
 </main><footer class="footer">
         <div class="footer-container"><div class="footer-line"><div><span id="timeDate">正在烧脑计算建站时间...</span><span id="times"></span><script>var now = new Date();function createtime(){var grt= new Date("05/20/2020 00:00:00");now.setTime(now.getTime()+250);days = (now - grt ) / 1000 / 60 / 60 / 24;dnum = Math.floor(days);hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);hnum = Math.floor(hours);if(String(hnum).length ==1 ){hnum = "0" + hnum; }minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);mnum = Math.floor(minutes);if(String(mnum).length ==1 ){mnum = "0" + mnum;}seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);snum = Math.round(seconds);if(String(snum).length ==1 ){snum = "0" + snum;}document.getElementById("timeDate").innerHTML = "&nbsp"+dnum+"&nbsp天";document.getElementById("times").innerHTML = hnum + "&nbsp小时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";}setInterval("createtime()",250);</script></div></div><div class="footer-line"><i class="svg-icon icon-copyright"></i><span>2020 - 2021</span><span class="author">&nbsp;<a href="https://aimoon.top" target="_blank">MOON</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="http://www.beian.miit.gov.cn" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
-                    <span class="icp"><a href="https://blog.pangao.vip/icp/aimoon.top">🧑ICP证000000号</a></span></div>
+                    <span class="icp"><a href="https://blog.pangao.vip/icp/xmoon,info">🧑ICP证000000号</a></span></div>
         </div>
     </footer></div>
 

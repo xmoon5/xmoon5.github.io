@@ -2,7 +2,7 @@
 
 
 
-以MNIST的[sequential模型](https://aimoon.top/2020/05/tf_keras_mnist/#%E4%BD%BF%E7%94%A8sequential%E5%AE%9E%E7%8E%B0%E6%89%8B%E5%86%99%E5%AD%97%E4%BD%93%E8%AF%86%E5%88%AB)为base-line，通过读取自己的数据，训练模型并存储模型，最后达到绘图实物的运用。
+以MNIST的[sequential模型](https://blog.aimoon.top/2020/05/tf_keras_mnist/#%E4%BD%BF%E7%94%A8sequential%E5%AE%9E%E7%8E%B0%E6%89%8B%E5%86%99%E5%AD%97%E4%BD%93%E8%AF%86%E5%88%AB)为base-line，通过读取自己的数据，训练模型并存储模型，最后达到绘图实物的运用。
 
 
 ## 自制数据集，解决本领域应用

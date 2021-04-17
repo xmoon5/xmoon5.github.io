@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>loss - 标签 - Moon&#39;s Blog</title>
-        <link>https://xmoon5.github.io/tags/loss/</link>
+        <link>https://blog.aimoon.top/tags/loss/</link>
         <description>loss - 标签 - Moon&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 20 May 2020 10:34:53 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/tags/loss/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 20 May 2020 10:34:53 &#43;0800</lastBuildDate><atom:link href="https://blog.aimoon.top/tags/loss/" rel="self" type="application/rss+xml" /><item>
     <title>TensorFlow2.1入门学习笔记(7)——损失函数</title>
-    <link>https://xmoon5.github.io/loss/</link>
+    <link>https://blog.aimoon.top/loss/</link>
     <pubDate>Wed, 20 May 2020 10:34:53 &#43;0800</pubDate>
     <author>moon.zh-cn</author>
-    <guid>https://xmoon5.github.io/loss/</guid>
-    <description><![CDATA[损失函数（loss）： 预测值（y）与已知答案（y_）的差距 神经网络的优化目标： loss最小: $\Rightarrow\left\{\begin{array}{lr}{mse(Mean Aquared Error)}\\{自定义}\\{ce(Cr]]></description>
+    <guid>https://blog.aimoon.top/loss/</guid>
+    <description><![CDATA[损失函数（loss）：预测值（y）与已知答案（y_）的差距 神经网络的优化目标： loss最小: $\Rightarrow\left\{\begin{array}{lr}{mse(Mean Aquared Error)}\\{自定义}\\{ce(Cr]]></description>
 </item></channel>
 </rss>

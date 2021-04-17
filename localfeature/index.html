@@ -8,12 +8,12 @@
 <meta name="twitter:description" content=""/><meta name="twitter:creator" content="@MoonXiaomu"/><meta name="Description" content="KEEP KWARKING"><meta property="og:title" content="区域检测——Harris角点" />
 <meta property="og:description" content="对于图像处理时经常需要提取特征点分析图片结构，将照片进行拼接，实现全景拍摄，那么在照片特征点提取时所采用的具体算法是什么呢？ 解决思路 提取特征" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xmoon5.github.io/localfeature/" />
-<meta property="og:image" content="https://xmoon5.github.io/images/favicon.svg"/>
-<meta property="article:published_time" content="2020-07-17T20:30:26+08:00" />
-<meta property="article:modified_time" content="2021-03-29T11:34:14+08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+<meta property="og:url" content="https://blog.aimoon.top/localfeature/" /><meta property="og:image" content="https://blog.aimoon.top/images/favicon.svg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-07-17T20:30:26&#43;08:00" />
+<meta property="article:modified_time" content="2021-03-29T11:34:14&#43;08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+
 <meta name="application-name" content="MOON">
-<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://xmoon5.github.io/localfeature/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.aimoon.top/localfeature/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -21,15 +21,15 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/xmoon5.github.io\/localfeature\/"
-        },"image": ["https:\/\/xmoon5.github.io\/images\/cover.png"],"genre": "posts","keywords": "Harris, 特征提取, 区域检测","wordCount":  1307 ,
-        "url": "https:\/\/xmoon5.github.io\/localfeature\/","datePublished": "2020-07-17T20:30:26+08:00","dateModified": "2021-03-29T11:34:14+08:00",
+            "@id": "https:\/\/blog.aimoon.top\/localfeature\/"
+        },"image": ["https:\/\/blog.aimoon.top\/images\/cover.png"],"genre": "posts","keywords": "Harris, 特征提取, 区域检测","wordCount":  1307 ,
+        "url": "https:\/\/blog.aimoon.top\/localfeature\/","datePublished": "2020-07-17T20:30:26+08:00","dateModified": "2021-03-29T11:34:14+08:00",
         "publisher": {
             "@type": "Person",
             "name": "Wang Yuexin", "image": [
             {
             "@type": "ImageObject",
-            "url": "https:\/\/aimoon.top\/images\/avatars.png"
+            "url": "https:\/\/blog.aimoon.top\/images\/avatars.png"
             }
             ]},"author": {
                 "@type": "Person",
@@ -44,12 +44,12 @@
             "@type": "ListItem",
             "position": 1,
             "name": "主页",
-            "item": "https:\/\/xmoon5.github.io"
+            "item": "https:\/\/blog.aimoon.top"
         },{
             "@type": "ListItem",
             "position": 2,
             "name": "计算机视觉",
-            "item": "https://xmoon5.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"
+            "item": "https://blog.aimoon.top/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/"
         },{
                 "@type": "ListItem",
                 "position": 3,
@@ -75,11 +75,11 @@
                         </li><li>
                             <a class="menu-item" href="/categories/"> 归档 </a>
                         </li><li>
+                            <a class="menu-item" href="https://aimoon.top" rel="noopener noreffer" target="_blank"> 关于 </a>
+                        </li><li>
                             <a class="menu-item" href="/music/"> 歌单 </a>
                         </li><li>
                             <a class="menu-item" href="/comments/"> 留言板 </a>
-                        </li><li>
-                            <a class="menu-item" href="https://tools.cyfan.top/" rel="noopener noreffer" target="_blank"> 小工具 </a>
                         </li></ul>
                 </nav><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="search……" id="search-input-desktop">
@@ -132,11 +132,11 @@
                         </li><li>
                             <a class="menu-item" href="/categories/" title="">归档</a>
                         </li><li>
+                            <a class="menu-item" href="https://aimoon.top" title="" rel="noopener noreffer" target="_blank">关于</a>
+                        </li><li>
                             <a class="menu-item" href="/music/" title="">歌单</a>
                         </li><li>
                             <a class="menu-item" href="/comments/" title="">留言板</a>
-                        </li><li>
-                            <a class="menu-item" href="https://tools.cyfan.top/" title="" rel="noopener noreffer" target="_blank">小工具</a>
                         </li></ul>
                 </nav>
                 <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
@@ -246,22 +246,18 @@
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h2 id="解决思路">解决思路</h2>
-<ol>
+<h2 id="解决思路" class="headerLink"><a href="#%e8%a7%a3%e5%86%b3%e6%80%9d%e8%b7%af" class="header-mark"></a>解决思路</h2><ol>
 <li>提取特征点</li>
 <li>匹配特征点</li>
 <li>使用<strong>RANSAC</strong>方法将两张图片的对应的特征点转换的方式拟合出来，在对图片采用相同的转换方式进行转换，在进行拼接</li>
 </ol>
-<h2 id="特征点corner">特征点——Corner</h2>
-<h3 id="好的特征点是什么样的">好的特征点是什么样的？</h3>
-<ol>
+<h2 id="特征点corner" class="headerLink"><a href="#%e7%89%b9%e5%be%81%e7%82%b9corner" class="header-mark"></a>特征点——Corner</h2><h3 id="好的特征点是什么样的" class="headerLink"><a href="#%e5%a5%bd%e7%9a%84%e7%89%b9%e5%be%81%e7%82%b9%e6%98%af%e4%bb%80%e4%b9%88%e6%a0%b7%e7%9a%84" class="header-mark"></a>好的特征点是什么样的？</h3><ol>
 <li>可重复性：在一张图可以被观测到的，在其他同场景的图也可以被观测到</li>
 <li>显著性：检测的特征点需要是在某一类图像中“独有的”，尽量剔除“普遍性”的点，目的是为了将不同类的图区分开</li>
 <li>简洁和高效：尽可能的减少计算量，提高计算效率</li>
 <li>局部性：匹配特征时要匹配特征点之间的相对关系，通过局部特征相对位置来判断是否为同一张图，来拟合转动镜头角度，图像位置</li>
 </ol>
-<h3 id="什么样的点满足条件">什么样的点满足条件</h3>
-<p>
+<h3 id="什么样的点满足条件" class="headerLink"><a href="#%e4%bb%80%e4%b9%88%e6%a0%b7%e7%9a%84%e7%82%b9%e6%bb%a1%e8%b6%b3%e6%9d%a1%e4%bb%b6" class="header-mark"></a>什么样的点满足条件</h3><p>
 
 
 
@@ -275,8 +271,7 @@
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
 <p>通过观察图片的特征，发现存在“<strong>角</strong>”的地方承载着更多的信息，角点是梯度在两个或以上方向上有变化的点。</p>
-<h3 id="basic-idea">Basic Idea</h3>
-<ol>
+<h3 id="basic-idea" class="headerLink"><a href="#basic-idea" class="header-mark"></a>Basic Idea</h3><ol>
 <li>使用一个较小的窗口在图像上延各个方向滑动</li>
 <li>不同的变化趋势显示了不同的特征</li>
 <li>图像内部所在的窗口延各个方向都没有变化；边缘所在的窗口延边缘方向无变化；角点所在窗口会在各个方向上都有显著的变化</li>
@@ -294,8 +289,7 @@
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h2 id="数学描述">数学描述</h2>
-<p>
+<h2 id="数学描述" class="headerLink"><a href="#%e6%95%b0%e5%ad%a6%e6%8f%8f%e8%bf%b0" class="header-mark"></a>数学描述</h2><p>
 
 
 
@@ -346,8 +340,7 @@
 </blockquote>
 </li>
 </ul>
-<h3 id="矩阵m">矩阵$M$</h3>
-<p>类比方程$y=ax+b$决定方程特性的是$a,b$。则决定$E(u,v)$特性的是$M$，分析矩阵$M$就可以得到$E(u,v)$的特性</p>
+<h3 id="矩阵m" class="headerLink"><a href="#%e7%9f%a9%e9%98%b5m" class="header-mark"></a>矩阵$M$</h3><p>类比方程$y=ax+b$决定方程特性的是$a,b$。则决定$E(u,v)$特性的是$M$，分析矩阵$M$就可以得到$E(u,v)$的特性</p>
 <p>
 
 
@@ -419,8 +412,7 @@
 <p>将$\lambda_1,\lambda_2$特征转化给$R$，<strong>最后判断只需判断$R$就可以确定是否为角点</strong></p>
 </li>
 </ul>
-<h2 id="harris检测器">Harris检测器</h2>
-<ol>
+<h2 id="harris检测器" class="headerLink"><a href="#harris%e6%a3%80%e6%b5%8b%e5%99%a8" class="header-mark"></a>Harris检测器</h2><ol>
 <li>计算每个像素处的高斯导数</li>
 <li>计算每个像素周围的高斯窗口中的二阶矩矩阵M</li>
 <li>计算角点响应函数R</li>
@@ -465,20 +457,20 @@
 
 
 <div class="post-share"><div class="share-link">
-        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://xmoon5.github.io/localfeature/" data-title="区域检测——Harris角点" data-via="MoonXiaomu" data-hashtags="Harris,特征提取,区域检测"><span class="svg-social-icon icon-twitter"></span></a>
+        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.aimoon.top/localfeature/" data-title="区域检测——Harris角点" data-via="MoonXiaomu" data-hashtags="Harris,特征提取,区域检测"><span class="svg-social-icon icon-twitter"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://xmoon5.github.io/localfeature/" data-hashtag="Harris"><span class="svg-social-icon icon-facebook"></span></a>
+        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.aimoon.top/localfeature/" data-hashtag="Harris"><span class="svg-social-icon icon-facebook"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://xmoon5.github.io/localfeature/" data-title="区域检测——Harris角点" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
+        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://blog.aimoon.top/localfeature/" data-title="区域检测——Harris角点" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://xmoon5.github.io/localfeature/" data-title="区域检测——Harris角点" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
+        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://blog.aimoon.top/localfeature/" data-title="区域检测——Harris角点" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
     </div></div>
 
 <div class="footer-post-author">
-    <div class="author-avatar"><a href="https://aimoon.top" target="_blank"><img alt="A Student" src="https://aimoon.top/images/avatars.png"></a></div>
+    <div class="author-avatar"><a href="https://aimoon.top" target="_blank"><img alt="Undergraduate Student of Artificial Intelligence 😜" src="https://blog.aimoon.top/images/avatars.png"></a></div>
     <div class="author-info">
         <div class="name"><a href="https://aimoon.top" target="_blank">Wang Yuexin</a></div>
-        <div class="number-posts">A Student</span></div>
+        <div class="number-posts">Undergraduate Student of Artificial Intelligence 😜</span></div>
     </div>
 </div><div class="post-tags"><a href="/tags/harris/" class="tag">Harris</a><a href="/tags/%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96/" class="tag">特征提取</a><a href="/tags/%E5%8C%BA%E5%9F%9F%E6%A3%80%E6%B5%8B/" class="tag">区域检测</a></div></div>
                 </footer></div>
@@ -492,7 +484,7 @@
 
 </main><footer class="footer">
         <div class="footer-container"><div class="footer-line"><div><span id="timeDate">正在烧脑计算建站时间...</span><span id="times"></span><script>var now = new Date();function createtime(){var grt= new Date("05/20/2020 00:00:00");now.setTime(now.getTime()+250);days = (now - grt ) / 1000 / 60 / 60 / 24;dnum = Math.floor(days);hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);hnum = Math.floor(hours);if(String(hnum).length ==1 ){hnum = "0" + hnum; }minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);mnum = Math.floor(minutes);if(String(mnum).length ==1 ){mnum = "0" + mnum;}seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);snum = Math.round(seconds);if(String(snum).length ==1 ){snum = "0" + snum;}document.getElementById("timeDate").innerHTML = "&nbsp"+dnum+"&nbsp天";document.getElementById("times").innerHTML = hnum + "&nbsp小时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";}setInterval("createtime()",250);</script></div></div><div class="footer-line"><i class="svg-icon icon-copyright"></i><span>2020 - 2021</span><span class="author">&nbsp;<a href="https://aimoon.top" target="_blank">MOON</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="http://www.beian.miit.gov.cn" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
-                    <span class="icp"><a href="https://blog.pangao.vip/icp/aimoon.top">🧑ICP证000000号</a></span></div>
+                    <span class="icp"><a href="https://blog.pangao.vip/icp/xmoon,info">🧑ICP证000000号</a></span></div>
         </div>
     </footer></div>
 

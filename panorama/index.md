@@ -11,8 +11,8 @@
 在图像拼接过程中，运用SIFT局部描述算子检测图像中的关键点和特征，SIFT特征是基于物体上的一些局部外观的兴趣点而与影像的大小和旋转无关。对于光线、噪声、些微视角改变的容忍度也相当高，所以用来检测要拼接图像的特征及关键点就很有优势。而接下来即步骤三是找到重叠的图片部分，连接所有图片之后就可以形成一个基本的全景图了。匹配图片最常用的方式是采用RANSAC（RANdom SAmple Consensus, 随机抽样一致），用此排除掉不符合大部分几何变换的匹配。之后利用这些匹配的点来估算单应矩阵”（Homography Estimation），也就是将其中一张图像通过关联性和另一张匹配。
 
 **使用的算法**：
-- [RANSAC](https://aimoon.top/2020/07/fitting/#roubst-fitting--ransac)
-- [SIFT](https://aimoon.top/2020/07/edgedetection2/#sift%E7%89%B9%E5%BE%81)
+- [RANSAC](https://blog.aimoon.top/2020/07/fitting/#roubst-fitting--ransac)
+- [SIFT](https://blog.aimoon.top/2020/07/edgedetection2/#sift%E7%89%B9%E5%BE%81)
 
 **1. 利用SIFT方法检测特征点**
 

@@ -8,12 +8,12 @@
 <meta name="twitter:description" content=""/><meta name="twitter:creator" content="@MoonXiaomu"/><meta name="Description" content="KEEP KWARKING"><meta property="og:title" content="TensorFlow2.1入门学习笔记(9)——神经网络参数优化器(优化器性能比较)" />
 <meta property="og:description" content="神经网络是基于链接的人工智能，当网络结构固定后，不同参数的选取对模型的表达力影响很大，优化器就是引导更新模型参数的工具 常用符号 待优化参数w 损" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xmoon5.github.io/optimizer/" />
-<meta property="og:image" content="https://xmoon5.github.io/images/favicon.svg"/>
-<meta property="article:published_time" content="2020-05-21T23:56:32+08:00" />
-<meta property="article:modified_time" content="2021-03-29T11:34:14+08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+<meta property="og:url" content="https://blog.aimoon.top/optimizer/" /><meta property="og:image" content="https://blog.aimoon.top/images/favicon.svg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-05-21T23:56:32&#43;08:00" />
+<meta property="article:modified_time" content="2021-03-29T11:34:14&#43;08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+
 <meta name="application-name" content="MOON">
-<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://xmoon5.github.io/optimizer/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.aimoon.top/optimizer/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -21,15 +21,15 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/xmoon5.github.io\/optimizer\/"
-        },"image": ["https:\/\/xmoon5.github.io\/images\/cover.png"],"genre": "posts","keywords": "optimizer","wordCount":  9066 ,
-        "url": "https:\/\/xmoon5.github.io\/optimizer\/","datePublished": "2020-05-21T23:56:32+08:00","dateModified": "2021-03-29T11:34:14+08:00",
+            "@id": "https:\/\/blog.aimoon.top\/optimizer\/"
+        },"image": ["https:\/\/blog.aimoon.top\/images\/cover.png"],"genre": "posts","keywords": "optimizer","wordCount":  9122 ,
+        "url": "https:\/\/blog.aimoon.top\/optimizer\/","datePublished": "2020-05-21T23:56:32+08:00","dateModified": "2021-03-29T11:34:14+08:00",
         "publisher": {
             "@type": "Person",
             "name": "Wang Yuexin", "image": [
             {
             "@type": "ImageObject",
-            "url": "https:\/\/aimoon.top\/images\/avatars.png"
+            "url": "https:\/\/blog.aimoon.top\/images\/avatars.png"
             }
             ]},"author": {
                 "@type": "Person",
@@ -44,12 +44,12 @@
             "@type": "ListItem",
             "position": 1,
             "name": "主页",
-            "item": "https:\/\/xmoon5.github.io"
+            "item": "https:\/\/blog.aimoon.top"
         },{
             "@type": "ListItem",
             "position": 2,
             "name": "TF2.1学习笔记",
-            "item": "https://xmoon5.github.io/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+            "item": "https://blog.aimoon.top/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
         },{
                 "@type": "ListItem",
                 "position": 3,
@@ -75,11 +75,11 @@
                         </li><li>
                             <a class="menu-item" href="/categories/"> 归档 </a>
                         </li><li>
+                            <a class="menu-item" href="https://aimoon.top" rel="noopener noreffer" target="_blank"> 关于 </a>
+                        </li><li>
                             <a class="menu-item" href="/music/"> 歌单 </a>
                         </li><li>
                             <a class="menu-item" href="/comments/"> 留言板 </a>
-                        </li><li>
-                            <a class="menu-item" href="https://tools.cyfan.top/" rel="noopener noreffer" target="_blank"> 小工具 </a>
                         </li></ul>
                 </nav><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="search……" id="search-input-desktop">
@@ -132,11 +132,11 @@
                         </li><li>
                             <a class="menu-item" href="/categories/" title="">归档</a>
                         </li><li>
+                            <a class="menu-item" href="https://aimoon.top" title="" rel="noopener noreffer" target="_blank">关于</a>
+                        </li><li>
                             <a class="menu-item" href="/music/" title="">歌单</a>
                         </li><li>
                             <a class="menu-item" href="/comments/" title="">留言板</a>
-                        </li><li>
-                            <a class="menu-item" href="https://tools.cyfan.top/" title="" rel="noopener noreffer" target="_blank">小工具</a>
                         </li></ul>
                 </nav>
                 <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
@@ -178,7 +178,7 @@
                             </span><span class="post-meta-date meta-item">
                                 <span class="svg-icon icon-clock"></span><time class="timeago" datetime="2020-05-21">2020-05-21</time>
                             </span><span class="post-meta-words meta-item">
-                                <span class="svg-icon icon-pencil"></span>约 9066 字
+                                <span class="svg-icon icon-pencil"></span>约 9122 字
                             </span>
                             <span class="post-meta-reading meta-item">
                                 <span class="svg-icon icon-stopwatch"></span>预计阅读 19 分钟
@@ -226,16 +226,14 @@
 </nav></div>
                     </div><p>神经网络是基于链接的人工智能，当网络结构固定后，不同参数的选取对模型的表达力影响很大，优化器就是引导更新模型参数的工具</p>
 <!-- more -->
-<h3 id="常用符号">常用符号</h3>
-<ul>
+<h3 id="常用符号" class="headerLink"><a href="#%e5%b8%b8%e7%94%a8%e7%ac%a6%e5%8f%b7" class="header-mark"></a>常用符号</h3><ul>
 <li>待优化参数w</li>
 <li>损失函数loss</li>
 <li>学习率lr</li>
 <li>每次迭代一个batch（以batch为单位批量喂入神经网络，batch常为$2^n$）</li>
 <li>t表示当前batch迭代的总次数</li>
 </ul>
-<h3 id="更新参数的过程">更新参数的过程</h3>
-<ol>
+<h3 id="更新参数的过程" class="headerLink"><a href="#%e6%9b%b4%e6%96%b0%e5%8f%82%e6%95%b0%e7%9a%84%e8%bf%87%e7%a8%8b" class="header-mark"></a>更新参数的过程</h3><ol>
 <li>计算t时刻损失函数关于当前参数的梯度$g_t=\nabla loss=\frac{\partial loss}{\partial(w_t)}$</li>
 <li>计算t时刻一阶动量$m_t$和二阶动量$V_t$</li>
 <li>计算t时刻下降梯度：$\eta_t=lr*{\frac {m_t}{\sqrt V_t}}$</li>
@@ -244,10 +242,8 @@
 <p>一阶动量：与梯度相关的函数
 二阶动量：与梯度平方相关的函数
 <font color=red><strong>不同的优化器实质上是定义了不同的一阶动量和二阶动量公式</strong></font></p>
-<h3 id="五种常见优化器">五种常见优化器</h3>
-<p>使用鸢尾花分类问题代码检测五种优化器性能。</p>
-<h4 id="sgd无moment随机梯度下降">SGD（无moment）：随机梯度下降</h4>
-<p>$m_t=g_t$</p>
+<h3 id="五种常见优化器" class="headerLink"><a href="#%e4%ba%94%e7%a7%8d%e5%b8%b8%e8%a7%81%e4%bc%98%e5%8c%96%e5%99%a8" class="header-mark"></a>五种常见优化器</h3><p>使用鸢尾花分类问题代码检测五种优化器性能。</p>
+<h4 id="sgd无moment随机梯度下降" class="headerLink"><a href="#sgd%e6%97%a0moment%e9%9a%8f%e6%9c%ba%e6%a2%af%e5%ba%a6%e4%b8%8b%e9%99%8d" class="header-mark"></a>SGD（无moment）：随机梯度下降</h4><p>$m_t=g_t$</p>
 <p>$V_t=1$</p>
 <p>$\eta_t=lr*{\frac {m_t}{\sqrt V_t}}=lr*g_t$</p>
 <p>$w_{t+1}=w_t-\eta_t=w_t-lr*{\frac {m_t}{\sqrt V_t}}=w_t-lr*g_t$</p>
@@ -496,8 +492,7 @@
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></td></tr></table>
 </div>
-</div><h4 id="sgdm含moment的sgd在sgd基础上增加了一阶动量">SGDM（含moment的SGD），在SGD基础上增加了一阶动量</h4>
-<p>$m_{t}$表示各个时刻梯度方向的指数滑动平均值
+</div><h4 id="sgdm含moment的sgd在sgd基础上增加了一阶动量" class="headerLink"><a href="#sgdm%e5%90%abmoment%e7%9a%84sgd%e5%9c%a8sgd%e5%9f%ba%e7%a1%80%e4%b8%8a%e5%a2%9e%e5%8a%a0%e4%ba%86%e4%b8%80%e9%98%b6%e5%8a%a8%e9%87%8f" class="header-mark"></a>SGDM（含moment的SGD），在SGD基础上增加了一阶动量</h4><p>$m_{t}$表示各个时刻梯度方向的指数滑动平均值
 $m_{t-1}$表示上一时刻的一阶动量
 $\beta$是一个超参数，接近1，经验值0.9</p>
 <p>$m_t=\beta*m_{t-1}+(1-\beta)*g_t$</p>
@@ -774,8 +769,7 @@ $\beta$是一个超参数，接近1，经验值0.9</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></td></tr></table>
 </div>
-</div><h4 id="adagrad在sgd基础上增加二阶动量">Adagrad：在SGD基础上增加二阶动量</h4>
-<p>$m_t=g_t$</p>
+</div><h4 id="adagrad在sgd基础上增加二阶动量" class="headerLink"><a href="#adagrad%e5%9c%a8sgd%e5%9f%ba%e7%a1%80%e4%b8%8a%e5%a2%9e%e5%8a%a0%e4%ba%8c%e9%98%b6%e5%8a%a8%e9%87%8f" class="header-mark"></a>Adagrad：在SGD基础上增加二阶动量</h4><p>$m_t=g_t$</p>
 <p>$V_t=\sum_{t=1}^{t}g_t^2$</p>
 <p>$\eta_t=lr*{\frac {m_t}{\sqrt V_t}}=lr*\frac{g_t}{\sqrt{\sum_{t=1}^{t}g_t^2}}$</p>
 <p>$w_{t+1}=w_t-\eta_t=w_t-lr*\frac{g_t}{\sqrt{\sum_{t=1}^{t}g_t^2}}$</p>
@@ -1045,8 +1039,7 @@ $\beta$是一个超参数，接近1，经验值0.9</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></td></tr></table>
 </div>
-</div><h4 id="rmspropsgd基础上增加了二阶动量">RMSProp：SGD基础上增加了二阶动量</h4>
-<p>$m_t=g_t$</p>
+</div><h4 id="rmspropsgd基础上增加了二阶动量" class="headerLink"><a href="#rmspropsgd%e5%9f%ba%e7%a1%80%e4%b8%8a%e5%a2%9e%e5%8a%a0%e4%ba%86%e4%ba%8c%e9%98%b6%e5%8a%a8%e9%87%8f" class="header-mark"></a>RMSProp：SGD基础上增加了二阶动量</h4><p>$m_t=g_t$</p>
 <p>$V_t=\beta*V_{t-1}+(1-\beta)*g_t^2$</p>
 <p>$\eta_t=lr*{\frac {m_t}{\sqrt V_t}}=lr*\frac{g_t}{\sqrt{\beta*V_{t-1}+(1-\beta)*g_t^2}}$</p>
 <p>$w_{t+1}=w_t-\eta_t=w_t-lr*\frac{g_t}{\sqrt{\beta*V_{t-1}+(1-\beta)*g_t^2}}$</p>
@@ -1320,8 +1313,7 @@ $\beta$是一个超参数，接近1，经验值0.9</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></td></tr></table>
 </div>
-</div><h4 id="adam同时结合sgdm一阶动量和rmsprop的二阶动量">Adam：同时结合SGDM一阶动量和RMSProp的二阶动量</h4>
-<p>$m_t=\beta*m_{t-1}+(1-\beta)*g_t$</p>
+</div><h4 id="adam同时结合sgdm一阶动量和rmsprop的二阶动量" class="headerLink"><a href="#adam%e5%90%8c%e6%97%b6%e7%bb%93%e5%90%88sgdm%e4%b8%80%e9%98%b6%e5%8a%a8%e9%87%8f%e5%92%8crmsprop%e7%9a%84%e4%ba%8c%e9%98%b6%e5%8a%a8%e9%87%8f" class="header-mark"></a>Adam：同时结合SGDM一阶动量和RMSProp的二阶动量</h4><p>$m_t=\beta*m_{t-1}+(1-\beta)*g_t$</p>
 <p>修正一阶动量的偏差：$\hat{m_t}=\frac{m_t}{1-\beta_1^t}$</p>
 <p>$V_t=\beta*V_{t-1}+(1-\beta)*g_t^2$</p>
 <p>修正二阶动量的偏差：$\hat{V_t}=\frac{V_t}{1-\beta_2^t}$</p>
@@ -1649,8 +1641,7 @@ $\beta$是一个超参数，接近1，经验值0.9</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></td></tr></table>
 </div>
-</div><h5 id="统计结果如下">统计结果如下</h5>
-<p>不同主机结果一般不同</p>
+</div><h5 id="统计结果如下" class="headerLink"><a href="#%e7%bb%9f%e8%ae%a1%e7%bb%93%e6%9e%9c%e5%a6%82%e4%b8%8b" class="header-mark"></a>统计结果如下</h5><p>不同主机结果一般不同</p>
 <table>
 <thead>
 <tr>
@@ -1679,20 +1670,20 @@ $\beta$是一个超参数，接近1，经验值0.9</p>
 
 
 <div class="post-share"><div class="share-link">
-        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://xmoon5.github.io/optimizer/" data-title="TensorFlow2.1入门学习笔记(9)——神经网络参数优化器(优化器性能比较)" data-via="MoonXiaomu" data-hashtags="optimizer"><span class="svg-social-icon icon-twitter"></span></a>
+        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.aimoon.top/optimizer/" data-title="TensorFlow2.1入门学习笔记(9)——神经网络参数优化器(优化器性能比较)" data-via="MoonXiaomu" data-hashtags="optimizer"><span class="svg-social-icon icon-twitter"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://xmoon5.github.io/optimizer/" data-hashtag="optimizer"><span class="svg-social-icon icon-facebook"></span></a>
+        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.aimoon.top/optimizer/" data-hashtag="optimizer"><span class="svg-social-icon icon-facebook"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://xmoon5.github.io/optimizer/" data-title="TensorFlow2.1入门学习笔记(9)——神经网络参数优化器(优化器性能比较)" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
+        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://blog.aimoon.top/optimizer/" data-title="TensorFlow2.1入门学习笔记(9)——神经网络参数优化器(优化器性能比较)" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://xmoon5.github.io/optimizer/" data-title="TensorFlow2.1入门学习笔记(9)——神经网络参数优化器(优化器性能比较)" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
+        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://blog.aimoon.top/optimizer/" data-title="TensorFlow2.1入门学习笔记(9)——神经网络参数优化器(优化器性能比较)" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
     </div></div>
 
 <div class="footer-post-author">
-    <div class="author-avatar"><a href="https://aimoon.top" target="_blank"><img alt="A Student" src="https://aimoon.top/images/avatars.png"></a></div>
+    <div class="author-avatar"><a href="https://aimoon.top" target="_blank"><img alt="Undergraduate Student of Artificial Intelligence 😜" src="https://blog.aimoon.top/images/avatars.png"></a></div>
     <div class="author-info">
         <div class="name"><a href="https://aimoon.top" target="_blank">Wang Yuexin</a></div>
-        <div class="number-posts">A Student</span></div>
+        <div class="number-posts">Undergraduate Student of Artificial Intelligence 😜</span></div>
     </div>
 </div><div class="post-tags"><a href="/tags/optimizer/" class="tag">optimizer</a></div></div>
                 </footer></div>
@@ -1706,7 +1697,7 @@ $\beta$是一个超参数，接近1，经验值0.9</p>
 
 </main><footer class="footer">
         <div class="footer-container"><div class="footer-line"><div><span id="timeDate">正在烧脑计算建站时间...</span><span id="times"></span><script>var now = new Date();function createtime(){var grt= new Date("05/20/2020 00:00:00");now.setTime(now.getTime()+250);days = (now - grt ) / 1000 / 60 / 60 / 24;dnum = Math.floor(days);hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);hnum = Math.floor(hours);if(String(hnum).length ==1 ){hnum = "0" + hnum; }minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);mnum = Math.floor(minutes);if(String(mnum).length ==1 ){mnum = "0" + mnum;}seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);snum = Math.round(seconds);if(String(snum).length ==1 ){snum = "0" + snum;}document.getElementById("timeDate").innerHTML = "&nbsp"+dnum+"&nbsp天";document.getElementById("times").innerHTML = hnum + "&nbsp小时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";}setInterval("createtime()",250);</script></div></div><div class="footer-line"><i class="svg-icon icon-copyright"></i><span>2020 - 2021</span><span class="author">&nbsp;<a href="https://aimoon.top" target="_blank">MOON</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="http://www.beian.miit.gov.cn" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
-                    <span class="icp"><a href="https://blog.pangao.vip/icp/aimoon.top">🧑ICP证000000号</a></span></div>
+                    <span class="icp"><a href="https://blog.pangao.vip/icp/xmoon,info">🧑ICP证000000号</a></span></div>
         </div>
     </footer></div>
 

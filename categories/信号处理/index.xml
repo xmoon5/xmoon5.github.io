@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>信号处理 - 分类 - Moon&#39;s Blog</title>
-        <link>https://xmoon5.github.io/categories/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/</link>
+        <link>https://blog.aimoon.top/categories/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/</link>
         <description>信号处理 - 分类 - Moon&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 25 Oct 2020 17:34:31 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/categories/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 25 Oct 2020 17:34:31 &#43;0800</lastBuildDate><atom:link href="https://blog.aimoon.top/categories/%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/" rel="self" type="application/rss+xml" /><item>
     <title>信号处理的几种变换</title>
-    <link>https://xmoon5.github.io/severaltransformationsofsignalprocessing/</link>
+    <link>https://blog.aimoon.top/severaltransformationsofsignalprocessing/</link>
     <pubDate>Sun, 25 Oct 2020 17:34:31 &#43;0800</pubDate>
     <author>moon.zh-cn</author>
-    <guid>https://xmoon5.github.io/severaltransformationsofsignalprocessing/</guid>
+    <guid>https://blog.aimoon.top/severaltransformationsofsignalprocessing/</guid>
     <description><![CDATA[信号处理中通常会进行转换，使信号便于处理，提取信息，最基本的变换是傅里叶变换，后又衍生处了小波波变换，希尔伯特变换，希尔伯特黄变换，曲波变换]]></description>
 </item></channel>
 </rss>

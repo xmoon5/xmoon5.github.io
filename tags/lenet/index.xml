@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>LeNet - 标签 - Moon&#39;s Blog</title>
-        <link>https://xmoon5.github.io/tags/lenet/</link>
+        <link>https://blog.aimoon.top/tags/lenet/</link>
         <description>LeNet - 标签 - Moon&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 15 Jun 2020 13:50:27 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/tags/lenet/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 15 Jun 2020 13:50:27 &#43;0800</lastBuildDate><atom:link href="https://blog.aimoon.top/tags/lenet/" rel="self" type="application/rss+xml" /><item>
     <title>TensorFlow2.1入门学习笔记(13)——卷积神经网络LeNet, AlexNet, VGGNet示例</title>
-    <link>https://xmoon5.github.io/convolutional2/</link>
+    <link>https://blog.aimoon.top/convolutional2/</link>
     <pubDate>Mon, 15 Jun 2020 13:50:27 &#43;0800</pubDate>
     <author>moon.zh-cn</author>
-    <guid>https://xmoon5.github.io/convolutional2/</guid>
+    <guid>https://blog.aimoon.top/convolutional2/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="https://img-blog.csdnimg.cn/20200614194424177.png" referrerpolicy="no-referrer">
             </div>Cifar10数据集 提供 5万张 32*32 像素点的十分类彩色图片和标签，用于训练。 提供 1万张 32*32 像素点的十分类彩色图片和标签，用于测试。 导入cifar1]]></description>

@@ -8,12 +8,12 @@
 <meta name="twitter:description" content=""/><meta name="twitter:creator" content="@MoonXiaomu"/><meta name="Description" content="KEEP KWARKING"><meta property="og:title" content="经典算法：Batch Normalization" />
 <meta property="og:description" content="在卷积网络六大模块中的BN（批批标准化）所指的就是Batch Normalization，该算法15年提出，现在已经成为深度学习中经常使用的技" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xmoon5.github.io/batchnormalization/" />
-<meta property="og:image" content="https://xmoon5.github.io/images/favicon.svg"/>
-<meta property="article:published_time" content="2020-08-13T12:50:45+08:00" />
-<meta property="article:modified_time" content="2021-03-29T11:34:14+08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+<meta property="og:url" content="https://blog.aimoon.top/batchnormalization/" /><meta property="og:image" content="https://blog.aimoon.top/images/favicon.svg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-08-13T12:50:45&#43;08:00" />
+<meta property="article:modified_time" content="2021-03-29T11:34:14&#43;08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+
 <meta name="application-name" content="MOON">
-<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://xmoon5.github.io/batchnormalization/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.aimoon.top/batchnormalization/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -21,15 +21,15 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/xmoon5.github.io\/batchnormalization\/"
-        },"image": ["https:\/\/xmoon5.github.io\/images\/cover.png"],"genre": "posts","keywords": "Batch Normalization, 算法","wordCount":  3274 ,
-        "url": "https:\/\/xmoon5.github.io\/batchnormalization\/","datePublished": "2020-08-13T12:50:45+08:00","dateModified": "2021-03-29T11:34:14+08:00",
+            "@id": "https:\/\/blog.aimoon.top\/batchnormalization\/"
+        },"image": ["https:\/\/blog.aimoon.top\/images\/cover.png"],"genre": "posts","keywords": "Batch Normalization, 算法","wordCount":  3284 ,
+        "url": "https:\/\/blog.aimoon.top\/batchnormalization\/","datePublished": "2020-08-13T12:50:45+08:00","dateModified": "2021-03-29T11:34:14+08:00",
         "publisher": {
             "@type": "Person",
             "name": "Wang Yuexin", "image": [
             {
             "@type": "ImageObject",
-            "url": "https:\/\/aimoon.top\/images\/avatars.png"
+            "url": "https:\/\/blog.aimoon.top\/images\/avatars.png"
             }
             ]},"author": {
                 "@type": "Person",
@@ -44,12 +44,12 @@
             "@type": "ListItem",
             "position": 1,
             "name": "主页",
-            "item": "https:\/\/xmoon5.github.io"
+            "item": "https:\/\/blog.aimoon.top"
         },{
             "@type": "ListItem",
             "position": 2,
             "name": "深度学习",
-            "item": "https://xmoon5.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"
+            "item": "https://blog.aimoon.top/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"
         },{
                 "@type": "ListItem",
                 "position": 3,
@@ -75,11 +75,11 @@
                         </li><li>
                             <a class="menu-item" href="/categories/"> 归档 </a>
                         </li><li>
+                            <a class="menu-item" href="https://aimoon.top" rel="noopener noreffer" target="_blank"> 关于 </a>
+                        </li><li>
                             <a class="menu-item" href="/music/"> 歌单 </a>
                         </li><li>
                             <a class="menu-item" href="/comments/"> 留言板 </a>
-                        </li><li>
-                            <a class="menu-item" href="https://tools.cyfan.top/" rel="noopener noreffer" target="_blank"> 小工具 </a>
                         </li></ul>
                 </nav><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="search……" id="search-input-desktop">
@@ -132,11 +132,11 @@
                         </li><li>
                             <a class="menu-item" href="/categories/" title="">归档</a>
                         </li><li>
+                            <a class="menu-item" href="https://aimoon.top" title="" rel="noopener noreffer" target="_blank">关于</a>
+                        </li><li>
                             <a class="menu-item" href="/music/" title="">歌单</a>
                         </li><li>
                             <a class="menu-item" href="/comments/" title="">留言板</a>
-                        </li><li>
-                            <a class="menu-item" href="https://tools.cyfan.top/" title="" rel="noopener noreffer" target="_blank">小工具</a>
                         </li></ul>
                 </nav>
                 <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
@@ -178,7 +178,7 @@
                             </span><span class="post-meta-date meta-item">
                                 <span class="svg-icon icon-clock"></span><time class="timeago" datetime="2020-08-13">2020-08-13</time>
                             </span><span class="post-meta-words meta-item">
-                                <span class="svg-icon icon-pencil"></span>约 3274 字
+                                <span class="svg-icon icon-pencil"></span>约 3284 字
                             </span>
                             <span class="post-meta-reading meta-item">
                                 <span class="svg-icon icon-stopwatch"></span>预计阅读 7 分钟
@@ -210,9 +210,8 @@
     <li><a href="#batch-normalization的优势">Batch Normalization的优势</a></li>
   </ul>
 </nav></div>
-                    </div><p>在<a href="https://aimoon.top/2020/06/convolutional1/#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C" target="_blank" rel="noopener noreffer"><strong>卷积网络六大模块</strong></a>中的<strong>BN</strong>（<strong>批批标准化</strong>）所指的就是Batch Normalization，该算法15年提出，现在已经成为深度学习中经常使用的技术，可以极大的提高网络的处理能力。</p>
-<h2 id="feature-scaling-特征缩放">Feature Scaling 特征缩放</h2>
-<p>在没有进行Feature Scaling之前，如果两个输入数据$x_1,x_2$的distribution很不均匀的话，导致对$w_2$计算结果的影响比较大，所以训练的时候，横纵方向上需要给与一个不同的training rate，在$w_1$方向需要一个更大的learning rate，$w_2$方向给与一个较小的learning rate，不过这样做的办法却不见得很简单。所以对不同Feature做了normalization之后，使得error surface看起来比较接近正圆的话，就可以使训练容易得多。</p>
+                    </div><p>在<a href="https://blog.aimoon.top/2020/06/convolutional1/#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C" target="_blank" rel="noopener noreffer"><strong>卷积网络六大模块</strong></a>中的<strong>BN</strong>（<strong>批批标准化</strong>）所指的就是Batch Normalization，该算法15年提出，现在已经成为深度学习中经常使用的技术，可以极大的提高网络的处理能力。</p>
+<h2 id="feature-scaling-特征缩放" class="headerLink"><a href="#feature-scaling-%e7%89%b9%e5%be%81%e7%bc%a9%e6%94%be" class="header-mark"></a>Feature Scaling 特征缩放</h2><p>在没有进行Feature Scaling之前，如果两个输入数据$x_1,x_2$的distribution很不均匀的话，导致对$w_2$计算结果的影响比较大，所以训练的时候，横纵方向上需要给与一个不同的training rate，在$w_1$方向需要一个更大的learning rate，$w_2$方向给与一个较小的learning rate，不过这样做的办法却不见得很简单。所以对不同Feature做了normalization之后，使得error surface看起来比较接近正圆的话，就可以使训练容易得多。</p>
 <p>
 
 
@@ -228,8 +227,7 @@
 </figure></p>
 <p><strong>优势</strong>：</p>
 <p>经过处理后error surface更接近一个<strong>圆</strong>，gradient在横的方向上和纵的方向上变化<strong>差不多</strong>，使得training变得更容易，如果error suface是一个<strong>椭圆</strong>，不同的方向上<strong>要非常不一样的学习率</strong>，例如：在横的方向上给比较大的学习率，纵的方向上给比较小的学习率，给不同的参数不同的学习率是有办法的，但不见得那么好做。如果可以把不同的feature做Normalization，让error surface看起来比较接近正圆的话，是会让training容易得多。</p>
-<h2 id="经典的feature-scaling">经典的Feature Scaling</h2>
-<p>现在有一大堆的数据，训练数据总共有$R$笔data。然后对每一个dimension去计算dimension的<strong>mean</strong>跟dimension的<strong>standard deviation</strong>，假设下图的input是39维，所以就算出39个mean跟39个standard deviation；然后对每一维中的数值，$\frac{x^r_i-m_i}{\sigma_i}$作为一个<strong>Normalization</strong>，你就使第$i$维的feature的分布为$mean=0，variance=1$。</p>
+<h2 id="经典的feature-scaling" class="headerLink"><a href="#%e7%bb%8f%e5%85%b8%e7%9a%84feature-scaling" class="header-mark"></a>经典的Feature Scaling</h2><p>现在有一大堆的数据，训练数据总共有$R$笔data。然后对每一个dimension去计算dimension的<strong>mean</strong>跟dimension的<strong>standard deviation</strong>，假设下图的input是39维，所以就算出39个mean跟39个standard deviation；然后对每一维中的数值，$\frac{x^r_i-m_i}{\sigma_i}$作为一个<strong>Normalization</strong>，你就使第$i$维的feature的分布为$mean=0，variance=1$。</p>
 <p>
 
 
@@ -243,8 +241,7 @@
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h2 id="internal-covariate-shift">Internal Covariate Shift</h2>
-<p>
+<h2 id="internal-covariate-shift" class="headerLink"><a href="#internal-covariate-shift" class="header-mark"></a>Internal Covariate Shift</h2><p>
 
 
 
@@ -260,8 +257,7 @@
 如上图所示：每一个人代表1个layer，然后他们中间是用话筒连在一起，而当一个人手上的两边的话筒被接在一起的时候，整个network的传输才会顺利，才会得到好的效果。</p>
 <p>看到上面一排中间那个人，左手边的话筒比较高，右手边的话筒比较低。在训练的时候为了将两个话筒拉到同一个水平高度，它会将左手边的话筒放低一点，同时右手的话筒放高一点，因为是同时两边都变，所以就可能出现了下面的图，最后还是没对上。</p>
 <p>在过去的解决方法是<strong>调小learning rate</strong>，因为没对上就是因为学习率太大导致的，小的learnin rate又会导致训练速度变得很慢。</p>
-<h2 id="batch-normalization原理">Batch Normalization原理</h2>
-<p>batch Normalization就是对每一个layer做Feature Scaling，就可以解决Internal Covariate Shift问题。</p>
+<h2 id="batch-normalization原理" class="headerLink"><a href="#batch-normalization%e5%8e%9f%e7%90%86" class="header-mark"></a>Batch Normalization原理</h2><p>batch Normalization就是对每一个layer做Feature Scaling，就可以解决Internal Covariate Shift问题。</p>
 <p>训练过程参数在调整的时候前一个层是后一个层的输入，当前一个层的参数改变之后也会改变后一层的参数。当后面的参数按照前面的参数学好了之后前面的layer就变了，因为前面的layer也是不断在变的。如果输入normalization的数据，因为输入是固定下来的，具有相同的均值和方差，training就会更容易。</p>
 <p>定义网络总共有$L$层（不包含输入层）</p>
 <p>
@@ -382,8 +378,7 @@
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h2 id="batch-normalization的优势">Batch Normalization的优势</h2>
-<ul>
+<h2 id="batch-normalization的优势" class="headerLink"><a href="#batch-normalization%e7%9a%84%e4%bc%98%e5%8a%bf" class="header-mark"></a>Batch Normalization的优势</h2><ul>
 <li>
 <p><strong>解决了Internal Covariate Shift的问题</strong>：Internal Covariate Shift让学习率需要设很小，Batch Normalization以后学习率可以设大一点，所以training就快一点。</p>
 </li>
@@ -418,20 +413,20 @@
 
 
 <div class="post-share"><div class="share-link">
-        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://xmoon5.github.io/batchnormalization/" data-title="经典算法：Batch Normalization" data-via="MoonXiaomu" data-hashtags="Batch Normalization,算法"><span class="svg-social-icon icon-twitter"></span></a>
+        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.aimoon.top/batchnormalization/" data-title="经典算法：Batch Normalization" data-via="MoonXiaomu" data-hashtags="Batch Normalization,算法"><span class="svg-social-icon icon-twitter"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://xmoon5.github.io/batchnormalization/" data-hashtag="Batch Normalization"><span class="svg-social-icon icon-facebook"></span></a>
+        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.aimoon.top/batchnormalization/" data-hashtag="Batch Normalization"><span class="svg-social-icon icon-facebook"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://xmoon5.github.io/batchnormalization/" data-title="经典算法：Batch Normalization" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
+        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://blog.aimoon.top/batchnormalization/" data-title="经典算法：Batch Normalization" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://xmoon5.github.io/batchnormalization/" data-title="经典算法：Batch Normalization" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
+        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://blog.aimoon.top/batchnormalization/" data-title="经典算法：Batch Normalization" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
     </div></div>
 
 <div class="footer-post-author">
-    <div class="author-avatar"><a href="https://aimoon.top" target="_blank"><img alt="A Student" src="https://aimoon.top/images/avatars.png"></a></div>
+    <div class="author-avatar"><a href="https://aimoon.top" target="_blank"><img alt="Undergraduate Student of Artificial Intelligence 😜" src="https://blog.aimoon.top/images/avatars.png"></a></div>
     <div class="author-info">
         <div class="name"><a href="https://aimoon.top" target="_blank">Wang Yuexin</a></div>
-        <div class="number-posts">A Student</span></div>
+        <div class="number-posts">Undergraduate Student of Artificial Intelligence 😜</span></div>
     </div>
 </div><div class="post-tags"><a href="/tags/batch-normalization/" class="tag">Batch Normalization</a><a href="/tags/%E7%AE%97%E6%B3%95/" class="tag">算法</a></div></div>
                 </footer></div>
@@ -445,7 +440,7 @@
 
 </main><footer class="footer">
         <div class="footer-container"><div class="footer-line"><div><span id="timeDate">正在烧脑计算建站时间...</span><span id="times"></span><script>var now = new Date();function createtime(){var grt= new Date("05/20/2020 00:00:00");now.setTime(now.getTime()+250);days = (now - grt ) / 1000 / 60 / 60 / 24;dnum = Math.floor(days);hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);hnum = Math.floor(hours);if(String(hnum).length ==1 ){hnum = "0" + hnum; }minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);mnum = Math.floor(minutes);if(String(mnum).length ==1 ){mnum = "0" + mnum;}seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);snum = Math.round(seconds);if(String(snum).length ==1 ){snum = "0" + snum;}document.getElementById("timeDate").innerHTML = "&nbsp"+dnum+"&nbsp天";document.getElementById("times").innerHTML = hnum + "&nbsp小时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";}setInterval("createtime()",250);</script></div></div><div class="footer-line"><i class="svg-icon icon-copyright"></i><span>2020 - 2021</span><span class="author">&nbsp;<a href="https://aimoon.top" target="_blank">MOON</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="http://www.beian.miit.gov.cn" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
-                    <span class="icp"><a href="https://blog.pangao.vip/icp/aimoon.top">🧑ICP证000000号</a></span></div>
+                    <span class="icp"><a href="https://blog.pangao.vip/icp/xmoon,info">🧑ICP证000000号</a></span></div>
         </div>
     </footer></div>
 

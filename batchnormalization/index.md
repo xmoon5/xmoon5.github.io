@@ -4,7 +4,7 @@
 
 
 
-在[**卷积网络六大模块**](https://aimoon.top/2020/06/convolutional1/#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)中的**BN**（**批批标准化**）所指的就是Batch Normalization，该算法15年提出，现在已经成为深度学习中经常使用的技术，可以极大的提高网络的处理能力。
+在[**卷积网络六大模块**](https://blog.aimoon.top/2020/06/convolutional1/#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C)中的**BN**（**批批标准化**）所指的就是Batch Normalization，该算法15年提出，现在已经成为深度学习中经常使用的技术，可以极大的提高网络的处理能力。
 
 
 ## Feature Scaling 特征缩放

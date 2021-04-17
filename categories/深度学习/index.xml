@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>深度学习 - 分类 - Moon&#39;s Blog</title>
-        <link>https://xmoon5.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</link>
+        <link>https://blog.aimoon.top/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</link>
         <description>深度学习 - 分类 - Moon&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 13 Aug 2020 12:50:45 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 13 Aug 2020 12:50:45 &#43;0800</lastBuildDate><atom:link href="https://blog.aimoon.top/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
     <title>经典算法：Batch Normalization</title>
-    <link>https://xmoon5.github.io/batchnormalization/</link>
+    <link>https://blog.aimoon.top/batchnormalization/</link>
     <pubDate>Thu, 13 Aug 2020 12:50:45 &#43;0800</pubDate>
     <author>moon.zh-cn</author>
-    <guid>https://xmoon5.github.io/batchnormalization/</guid>
+    <guid>https://blog.aimoon.top/batchnormalization/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="https://img-blog.csdnimg.cn/20200813125930659.png" referrerpolicy="no-referrer">
             </div>在卷积网络六大模块中的BN（批批标准化）所指的就是Batch Normalization，该算法15年提出，现在已经成为深度学习中经常使用的技]]></description>

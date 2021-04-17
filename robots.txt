@@ -114,4 +114,4 @@ Disallow: /
 User-agent: ZoominfoBot
 Disallow: /
 
-Sitemap: https://xmoon5.github.io/sitemap.xml
+Sitemap: https://blog.aimoon.top/sitemap.xml

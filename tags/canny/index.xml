@@ -1,16 +1,16 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Canny - 标签 - Moon&#39;s Blog</title>
-        <link>https://xmoon5.github.io/tags/canny/</link>
+        <link>https://blog.aimoon.top/tags/canny/</link>
         <description>Canny - 标签 - Moon&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 29 Jul 2020 17:30:45 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/tags/canny/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 29 Jul 2020 17:30:45 &#43;0800</lastBuildDate><atom:link href="https://blog.aimoon.top/tags/canny/" rel="self" type="application/rss+xml" /><item>
     <title>python实现Canny与Hough算法</title>
-    <link>https://xmoon5.github.io/cannyhough/</link>
+    <link>https://blog.aimoon.top/cannyhough/</link>
     <pubDate>Wed, 29 Jul 2020 17:30:45 &#43;0800</pubDate>
     <author>moon.zh-cn</author>
-    <guid>https://xmoon5.github.io/cannyhough/</guid>
+    <guid>https://blog.aimoon.top/cannyhough/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="https://img-blog.csdnimg.cn/20200729181503649.png" referrerpolicy="no-referrer">
-            </div>任务说明：编写一个钱币定位系统，其不仅能够检测出输入图像中各个钱币的边缘，同时，还能给出各个钱币的圆心坐标与半径。 效果 代码实现 Canny边缘]]></description>
+            </div>任务说明：编写一个钱币定位系统，其不仅能够检测出输入图像中各个钱币的边缘，同时，还能给出各个钱币的圆心坐标与半径。 效果 代码实现Canny边缘]]></description>
 </item></channel>
 </rss>

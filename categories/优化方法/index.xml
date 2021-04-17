@@ -1,28 +1,28 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>优化方法 - 分类 - Moon&#39;s Blog</title>
-        <link>https://xmoon5.github.io/categories/%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/</link>
+        <link>https://blog.aimoon.top/categories/%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/</link>
         <description>优化方法 - 分类 - Moon&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 28 Nov 2020 14:58:24 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/categories/%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 28 Nov 2020 14:58:24 &#43;0800</lastBuildDate><atom:link href="https://blog.aimoon.top/categories/%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95/" rel="self" type="application/rss+xml" /><item>
     <title>罚函数法</title>
-    <link>https://xmoon5.github.io/penaltyfunmethod/</link>
+    <link>https://blog.aimoon.top/penaltyfunmethod/</link>
     <pubDate>Sat, 28 Nov 2020 14:58:24 &#43;0800</pubDate>
     <author>moon.zh-cn</author>
-    <guid>https://xmoon5.github.io/penaltyfunmethod/</guid>
+    <guid>https://blog.aimoon.top/penaltyfunmethod/</guid>
     <description><![CDATA[罚函数法]]></description>
 </item><item>
     <title>单纯形法</title>
-    <link>https://xmoon5.github.io/simplexmethod/</link>
+    <link>https://blog.aimoon.top/simplexmethod/</link>
     <pubDate>Sat, 28 Nov 2020 14:56:36 &#43;0800</pubDate>
     <author>moon.zh-cn</author>
-    <guid>https://xmoon5.github.io/simplexmethod/</guid>
+    <guid>https://blog.aimoon.top/simplexmethod/</guid>
     <description><![CDATA[单纯形法]]></description>
 </item><item>
     <title>共轭梯度法</title>
-    <link>https://xmoon5.github.io/cg-method/</link>
+    <link>https://blog.aimoon.top/cg-method/</link>
     <pubDate>Sat, 28 Nov 2020 14:51:16 &#43;0800</pubDate>
     <author>moon.zh-cn</author>
-    <guid>https://xmoon5.github.io/cg-method/</guid>
+    <guid>https://blog.aimoon.top/cg-method/</guid>
     <description><![CDATA[共轭梯度法]]></description>
 </item></channel>
 </rss>

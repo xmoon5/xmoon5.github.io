@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>function - 标签 - Moon&#39;s Blog</title>
-        <link>https://xmoon5.github.io/tags/function/</link>
+        <link>https://blog.aimoon.top/tags/function/</link>
         <description>function - 标签 - Moon&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 20 May 2020 09:34:53 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/tags/function/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 20 May 2020 09:34:53 &#43;0800</lastBuildDate><atom:link href="https://blog.aimoon.top/tags/function/" rel="self" type="application/rss+xml" /><item>
     <title>TensorFlow2.1入门学习笔记(6)——激活函数</title>
-    <link>https://xmoon5.github.io/activation/</link>
+    <link>https://blog.aimoon.top/activation/</link>
     <pubDate>Wed, 20 May 2020 09:34:53 &#43;0800</pubDate>
     <author>moon.zh-cn</author>
-    <guid>https://xmoon5.github.io/activation/</guid>
-    <description><![CDATA[常见函数 tf.where(条件语句，真返回A，假返回B) 1 2 3 4 5 6 import tensorflow as tf a = tf.constant([1, 2, 3, 1, 1]) b = tf.constant([0, 1, 3, 4, 5]) # 若a&gt;b，返回a对应位置的元]]></description>
+    <guid>https://blog.aimoon.top/activation/</guid>
+    <description><![CDATA[常见函数tf.where(条件语句，真返回A，假返回B)1 2 3 4 5 6 import tensorflow as tf a = tf.constant([1, 2, 3, 1, 1]) b = tf.constant([0, 1, 3, 4, 5]) # 若a&gt;b，返回a对应位置的元]]></description>
 </item></channel>
 </rss>

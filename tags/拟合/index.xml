@@ -1,23 +1,23 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>拟合 - 标签 - Moon&#39;s Blog</title>
-        <link>https://xmoon5.github.io/tags/%E6%8B%9F%E5%90%88/</link>
+        <link>https://blog.aimoon.top/tags/%E6%8B%9F%E5%90%88/</link>
         <description>拟合 - 标签 - Moon&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 31 Jul 2020 17:50:45 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/tags/%E6%8B%9F%E5%90%88/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 31 Jul 2020 17:50:45 &#43;0800</lastBuildDate><atom:link href="https://blog.aimoon.top/tags/%E6%8B%9F%E5%90%88/" rel="self" type="application/rss+xml" /><item>
     <title>图像分割(Segmentation)——K-Means, 最小割, 归一化图割</title>
-    <link>https://xmoon5.github.io/segmentstionclustering/</link>
+    <link>https://blog.aimoon.top/segmentstionclustering/</link>
     <pubDate>Fri, 31 Jul 2020 17:50:45 &#43;0800</pubDate>
     <author>moon.zh-cn</author>
-    <guid>https://xmoon5.github.io/segmentstionclustering/</guid>
+    <guid>https://blog.aimoon.top/segmentstionclustering/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="https://img-blog.csdnimg.cn/20200731151831291.png" referrerpolicy="no-referrer">
-            </div>图像分割是将图片将相似的部分分割成相同的块 Gestalt理论 解释物体分割的底层原理 将同一个东西群组在一起,集合中的元素可以具有由关系产生的属]]></description>
+            </div>图像分割是将图片将相似的部分分割成相同的块 Gestalt理论解释物体分割的底层原理 将同一个东西群组在一起,集合中的元素可以具有由关系产生的属]]></description>
 </item><item>
     <title>拟合(Fitting)</title>
-    <link>https://xmoon5.github.io/fitting/</link>
+    <link>https://blog.aimoon.top/fitting/</link>
     <pubDate>Wed, 15 Jul 2020 18:30:26 &#43;0800</pubDate>
     <author>moon.zh-cn</author>
-    <guid>https://xmoon5.github.io/fitting/</guid>
+    <guid>https://blog.aimoon.top/fitting/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="https://img-blog.csdnimg.cn/20200715184300485.png" referrerpolicy="no-referrer">
             </div>提取完边缘后如何使用数学模型来描述边缘？ 例如：在桌子上有几枚硬币，在经过边缘提取后，需要描述出硬币的圆心坐标和圆的大小 难点 噪声：噪声的存在使]]></description>

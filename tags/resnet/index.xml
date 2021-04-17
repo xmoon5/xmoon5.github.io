@@ -1,16 +1,16 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>ResNet - 标签 - Moon&#39;s Blog</title>
-        <link>https://xmoon5.github.io/tags/resnet/</link>
+        <link>https://blog.aimoon.top/tags/resnet/</link>
         <description>ResNet - 标签 - Moon&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 19 Jun 2020 00:05:27 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/tags/resnet/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 19 Jun 2020 00:05:27 &#43;0800</lastBuildDate><atom:link href="https://blog.aimoon.top/tags/resnet/" rel="self" type="application/rss+xml" /><item>
     <title>TensorFlow2.1入门学习笔记(14)——卷积神经网络InceptionNet, ResNet示例</title>
-    <link>https://xmoon5.github.io/convolutional3/</link>
+    <link>https://blog.aimoon.top/convolutional3/</link>
     <pubDate>Fri, 19 Jun 2020 00:05:27 &#43;0800</pubDate>
     <author>moon.zh-cn</author>
-    <guid>https://xmoon5.github.io/convolutional3/</guid>
+    <guid>https://blog.aimoon.top/convolutional3/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="https://img-blog.csdnimg.cn/20200618235842459.png" referrerpolicy="no-referrer">
-            </div>InceptionNet InceptionNet诞生于2014年，当年ImageNet竞赛冠军，Top5错误率为6.67% InceptionNet引入了Incep]]></description>
+            </div>InceptionNetInceptionNet诞生于2014年，当年ImageNet竞赛冠军，Top5错误率为6.67% Inception]]></description>
 </item></channel>
 </rss>

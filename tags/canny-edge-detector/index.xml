@@ -1,16 +1,16 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Canny edge detector - 标签 - Moon&#39;s Blog</title>
-        <link>https://xmoon5.github.io/tags/canny-edge-detector/</link>
+        <link>https://blog.aimoon.top/tags/canny-edge-detector/</link>
         <description>Canny edge detector - 标签 - Moon&#39;s Blog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 10 Jul 2020 16:50:26 &#43;0800</lastBuildDate><atom:link href="https://xmoon5.github.io/tags/canny-edge-detector/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 10 Jul 2020 16:50:26 &#43;0800</lastBuildDate><atom:link href="https://blog.aimoon.top/tags/canny-edge-detector/" rel="self" type="application/rss+xml" /><item>
     <title>边缘检测(Edge Detection)</title>
-    <link>https://xmoon5.github.io/edgedetection/</link>
+    <link>https://blog.aimoon.top/edgedetection/</link>
     <pubDate>Fri, 10 Jul 2020 16:50:26 &#43;0800</pubDate>
     <author>moon.zh-cn</author>
-    <guid>https://xmoon5.github.io/edgedetection/</guid>
+    <guid>https://blog.aimoon.top/edgedetection/</guid>
     <description><![CDATA[<div class="featured-image">
                 <img src="https://img-blog.csdnimg.cn/20200710170507176.png" referrerpolicy="no-referrer">
-            </div>边缘提取 在大多数时候图像的边缘可以承载大部分的信息，并且提取边缘可以除去很多干扰信息，提高处理数据的效率 目标 识别图像中的突然变化(不连续) 图]]></description>
+            </div>边缘提取在大多数时候图像的边缘可以承载大部分的信息，并且提取边缘可以除去很多干扰信息，提高处理数据的效率 目标识别图像中的突然变化(不连续) 图]]></description>
 </item></channel>
 </rss>

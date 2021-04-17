@@ -6,14 +6,14 @@
 <meta name="twitter:image" content=""/>
 <meta name="twitter:title" content="TensorFlow2.1入门学习笔记(7)——损失函数"/>
 <meta name="twitter:description" content=""/><meta name="twitter:creator" content="@MoonXiaomu"/><meta name="Description" content="KEEP KWARKING"><meta property="og:title" content="TensorFlow2.1入门学习笔记(7)——损失函数" />
-<meta property="og:description" content="损失函数（loss）： 预测值（y）与已知答案（y_）的差距 神经网络的优化目标： loss最小: $\Rightarrow\left\{\begin{array}{lr}{mse(Mean Aquared Error)}\\{自定义}\\{ce(Cr" />
+<meta property="og:description" content="损失函数（loss）：预测值（y）与已知答案（y_）的差距 神经网络的优化目标： loss最小: $\Rightarrow\left\{\begin{array}{lr}{mse(Mean Aquared Error)}\\{自定义}\\{ce(Cr" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://xmoon5.github.io/loss/" />
-<meta property="og:image" content="https://xmoon5.github.io/images/favicon.svg"/>
-<meta property="article:published_time" content="2020-05-20T10:34:53+08:00" />
-<meta property="article:modified_time" content="2021-03-29T11:34:14+08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+<meta property="og:url" content="https://blog.aimoon.top/loss/" /><meta property="og:image" content="https://blog.aimoon.top/images/favicon.svg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-05-20T10:34:53&#43;08:00" />
+<meta property="article:modified_time" content="2021-03-29T11:34:14&#43;08:00" /><meta property="og:site_name" content="Moon&#39;s Blog" />
+
 <meta name="application-name" content="MOON">
-<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://xmoon5.github.io/loss/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.aimoon.top/loss/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -21,15 +21,15 @@
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/xmoon5.github.io\/loss\/"
-        },"image": ["https:\/\/xmoon5.github.io\/images\/cover.png"],"genre": "posts","keywords": "loss","wordCount":  1203 ,
-        "url": "https:\/\/xmoon5.github.io\/loss\/","datePublished": "2020-05-20T10:34:53+08:00","dateModified": "2021-03-29T11:34:14+08:00",
+            "@id": "https:\/\/blog.aimoon.top\/loss\/"
+        },"image": ["https:\/\/blog.aimoon.top\/images\/cover.png"],"genre": "posts","keywords": "loss","wordCount":  1216 ,
+        "url": "https:\/\/blog.aimoon.top\/loss\/","datePublished": "2020-05-20T10:34:53+08:00","dateModified": "2021-03-29T11:34:14+08:00",
         "publisher": {
             "@type": "Person",
             "name": "Wang Yuexin", "image": [
             {
             "@type": "ImageObject",
-            "url": "https:\/\/aimoon.top\/images\/avatars.png"
+            "url": "https:\/\/blog.aimoon.top\/images\/avatars.png"
             }
             ]},"author": {
                 "@type": "Person",
@@ -44,12 +44,12 @@
             "@type": "ListItem",
             "position": 1,
             "name": "主页",
-            "item": "https:\/\/xmoon5.github.io"
+            "item": "https:\/\/blog.aimoon.top"
         },{
             "@type": "ListItem",
             "position": 2,
             "name": "TF2.1学习笔记",
-            "item": "https://xmoon5.github.io/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
+            "item": "https://blog.aimoon.top/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"
         },{
                 "@type": "ListItem",
                 "position": 3,
@@ -75,11 +75,11 @@
                         </li><li>
                             <a class="menu-item" href="/categories/"> 归档 </a>
                         </li><li>
+                            <a class="menu-item" href="https://aimoon.top" rel="noopener noreffer" target="_blank"> 关于 </a>
+                        </li><li>
                             <a class="menu-item" href="/music/"> 歌单 </a>
                         </li><li>
                             <a class="menu-item" href="/comments/"> 留言板 </a>
-                        </li><li>
-                            <a class="menu-item" href="https://tools.cyfan.top/" rel="noopener noreffer" target="_blank"> 小工具 </a>
                         </li></ul>
                 </nav><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="search……" id="search-input-desktop">
@@ -132,11 +132,11 @@
                         </li><li>
                             <a class="menu-item" href="/categories/" title="">归档</a>
                         </li><li>
+                            <a class="menu-item" href="https://aimoon.top" title="" rel="noopener noreffer" target="_blank">关于</a>
+                        </li><li>
                             <a class="menu-item" href="/music/" title="">歌单</a>
                         </li><li>
                             <a class="menu-item" href="/comments/" title="">留言板</a>
-                        </li><li>
-                            <a class="menu-item" href="https://tools.cyfan.top/" title="" rel="noopener noreffer" target="_blank">小工具</a>
                         </li></ul>
                 </nav>
                 <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
@@ -178,7 +178,7 @@
                             </span><span class="post-meta-date meta-item">
                                 <span class="svg-icon icon-clock"></span><time class="timeago" datetime="2020-05-20">2020-05-20</time>
                             </span><span class="post-meta-words meta-item">
-                                <span class="svg-icon icon-pencil"></span>约 1203 字
+                                <span class="svg-icon icon-pencil"></span>约 1216 字
                             </span>
                             <span class="post-meta-reading meta-item">
                                 <span class="svg-icon icon-stopwatch"></span>预计阅读 3 分钟
@@ -223,15 +223,13 @@
     </li>
   </ul>
 </nav></div>
-                    </div><h3 id="损失函数loss">损失函数（loss）：</h3>
-<p>预测值（y）与已知答案（y_）的差距</p>
+                    </div><h3 id="损失函数loss" class="headerLink"><a href="#%e6%8d%9f%e5%a4%b1%e5%87%bd%e6%95%b0loss" class="header-mark"></a>损失函数（loss）：</h3><p>预测值（y）与已知答案（y_）的差距</p>
 <!-- more -->
 <p>神经网络的优化目标：</p>
 <div>
 loss最小: $\Rightarrow\left\{\begin{array}{lr}{mse(Mean Aquared Error)}\\{自定义}\\{ce(Cross  Entropy)}\end{array}\right.$
 </div>
-<h6 id="均方误差mseloss_mse--tfreduce_meantfsquarey_-y">均方误差mse：loss_mse = tf.reduce_mean(tf.square(y_-y))</h6>
-<p>$$MSE(y_,y)=\frac{\sum_{i=1}^{n}(y-y_)^2}{n}$$</p>
+<h6 id="均方误差mseloss_mse--tfreduce_meantfsquarey_-y" class="headerLink"><a href="#%e5%9d%87%e6%96%b9%e8%af%af%e5%b7%aemseloss_mse--tfreduce_meantfsquarey_-y" class="header-mark"></a>均方误差mse：loss_mse = tf.reduce_mean(tf.square(y_-y))</h6><p>$$MSE(y_,y)=\frac{\sum_{i=1}^{n}(y-y_)^2}{n}$$</p>
 <ul>
 <li>例
 预测酸奶日销量y，x1、x2是影响日销量的因素。
@@ -316,8 +314,7 @@ loss最小: $\Rightarrow\left\{\begin{array}{lr}{mse(Mean Aquared Error)}\\{自�
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h6 id="自定义损失函数">自定义损失函数：</h6>
-<p>如预测产品销量，预测多了，损失成本；预测少了，损失利润。若利润$\neq$成本，则mse产生的loss无法利益最大化。
+<h6 id="自定义损失函数" class="headerLink"><a href="#%e8%87%aa%e5%ae%9a%e4%b9%89%e6%8d%9f%e5%a4%b1%e5%87%bd%e6%95%b0" class="header-mark"></a>自定义损失函数：</h6><p>如预测产品销量，预测多了，损失成本；预测少了，损失利润。若利润$\neq$成本，则mse产生的loss无法利益最大化。
 自定义损失函数：
 $lossy_,y=\sum_{n}f(y_,y)$</p>
 <div>
@@ -417,8 +414,7 @@ $$
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h6 id="交叉熵损失函数tflossescategorical_crossentropyy_y">交叉熵损失函数：tf.losses.categorical_crossentropy(y_,y)</h6>
-<p>$$H(y_,y)=-\sum y_*lny$$</p>
+<h6 id="交叉熵损失函数tflossescategorical_crossentropyy_y" class="headerLink"><a href="#%e4%ba%a4%e5%8f%89%e7%86%b5%e6%8d%9f%e5%a4%b1%e5%87%bd%e6%95%b0tflossescategorical_crossentropyy_y" class="header-mark"></a>交叉熵损失函数：tf.losses.categorical_crossentropy(y_,y)</h6><p>$$H(y_,y)=-\sum y_*lny$$</p>
 <p>CE(Cross Entropy):表示两个概率分布之间的距离
 eg.二分类	已知答案y_=(1,0)</p>
 <p>预测$y_1$=(0.6,0.4)	$y_2$=(0.8,0.2)哪个更接近标准答案</p>
@@ -457,8 +453,7 @@ eg.二分类	已知答案y_=(1,0)</p>
         />
     </a><figcaption class="image-caption"> </figcaption>
 </figure></p>
-<h6 id="softmax与交叉熵解和tfnnsoftmax_cross_entropy_with_logitsy_y">softmax与交叉熵解和：tf.nn.softmax_cross_entropy_with_logits(y_,y)</h6>
-<p>输出先过softmax函数，再计算y与y_的交叉熵损失函数</p>
+<h6 id="softmax与交叉熵解和tfnnsoftmax_cross_entropy_with_logitsy_y" class="headerLink"><a href="#softmax%e4%b8%8e%e4%ba%a4%e5%8f%89%e7%86%b5%e8%a7%a3%e5%92%8ctfnnsoftmax_cross_entropy_with_logitsy_y" class="header-mark"></a>softmax与交叉熵解和：tf.nn.softmax_cross_entropy_with_logits(y_,y)</h6><p>输出先过softmax函数，再计算y与y_的交叉熵损失函数</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -511,20 +506,20 @@ eg.二分类	已知答案y_=(1,0)</p>
 
 
 <div class="post-share"><div class="share-link">
-        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://xmoon5.github.io/loss/" data-title="TensorFlow2.1入门学习笔记(7)——损失函数" data-via="MoonXiaomu" data-hashtags="loss"><span class="svg-social-icon icon-twitter"></span></a>
+        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.aimoon.top/loss/" data-title="TensorFlow2.1入门学习笔记(7)——损失函数" data-via="MoonXiaomu" data-hashtags="loss"><span class="svg-social-icon icon-twitter"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://xmoon5.github.io/loss/" data-hashtag="loss"><span class="svg-social-icon icon-facebook"></span></a>
+        <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.aimoon.top/loss/" data-hashtag="loss"><span class="svg-social-icon icon-facebook"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://xmoon5.github.io/loss/" data-title="TensorFlow2.1入门学习笔记(7)——损失函数" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
+        <a class="share-icon share-whatsapp" href="javascript:void(0);" title="分享到 WhatsApp" data-sharer="whatsapp" data-url="https://blog.aimoon.top/loss/" data-title="TensorFlow2.1入门学习笔记(7)——损失函数" data-web><span class="svg-social-icon icon-whatsapp"></span></a>
     </div><div class="share-link">
-        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://xmoon5.github.io/loss/" data-title="TensorFlow2.1入门学习笔记(7)——损失函数" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
+        <a class="share-icon share-blogger" href="javascript:void(0);" title="分享到 Blogger" data-sharer="blogger" data-url="https://blog.aimoon.top/loss/" data-title="TensorFlow2.1入门学习笔记(7)——损失函数" data-description=""><span class="svg-social-icon icon-blogger"></span></a>
     </div></div>
 
 <div class="footer-post-author">
-    <div class="author-avatar"><a href="https://aimoon.top" target="_blank"><img alt="A Student" src="https://aimoon.top/images/avatars.png"></a></div>
+    <div class="author-avatar"><a href="https://aimoon.top" target="_blank"><img alt="Undergraduate Student of Artificial Intelligence 😜" src="https://blog.aimoon.top/images/avatars.png"></a></div>
     <div class="author-info">
         <div class="name"><a href="https://aimoon.top" target="_blank">Wang Yuexin</a></div>
-        <div class="number-posts">A Student</span></div>
+        <div class="number-posts">Undergraduate Student of Artificial Intelligence 😜</span></div>
     </div>
 </div><div class="post-tags"><a href="/tags/loss/" class="tag">loss</a></div></div>
                 </footer></div>
@@ -538,7 +533,7 @@ eg.二分类	已知答案y_=(1,0)</p>
 
 </main><footer class="footer">
         <div class="footer-container"><div class="footer-line"><div><span id="timeDate">正在烧脑计算建站时间...</span><span id="times"></span><script>var now = new Date();function createtime(){var grt= new Date("05/20/2020 00:00:00");now.setTime(now.getTime()+250);days = (now - grt ) / 1000 / 60 / 60 / 24;dnum = Math.floor(days);hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);hnum = Math.floor(hours);if(String(hnum).length ==1 ){hnum = "0" + hnum; }minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);mnum = Math.floor(minutes);if(String(mnum).length ==1 ){mnum = "0" + mnum;}seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);snum = Math.round(seconds);if(String(snum).length ==1 ){snum = "0" + snum;}document.getElementById("timeDate").innerHTML = "&nbsp"+dnum+"&nbsp天";document.getElementById("times").innerHTML = hnum + "&nbsp小时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";}setInterval("createtime()",250);</script></div></div><div class="footer-line"><i class="svg-icon icon-copyright"></i><span>2020 - 2021</span><span class="author">&nbsp;<a href="https://aimoon.top" target="_blank">MOON</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="http://www.beian.miit.gov.cn" target="_blank">CC BY-NC 4.0</a></span><span class="icp-splitter">&nbsp;|&nbsp;</span><br class="icp-br"/>
-                    <span class="icp"><a href="https://blog.pangao.vip/icp/aimoon.top">🧑ICP证000000号</a></span></div>
+                    <span class="icp"><a href="https://blog.pangao.vip/icp/xmoon,info">🧑ICP证000000号</a></span></div>
         </div>
     </footer></div>
 
