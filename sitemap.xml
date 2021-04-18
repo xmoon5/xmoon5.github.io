@@ -77,7 +77,6 @@
             <loc>https://blog.aimoon.top/tags/%E7%AD%89%E5%8E%8B/</loc><lastmod>2021-03-29T11:34:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
             <loc>https://blog.aimoon.top/tags/%E7%AD%89%E5%AE%B9/</loc><lastmod>2021-03-29T11:34:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
             <loc>https://blog.aimoon.top/tags/%E7%AD%89%E6%B8%A9/</loc><lastmod>2021-03-29T11:34:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
-            <loc>https://blog.aimoon.top/music/</loc><lastmod>2021-03-29T11:34:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
             <loc>https://blog.aimoon.top/tags/optimizer/</loc><lastmod>2021-03-29T11:34:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
             <loc>https://blog.aimoon.top/optimizer/</loc><lastmod>2021-03-29T11:34:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
             <loc>https://blog.aimoon.top/tags/regularization/</loc><lastmod>2021-03-29T11:34:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
@@ -101,4 +100,5 @@
             <loc>https://blog.aimoon.top/numpy/</loc><lastmod>2021-03-29T11:34:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
             <loc>https://blog.aimoon.top/about/</loc><priority>0</priority></url><url>
             <loc>https://blog.aimoon.top/categories/</loc><lastmod>2021-03-29T11:34:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
-            <loc>https://blog.aimoon.top/tags/</loc><lastmod>2021-03-29T11:34:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url></urlset>
+            <loc>https://blog.aimoon.top/tags/</loc><lastmod>2021-03-29T11:34:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
+            <loc>https://blog.aimoon.top/music/</loc><lastmod>2021-03-29T11:34:14&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url></urlset>
