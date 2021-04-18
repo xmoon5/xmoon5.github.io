@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>TF2.1学习笔记 - 分类 - Moon&#39;s Blog</title>
+        <title>TF2.1学习笔记 - 分类 - Yasin&#39;s Blog</title>
         <link>https://blog.aimoon.top/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
-        <description>TF2.1学习笔记 - 分类 - Moon&#39;s Blog</description>
+        <description>TF2.1学习笔记 - 分类 - Yasin&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 24 Jun 2020 00:30:27 &#43;0800</lastBuildDate><atom:link href="https://blog.aimoon.top/categories/tf2.1%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="self" type="application/rss+xml" /><item>
     <title>TensorFlow2.1入门学习笔记(16)——实战使用RNN，LSTM，GRU实现股票预测</title>
     <link>https://blog.aimoon.top/rnn2/</link>

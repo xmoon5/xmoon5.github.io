@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>SIFT - 标签 - Moon&#39;s Blog</title>
+        <title>SIFT - 标签 - Yasin&#39;s Blog</title>
         <link>https://blog.aimoon.top/tags/sift/</link>
-        <description>SIFT - 标签 - Moon&#39;s Blog</description>
+        <description>SIFT - 标签 - Yasin&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 09 Aug 2020 11:06:26 &#43;0800</lastBuildDate><atom:link href="https://blog.aimoon.top/tags/sift/" rel="self" type="application/rss+xml" /><item>
     <title>Python实现图像全景拼接</title>
     <link>https://blog.aimoon.top/panorama/</link>

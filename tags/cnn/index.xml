@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>CNN - 标签 - Moon&#39;s Blog</title>
+        <title>CNN - 标签 - Yasin&#39;s Blog</title>
         <link>https://blog.aimoon.top/tags/cnn/</link>
-        <description>CNN - 标签 - Moon&#39;s Blog</description>
+        <description>CNN - 标签 - Yasin&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 19 Jun 2020 00:05:27 &#43;0800</lastBuildDate><atom:link href="https://blog.aimoon.top/tags/cnn/" rel="self" type="application/rss+xml" /><item>
     <title>TensorFlow2.1入门学习笔记(14)——卷积神经网络InceptionNet, ResNet示例</title>
     <link>https://blog.aimoon.top/convolutional3/</link>

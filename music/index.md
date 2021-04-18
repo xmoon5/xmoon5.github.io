@@ -11,7 +11,7 @@
 <center>
 
 
-站名: 一颗小木
+站名: Yasin's Blog
 
 主页: [aimoon.top](aimoon.top)
 

@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>FASHION - 标签 - Moon&#39;s Blog</title>
+        <title>FASHION - 标签 - Yasin&#39;s Blog</title>
         <link>https://blog.aimoon.top/tags/fashion/</link>
-        <description>FASHION - 标签 - Moon&#39;s Blog</description>
+        <description>FASHION - 标签 - Yasin&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 31 May 2020 12:16:26 &#43;0800</lastBuildDate><atom:link href="https://blog.aimoon.top/tags/fashion/" rel="self" type="application/rss+xml" /><item>
     <title>TensorFlow2.1入门学习笔记(10)——使用keras搭建神经网络(Mnist,Fashion)</title>
     <link>https://blog.aimoon.top/tf_keras_mnist/</link>

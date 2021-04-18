@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>activation - 标签 - Moon&#39;s Blog</title>
+        <title>activation - 标签 - Yasin&#39;s Blog</title>
         <link>https://blog.aimoon.top/tags/activation/</link>
-        <description>activation - 标签 - Moon&#39;s Blog</description>
+        <description>activation - 标签 - Yasin&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 20 May 2020 09:34:53 &#43;0800</lastBuildDate><atom:link href="https://blog.aimoon.top/tags/activation/" rel="self" type="application/rss+xml" /><item>
     <title>TensorFlow2.1入门学习笔记(6)——激活函数</title>
     <link>https://blog.aimoon.top/activation/</link>

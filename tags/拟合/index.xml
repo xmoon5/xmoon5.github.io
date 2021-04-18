@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>拟合 - 标签 - Moon&#39;s Blog</title>
+        <title>拟合 - 标签 - Yasin&#39;s Blog</title>
         <link>https://blog.aimoon.top/tags/%E6%8B%9F%E5%90%88/</link>
-        <description>拟合 - 标签 - Moon&#39;s Blog</description>
+        <description>拟合 - 标签 - Yasin&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 31 Jul 2020 17:50:45 &#43;0800</lastBuildDate><atom:link href="https://blog.aimoon.top/tags/%E6%8B%9F%E5%90%88/" rel="self" type="application/rss+xml" /><item>
     <title>图像分割(Segmentation)——K-Means, 最小割, 归一化图割</title>
     <link>https://blog.aimoon.top/segmentstionclustering/</link>

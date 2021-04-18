@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>循环神经网络 - 标签 - Moon&#39;s Blog</title>
+        <title>循环神经网络 - 标签 - Yasin&#39;s Blog</title>
         <link>https://blog.aimoon.top/tags/%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/</link>
-        <description>循环神经网络 - 标签 - Moon&#39;s Blog</description>
+        <description>循环神经网络 - 标签 - Yasin&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 24 Jun 2020 00:30:27 &#43;0800</lastBuildDate><atom:link href="https://blog.aimoon.top/tags/%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="self" type="application/rss+xml" /><item>
     <title>TensorFlow2.1入门学习笔记(16)——实战使用RNN，LSTM，GRU实现股票预测</title>
     <link>https://blog.aimoon.top/rnn2/</link>
