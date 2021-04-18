@@ -5,15 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noodp"/><title>TensorFlow2.1入门学习笔记(14)——卷积神经网络InceptionNet, ResNet示例 | Yasin&#39;s Blog</title><meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content=""/>
 <meta name="twitter:title" content="TensorFlow2.1入门学习笔记(14)——卷积神经网络InceptionNet, ResNet示例"/>
-<meta name="twitter:description" content=""/><meta name="twitter:creator" content="@MoonXiaomu"/><meta name="Description" content="KEEP KWARKING"><meta property="og:title" content="TensorFlow2.1入门学习笔记(14)——卷积神经网络InceptionNet, ResNet示例" />
+<meta name="twitter:description" content=""/><meta name="twitter:creator" content="@wangyuexin8"/><meta name="Description" content="KEEP KWARKING"><meta property="og:title" content="TensorFlow2.1入门学习笔记(14)——卷积神经网络InceptionNet, ResNet示例" />
 <meta property="og:description" content="InceptionNetInceptionNet诞生于2014年，当年ImageNet竞赛冠军，Top5错误率为6.67% Inception" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://blog.aimoon.top/convolutional3/" /><meta property="og:image" content="https://blog.aimoon.top/images/favicon.svg"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2020-06-19T00:05:27&#43;08:00" />
 <meta property="article:modified_time" content="2021-03-29T11:34:14&#43;08:00" /><meta property="og:site_name" content="Yasin&#39;s Blog" />
 
-<meta name="application-name" content="MOON">
-<meta name="apple-mobile-web-app-title" content="MOON"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.aimoon.top/convolutional3/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
+<meta name="application-name" content="YASIN">
+<meta name="apple-mobile-web-app-title" content="YASIN"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/images/favicon.svg" type="image/x-icon"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://blog.aimoon.top/convolutional3/" /><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -26,14 +26,14 @@
         "url": "https:\/\/blog.aimoon.top\/convolutional3\/","datePublished": "2020-06-19T00:05:27+08:00","dateModified": "2021-03-29T11:34:14+08:00",
         "publisher": {
             "@type": "Person",
-            "name": "Wang Yuexin", "image": [
+            "name": "Wang Yasin", "image": [
             {
             "@type": "ImageObject",
             "url": "https:\/\/blog.aimoon.top\/images\/avatars.png"
             }
             ]},"author": {
                 "@type": "Person",
-                "name": "Wang Yuexin"
+                "name": "Wang Yasin"
             },"description": ""
     }
     </script><script type="application/ld+json">
@@ -75,11 +75,11 @@
                         </li><li>
                             <a class="menu-item" href="/categories/"> 归档 </a>
                         </li><li>
-                            <a class="menu-item" href="https://aimoon.top" rel="noopener noreffer" target="_blank"> 关于 </a>
+                            <a class="menu-item" href="/comments/"> 留言板 </a>
                         </li><li>
                             <a class="menu-item" href="/music/"> 歌单 </a>
                         </li><li>
-                            <a class="menu-item" href="/comments/"> 留言板 </a>
+                            <a class="menu-item" href="https://aimoon.top" rel="noopener noreffer" target="_blank"> 主页 </a>
                         </li></ul>
                 </nav><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
                         <input type="text" placeholder="search……" id="search-input-desktop">
@@ -132,11 +132,11 @@
                         </li><li>
                             <a class="menu-item" href="/categories/" title="">归档</a>
                         </li><li>
-                            <a class="menu-item" href="https://aimoon.top" title="" rel="noopener noreffer" target="_blank">关于</a>
+                            <a class="menu-item" href="/comments/" title="">留言板</a>
                         </li><li>
                             <a class="menu-item" href="/music/" title="">歌单</a>
                         </li><li>
-                            <a class="menu-item" href="/comments/" title="">留言板</a>
+                            <a class="menu-item" href="https://aimoon.top" title="" rel="noopener noreffer" target="_blank">主页</a>
                         </li></ul>
                 </nav>
                 <a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
@@ -977,7 +977,7 @@ InceptionNet引入了Inception结构块，在同一层网络内使用不同尺�
 
 
 <div class="post-share"><div class="share-link">
-        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.aimoon.top/convolutional3/" data-title="TensorFlow2.1入门学习笔记(14)——卷积神经网络InceptionNet, ResNet示例" data-via="MoonXiaomu" data-hashtags="InceptionNet,ResNet,CNN"><span class="svg-social-icon icon-twitter"></span></a>
+        <a class="share-icon share-twitter" href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="https://blog.aimoon.top/convolutional3/" data-title="TensorFlow2.1入门学习笔记(14)——卷积神经网络InceptionNet, ResNet示例" data-via="wangyuexin8" data-hashtags="InceptionNet,ResNet,CNN"><span class="svg-social-icon icon-twitter"></span></a>
     </div><div class="share-link">
         <a class="share-icon share-facebook" href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="https://blog.aimoon.top/convolutional3/" data-hashtag="InceptionNet"><span class="svg-social-icon icon-facebook"></span></a>
     </div><div class="share-link">
@@ -989,7 +989,7 @@ InceptionNet引入了Inception结构块，在同一层网络内使用不同尺�
 <div class="footer-post-author">
     <div class="author-avatar"><a href="https://aimoon.top" target="_blank"><img alt="Undergraduate Student of Artificial Intelligence 😜" src="https://blog.aimoon.top/images/avatars.png"></a></div>
     <div class="author-info">
-        <div class="name"><a href="https://aimoon.top" target="_blank">Wang Yuexin</a></div>
+        <div class="name"><a href="https://aimoon.top" target="_blank">Wang Yasin</a></div>
         <div class="number-posts">Undergraduate Student of Artificial Intelligence 😜</span></div>
     </div>
 </div><div class="post-tags"><a href="/tags/inceptionnet/" class="tag">InceptionNet</a><a href="/tags/resnet/" class="tag">ResNet</a><a href="/tags/cnn/" class="tag">CNN</a></div></div>
