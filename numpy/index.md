@@ -2,7 +2,7 @@
 
 在正式学习tensorflow2.0之前需要有一定的python基础，对numpy，matplotlib等库有基本的了解，笔者还是AI小白，通过写博客来记录自己的学习过程，同时对所学的东西进行总结。主要学习资料西安科技大学：[神经网络与深度学习——TensorFlow2.0实战](https://www.icourse163.org/learn/XUST-1206363802#/learn/announce)，北京大学：[人工智能实践Tensorflow笔记](https://www.icourse163.org/learn/PKU-1002536002#/learn/announce)。博客从tf常用的库开始，需要学习python基础的朋友推荐[菜鸟教程](https://www.runoob.com/python3/python3-tutorial.html)
 <!-- more -->
-### 1.多为数组的形状(Shape)
+### 1.多维数组的形状(Shape)
 描述数组的维度，以及各维度内部元素个数
 
 #### 一维数组 shape:(5,)
